@@ -18,14 +18,15 @@
 button.hubutton {
   font-size: 24px;
   width: 90%;
-  border-radius: 15px;
   background-color: white;
-  color: #1E363A;
   margin-left: auto;
   margin-right: auto;
   border: none;
   height: 100px;
   margin-top: 20px;
+  border-radius: 15px;
+  border: 1px solid #0B697F;
+  color: #1E363A;
 }
 button.hubutton i {
   font-size: 30pt;
@@ -41,18 +42,36 @@ button.hubutton i {
 #scanLogoIndex {
   margin-top: 65%;
 }
-#signInButton,
-#addUserButton,
-#editUserButton,
-#checkOutButton,
-#returnButton {
-  border: 1px solid #0B697F;
-  color: #1E363A;
-}
 #signInButton {
   left: 20%;
   bottom: 10px;
   position: absolute;
   height: 50px;
   width: 60%;
+}
+.userForm .formTable {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  text-align: right;
+  height: 600px;
+}
+.userForm .formTable .formLabel {
+  text-align: left;
+  width: 40%;
+  font-size: 12pt;
+}
+.userForm .formTable .formButtons {
+  bottom: 10px;
+}
+.userForm .formTable input {
+  width: 100%;
+  height: 25px;
+  font-size: 12pt;
+}
+.userForm .formTable input.formSubmit {
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  border: none;
 }

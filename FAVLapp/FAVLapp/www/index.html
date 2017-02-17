@@ -51,6 +51,20 @@
                 </tr>
                 <tr>
                     <td>
+                        <button id="overdueButton" type="button" class="hubutton">
+                            <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                            OVERDUE
+                        </button>
+                    </td>
+                    <td>
+                        <button id="inventoryButton" type="button" class="hubutton">
+                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                            INVENTORY
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <button id="checkOutButton" type="button" class="hubutton">
                             <i class="fa fa-cart-plus" aria-hidden="true"></i><br />
                             CHECK OUT
@@ -67,39 +81,36 @@
         </div>
     </section>
     <section id="addUser" hidden>
-
         <h2>Add User</h2>
         <div>
-            <table class="hubtable">
-                <tr>
-                    <td>
-                        <button type="button" class="hubutton" onclick="location.href='addUser.html'">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i><br />
-                            Add User
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="hubutton">
-                            <i class="fa fa-pencil" aria-hidden="true"></i><br />
-                            Edit User
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" class="hubutton">
-                            <i class="fa fa-cart-plus" aria-hidden="true"></i><br />
-                            Check Out
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button" class="hubutton">
-                            <i class="fa fa-inbox" aria-hidden="true"></i><br />
-                            Return
-                        </button>
-                    </td>
-                </tr>
-            </table>
+            <form class="userForm" id="addUserForm">
+                <fieldset>
+                    <legend>User Information</legend>
+                    <table class="formTable">
+                        <tr>
+                            <td class="formLabel"><label>First Name: </label></td>
+                            <td><input type="text" name="firstName" /></td>
+                        </tr>
+                        <tr>
+                            <td class="formLabel"><label>Last Name: </label></td>
+                            <td><input type="text" name="lastName" /></td>
+                        </tr>
+                        <tr>
+                            <td class="formLabel"><label>Address: </label></td>
+                            <td><input type="text" name="address" /></td>
+                        </tr>
+                        <tr>
+                            <td class="formLabel"><label>Phone Number: </label></td>
+                            <td><input type="text" name="phone" /></td>
+                        </tr>
+                        <tr class="formButtons">
+                            <td><input class="formCancel" type="button" value="CANCEL" /></td>
+                            <td><input class="formSubmit" type="submit" value="SUBMIT" /></td>
+                        </tr>
+                    </table>                                                           
+                </fieldset>
+            </form>
+
         </div>
     </section>
     <script src="scripts/main.js"></script>
