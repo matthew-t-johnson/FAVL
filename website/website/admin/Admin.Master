@@ -1,0 +1,94 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="website.admin.Admin" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/images/logos/favicon.ico" type="image/x-icon" />
+
+    <title>SCAN Admin</title>
+
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="/css/default.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top col-xl-12" role="navigation" id="navbar-wrapper">
+        <div class="navbar-header nav-header">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logos/scan_header_logo.svg" style="height: 40px;" /></a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+            <ul class="nav navbar-nav" id="navbar-list">
+                <li><a href="libraries.aspx">Libraries</a></li>
+                <li><a href="librarians.aspx">Librarians</a></li>
+                <li><a href="books.aspx">Books</a></li>
+                <li><a href="readers.aspx">Readers</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Get Involved
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Donate</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Volunteer</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Future Projects</a></li>
+                    </ul>
+
+                </li>
+                <!--</ul>
+                <ul class="nav navbar-nav navbar-right">-->
+                <li class="search hidden-xs">
+                    <input id="searchBox" type="text" placeholder="Search..." hidden />
+                    <i class="fa fa-search" aria-hidden="true" onclick="var sb = document.getElementById('searchBox'); sb.removeAttribute('hidden'); sb.focus();"></i>
+                </li>
+                <li class="search hidden-sm hidden-md hidden-lg hidden-xl">
+                    <input type="text" placeholder="Search..." />
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="contentWrapper">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+
+    <footer style="border-top: 1px solid #333;">
+        <div class="container">
+            <div class="col-xs-6 footer-left">
+                Friends of African Village Libraries<br />
+                Copyright &copy; 2017<br />
+                All Rights Reserved
+            </div>
+            <div class="col-xs-6 footer-right">
+                <span class="socicons"><i class="fa fa-facebook-square" aria-hidden="true"></i><i class="fa fa-instagram" aria-hidden="true"></i><i class="fa fa-twitter" aria-hidden="true"></i><i class="fa fa-youtube" aria-hidden="true"></i><i class="fa fa-snapchat-ghost" aria-hidden="true"></i></span>
+                <br />
+                <a href="#">Site Terms</a> | <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+
+</body>
+</html>

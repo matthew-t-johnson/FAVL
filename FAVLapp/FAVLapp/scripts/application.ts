@@ -4,6 +4,8 @@
 // and then run "window.location.reload()" in the JavaScript Console.
 "use strict";
 
+import Main = require('./main');
+
 export function initialize(): void {
     document.addEventListener('deviceready', onDeviceReady, false);
 }
@@ -18,6 +20,8 @@ function onDeviceReady(): void {
     var receivedElement = parentElement.querySelector('.received');
     listeningElement.setAttribute('style', 'display:none;');
     receivedElement.setAttribute('style', 'display:block;');
+
+    Main.mainInit();
 }
 
 function onPause(): void {

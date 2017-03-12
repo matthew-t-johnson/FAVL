@@ -1,4 +1,4 @@
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "./main"], function (require, exports, Main) {
     // For an introduction to the Blank template, see the following documentation:
     // http://go.microsoft.com/fwlink/?LinkID=397705
     // To debug code on page load in cordova-simulate or on Android devices/emulators: launch your app, set breakpoints, 
@@ -17,6 +17,7 @@ define(["require", "exports"], function (require, exports) {
         var receivedElement = parentElement.querySelector('.received');
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
+        Main.mainInit();
     }
     function onPause() {
         // TODO: This application has been suspended. Save application state here.

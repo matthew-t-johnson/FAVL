@@ -1,27 +1,335 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>FAVL Website</title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="images/logos/favicon.ico" type="image/x-icon" />
+
+    <title>SCAN</title>
+
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/font-awesome.min.css" rel="stylesheet" />
     <link href="css/default.css" rel="stylesheet" />
+
+    <script>
+        var a = document.querySelector("li a[href='" + location.pathname + "']");
+        if (a) {
+            a.parentElement.classList.add("active")
+        }
+    </script>
+
 </head>
 <body>
-    <h1>FAVL Website</h1>
-    <i class="fa fa-user-plus" aria-hidden="true"></i>
-    <h2>under construction</h2>
-    <table>
-        <tr>
-            <td>
-                <p><i class="fa fa-user-plus" aria-hidden="true"></i></p>
-                <p>Hello World</p>
-            </td>
-            <td>
-                <p><i class="fa fa-user-plus" aria-hidden="true"></i></p>
-                <p>Hello Scucci Mane</p>
-            </td>
-        </tr>
-    </table>
+    <nav class="navbar navbar-default navbar-fixed-top col-xl-12" role="navigation" id="navbar-wrapper">
+        <div class="navbar-header nav-header">
+            <a class="navbar-brand" href="/"><img src="/images/logos/scan_header_logo.svg" style="height: 40px;" /></a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+            <ul class="nav navbar-nav" id="navbar-list">
+                <li><a href="/">FAVL 2017</a></li>
+                <li><a href="/">Subscribe</a></li>
+                <li><a href="/">Contact Us</a></li>
+                <li><a href="/">FAVL Tips</a></li>
+                <li><a href="/">Libraries</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Get Involved
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Donate</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Volunteer</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Future Projects</a></li>
+                    </ul>
+
+                </li>
+                <!--</ul>
+                <ul class="nav navbar-nav navbar-right">-->
+                <li class="search hidden-xs">
+                    <input id="searchBox" type="text" placeholder="Search..." hidden />
+                    <i class="fa fa-search" aria-hidden="true" onclick="var sb = document.getElementById('searchBox'); sb.removeAttribute('hidden'); sb.focus();"></i>
+                </li>
+                <li class="search hidden-sm hidden-md hidden-lg hidden-xl">
+                    <input type="text" placeholder="Search..." />
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="myCarousel" class="carousel slide" style="height: auto; padding: 0; margin: 60px 0 40px; background-color: #333; color: #eee; max-height: 400px;">
+        <!-- Carousel indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+        </ol>
+
+        <!-- Carousel items -->
+        <div class="carousel-inner" style="height: auto;">
+            <div class="item active" style="max-height: 400px;">
+                <img src="../images/carousel/stat_banner_2.jpg" alt="First slide" />
+            </div>
+            <div class="item" style="max-height: 400px;">
+                <img src="../images/carousel/phone_banner.jpg" alt="Second slide" />
+            </div>
+        </div>
+        <!-- Carousel nav -->
+        <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+            <span>&lsaquo;</span>
+        </a>
+        <a class="carousel-control right" style="top: 0; bottom: 0; font-size: 20pt; padding: 0;" href="#myCarousel" data-slide="next">
+            <span>&rsaquo;</span>
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 thumbnail-container" style="text-align: center;">
+            <a href="#" class="thumbnail">
+                <img src="images/thumbnail/girl_reading_small.jpg" />
+                <h4>Youth Movement</h4>
+                <p class="hidden-xs">FAVL gives students the tools to grow, learn, and prosper.</p>
+            </a>
+        </div>
+        <div class="col-sm-4 col-md-3 thumbnail-container hidden-xs">
+            <a href="#" class="thumbnail">
+                <img src="images/thumbnail/girl_surrounded_books_small.jpg" />
+                <h4>Endless Books</h4>
+                <p>To curb the interests of our most adventerous readers.</p>
+            </a>
+        </div>
+        <div class="col-md-3 thumbnail-container hidden-xs hidden-sm">
+            <a href="#" class="thumbnail">
+                <img src="images/thumbnail/girl_with_book_small.jpg" />
+                <h4>Opening a Door</h4>
+                <p>Just by opening a book; the power when FAVL helps out.</p>
+            </a>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 thumbnail-container">
+            <a href="#" class="thumbnail">
+                <img src="images/thumbnail/librarian_reading_small.jpg" />
+                <h4>Happy Librarians</h4>
+                <p class="hidden-xs">Are good ones. We give them what they need to succeed.</p>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-12 hidden-lg hidden-md thumbnail-container" style="text-align: right; margin-top: -15px;">
+        <a href="#">See more...</a>
+    </div>
+
+    <div class="barcharts">
+        <div class="barchart-title">
+            <h3>Literacy Rates</h3>
+            <p>Millions of people in underdeveloped countries, especially those in Africa, lack even basic reading skills. The worst levels of illiteracy occur in Burkina Faso where 78% of the population cannot read on even a basic level. There are many obstacles standing in the way of increasing literacy rates in impoverished countries like Burkina Faso.</p>
+        </div>
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar"
+                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 99%;">
+
+                <span class="sr-only">99% Reported (danger)</span>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar"
+                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 69%;">
+
+                <span class="sr-only">69% Reported (warming)</span>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress-bar progress-bar-warning" role="progressbar"
+                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 37%;">
+
+                <span class="sr-only">37% Reported (info)</span>
+            </div>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar progress-bar-danger" role="progressbar"
+                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 29%;">
+
+                <span class="sr-only">29% Reported (success)</span>
+            </div>
+        </div>
+        <div class="barchart-legend" style="text-align: center;">
+            <ul style="list-style-type: none;">
+                <li style="display: inline-block; margin: 0 10px;">
+                    <div style="height: 14px; width: 14px; background-color: #d9534f; display: inline-block;"></div>
+                    <h4 style="display: inline-block">Burkina Faso</h4>
+                </li>
+                <li style="display: inline-block; margin: 0 10px;">
+                    <div style="height: 14px; width: 14px; background-color: #f0ad4e; display: inline-block;"></div>
+                    <h4 style="display: inline-block">Central African Republic</h4>
+                </li>
+                <li style="display: inline-block; margin: 0 10px;">
+                    <div style="height: 14px; width: 14px; background-color: #5bc0de; display: inline-block;"></div>
+                    <h4 style="display: inline-block">India</h4>
+                </li>
+                <li style="display: inline-block; margin: 0 10px;">
+                    <div style="height: 14px; width: 14px; background-color: #5cb85c; display: inline-block;"></div>
+                    <h4 style="display: inline-block">Italy</h4>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panels panels-big hidden-sm hidden-xs hidden-md">
+        <div class="container" style="border-radius: 10px;">
+            <div class="col-lg-7 col-md-12 panel-photos" style="padding: 0 0 0 0; border-radius: 10px 0 0 10px;">
+                <img style="border-radius: 10px 0 0 10px;" src="../images/hero/boys_reading_outside2_hero.jpg" />
+            </div>
+            <div class="col-lg-5 col-md-12 panel-text" style="border-radius: 0 10px 10px 0;">
+                <div>
+                    <div class="panel-text-text" style="text-align: right; border-radius: 0 10px 10px 0;">
+                        <h1>Reading Camps</h1>
+                        <p>Millions of people in underdeveloped countries, especially those in Africa, lack even basic reading skills. The worst levels of illiteracy occur in Burkina Faso where 78% of the population cannot read on even a basic level. There are many obstacles standing in the way of increasing literacy rates in impoverished countries like Burkina Faso.</p>
+                        <p>The primary issue is that access to reading materials is extremely limited, especially in rural areas. Having available reading materials is essential to increasing literacy rates and therefore alleviating poverty through education. Hence, bringing reading materials to these rural areas is an imperative if literacy rates are to improve.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="border-radius: 10px;">
+            <div class="col-lg-5 col-md-12 panel-text" style="border-radius: 10px 0 0 10px;">
+                <div>
+                    <div class="panel-text-text">
+                        <h1>Partners in Education</h1>
+                        <p>FAVL's goal is to assist the rural poor of Africa with the creation of village libraries. This is accomplished by working closely with the communities in which the libraries are established. FAVL refurbishes community-donated buildings, transforming them into a space to read and study.</p>
+                        <p>Libraries are stocked with books by local authors and in local languages to the greatest extent possible, and with a recent initiative FAVL is producing microbooks for village libraries, in partnership with fastpencil.com. In addition, FAVL sponsors librarian training and provides for librarian salaries, thereby empowering locals with skilled employment. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-12 panel-photos" style="padding: 0 0 0 0; border-radius: 0 10px 10px 0;">
+                <img style="border-radius: 0 10px 10px 0;" src="../images/hero/boys_reading_outside_HERO.jpg" />
+            </div>
+        </div>
+        <div class="container" style="border-radius: 10px;">
+            <div class="col-lg-7 col-md-12 panel-photos" style="padding: 0 0 0 0; border-radius: 10px 0 0 10px;">
+                <img style="border-radius: 10px 0 0 10px;" src="../images/hero/adult_praying_hero.jpg" />
+            </div>
+            <div class="col-lg-5 col-md-12 panel-text" style="border-radius: 0 10px 10px 0;">
+                <div>
+                    <div class="panel-text-text" style="text-align: right; border-radius: 0 10px 10px 0;">
+                        <h1>The Long Haul</h1>
+                        <p>We believe that every child and adult should have the opportunity to pick up a book and read. FAVL is dedicated to increasing access to reading material and other information in rural villages in sub-Saharan Africa. Friends of African Village Libraries is committed to long-term financial and management support for small community libraries in rural Africa.</p>
+                        <p>Our goal is to establish long-term relationships with community libraries, rather than provide an initial donation and move on. This is why the number of libraries in our network is small, as they are carefully managed to ensure their continued success. Burkina Faso alone has thousands of villages with primary schools and no libraries; the needs are immense, the means to address the need are limited.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panels panels-small hidden-lg" style="margin: 0 10px;">
+        <div class="container" style="border-radius: 10px;">
+            <div class="col-lg-7 col-md-12 panel-photos" style="padding: 0 0 0 0; border-radius: 10px 10px 0 0;">
+                <img style=" border-radius: 10px 10px 0 0;" src="../images/hero/boys_reading_outside2_hero.jpg" />
+            </div>
+            <div class="col-lg-5 col-md-12 panel-text" style="border-radius: 0 0 10px 10px;">
+                <div>
+                    <div class="panel-text-text" style="text-align: left; border-radius: 0 0 10px 10px;">
+                        <h1>Reading Camps</h1>
+                        <p>Millions of people in underdeveloped countries, especially those in Africa, lack even basic reading skills. The worst levels of illiteracy occur in Burkina Faso where 78% of the population cannot read on even a basic level. There are many obstacles standing in the way of increasing literacy rates in impoverished countries like Burkina Faso.</p>
+                        <!--<p>The primary issue is that access to reading materials is extremely limited, especially in rural areas. Having available reading materials is essential to increasing literacy rates and therefore alleviating poverty through education. Hence, bringing reading materials to these rural areas is an imperative if literacy rates are to improve.</p>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="border-radius: 10px;">
+            <div class="col-lg-7 col-md-12 panel-photos" style="padding: 0 0 0 0; border-radius: 10px 10px 0 0;">
+                <img style=" border-radius: 10px 10px 0 0;" src="../images/hero/boys_reading_outside_HERO.jpg" />
+            </div>
+            <div class="col-lg-5 col-md-12 panel-text" style="border-radius: 0 0 10px 10px;">
+                <div>
+                    <div class="panel-text-text" style="text-align: left; border-radius: 0 0 10px 10px;">
+                        <h1>Partners in Education</h1>
+                        <p>FAVL's goal is to assist the rural poor of Africa with the creation of village libraries. This is accomplished by working closely with the communities in which the libraries are established. FAVL refurbishes community-donated buildings, transforming them into a space to read and study.</p>
+                        <!--<p>Libraries are stocked with books by local authors and in local languages to the greatest extent possible, and with a recent initiative FAVL is producing microbooks for village libraries, in partnership with fastpencil.com. In addition, FAVL sponsors librarian training and provides for librarian salaries, thereby empowering locals with skilled employment. </p>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="border-radius: 10px;">
+            <div class="col-lg-7 col-md-12 panel-photos" style="padding: 0 0 0 0; border-radius: 10px 10px 0 0;">
+                <img style=" border-radius: 10px 10px 0 0;" src="../images/hero/adult_praying_hero.jpg" />
+            </div>
+            <div class="col-lg-5 col-md-12 panel-text" style="border-radius: 0 0 10px 10px;">
+                <div>
+                    <div class="panel-text-text" style="text-align: left; border-radius: 0 0 10px 10px;">
+                        <h1>The Long Haul</h1>
+                        <p>We believe that every child and adult should have the opportunity to pick up a book and read. FAVL is dedicated to increasing access to reading material and other information in rural villages in sub-Saharan Africa. Friends of African Village Libraries is committed to long-term financial and management support for small community libraries in rural Africa.</p>
+                        <!--<p>Our goal is to establish long-term relationships with community libraries, rather than provide an initial donation and move on. This is why the number of libraries in our network is small, as they are carefully managed to ensure their continued success. Burkina Faso alone has thousands of villages with primary schools and no libraries; the needs are immense, the means to address the need are limited.</p>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container three-horz">
+        <h1 style="font-size: 20pt; text-align: center;">Technologies Used</h1>
+        <div class="col-md-3 col-sm-4 col-xs-6">
+            <div style="padding: 32px 0">
+                <img class="circle-img" style="max-width: 145px;" src="images/companies/ts_logo.svg" />
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 hidden-xs">
+            <div>
+                <img class="circle-img" src="images/companies/bootstrap-logo-vector-download.jpg" />
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6">
+            <div style="padding: 20px;">
+                <img class="circle-img" src="images/companies/LESS_Logo.svg.png" />
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6">
+            <div>
+                <img class="circle-img" src="images/companies/java.png" />
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 hidden-xs">
+            <div>
+                <img class="circle-img" src="images/companies/mstile-310x310.png" />
+            </div>
+        </div>
+        <div class="col-md-3 hidden-sm hidden-xs">
+            <div>
+                <img class="circle-img" src="images/companies/HTML5_Logo_512.png" />
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6">
+            <div>
+                <img class="circle-img" src="images/companies/CSS3-logo-vector.png" />
+            </div>
+        </div>
+        <div class="col-md-3 hidden-sm hidden-xs">
+            <div>
+                <img class="circle-img" src="images/companies/GitHub-Mark.png" />
+            </div>
+        </div>
+    </div>
+
+    <footer style="border-top: 1px solid #333;">
+        <div class="container">
+            <div class="col-xs-6 footer-left">Friends of African Village Libraries<br />Copyright &copy; 2017<br />All Rights Reserved</div>
+            <div class="col-xs-6 footer-right">
+                <span class="socicons"><i class="fa fa-facebook-square" aria-hidden="true"></i><i class="fa fa-instagram" aria-hidden="true"></i><i class="fa fa-twitter" aria-hidden="true"></i><i class="fa fa-youtube" aria-hidden="true"></i><i class="fa fa-snapchat-ghost" aria-hidden="true"></i></span><br />
+                <a href="#">Site Terms</a> | <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
 </body>
 </html>

@@ -33,6 +33,10 @@ button.hubutton {
     border: 1px solid #0B697F;
     color: #1E363A;
 
+    &:focus {
+        outline: none !important;
+    }
+
     i {
         font-size: 30pt;
         color: #0B697F;
@@ -61,36 +65,97 @@ button.hubutton {
 }
 
 .userForm {
+    padding: 0 5px;
+
+    fieldset {
+        /*border-style: solid;
+        border-color: #1E363A;
+        border-radius: 10px;*/
+        border: none;
+    }
 
     .formTable {
         margin-left: auto;
         margin-right: auto;
         width: 100%;
-        text-align: right;
-        height: 600px;
+        height: 550px;
 
-        .formLabel {
-            text-align: left;
-            width: 40%;
-            font-size: 12pt;
-        }
+        td {
+            padding: 10px 5px;
 
-        .formButtons {
-            bottom: 10px;
-        }
 
-        input {
-            width: 100%;
-            height: 25px;
-            font-size: 12pt;
-
-            &.formSubmit {
-                height: 75px;
-                width: 75px;
-                border-radius: 50%;
+            .addBarcodeButton {
+                height: 100px;
+                color: white;
+                background-color: rgba(30, 54, 58, 0.78);
                 border: none;
+                border-radius: 10px;
+                width: 100%;
+
+                i {
+                    font-size: 50pt;
+                }
+
+                h1 {
+                    font-size: 20pt;
+                    padding-left: 20px;
+                    display: inline-block;
+                }
+            }
+
+            .formSubmit {
+                height: 90px;
+                width: 45%;
+                border: none;
+                color: #005200;
+                background-color: rgba(74, 232, 108, 0.76);
+                border-radius: 10px;
+
+                i {
+                    font-size: 40pt;
+                }
+
+                h1 {
+                    font-size: 18pt;
+                }
+            }
+
+            .formCancel {
+                width: 45%;
+                margin-left: 28px;
+                background-color: rgba(232, 74, 74, 0.76);
+                color: #520000;
+                border: none;
+                height: 90px;
+                border-radius: 10px;
+
+                i {
+                    font-size: 40pt;
+                }
+
+                h1 {
+                    font-size: 18pt;
+                }
+            }
+
+            input {
+                width: 100%;
+                height: 25px;
+                font-size: 14pt;
+                border: 1px solid #1E363A;
+                border-radius: 5px;
+                padding: 3px 0;
+
+                &:focus {
+                    outline: none !important;
+                    border: 1px solid #0B697F;
+                }
+                /*&.addBarcodeButton {
+                    height: 100px;
+                    background-color: lightblue;
+                    border: none;
+                }*/
             }
         }
     }
 }
-
