@@ -16,7 +16,7 @@
   width: 50%;
 }
 button.hubutton {
-  font-size: 24px;
+  font-size: 16px;
   width: 90%;
   background-color: white;
   margin-left: auto;
@@ -34,6 +34,7 @@ button.hubutton:focus {
 button.hubutton i {
   font-size: 30pt;
   color: #0B697F;
+  margin-bottom: 10px;
 }
 #scanLogoHeader {
   height: 40px;
@@ -51,6 +52,18 @@ button.hubutton i {
   position: absolute;
   height: 50px;
   width: 60%;
+}
+#signInForm {
+  margin-top: 75%;
+}
+#signInForm input {
+  font-size: 14pt;
+  padding: 3px;
+  width: 250px;
+  margin-bottom: 15px;
+  border-radius: 7px;
+  border-style: none;
+  border: 1px solid #1E363A;
 }
 .userForm {
   padding: 0 5px;

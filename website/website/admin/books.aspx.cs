@@ -18,10 +18,32 @@ namespace website.admin
 
                 foreach (var book in list)
                 {
-                    insertList.Controls.Add(new HtmlGenericControl("li")
+                    var li = new HtmlGenericControl("li");
+                    var span = new HtmlGenericControl("span");
+                    span.Attributes.Add("class", "title");
+                    span.InnerText = book.Title;
+                    li.Controls.Add(span);
+
+                    span = new HtmlGenericControl("span");
+                    span.Attributes.Add("class", "author");
+                    span.InnerText = book.Author;
+                    li.Controls.Add(span);
+
+                    span = new HtmlGenericControl("span");
+                    span.Attributes.Add("class", "library");
+                    span.InnerText = book.Libraries != null ? book.Libraries.Name : "UNASSIGNED";
+                    li.Controls.Add(span);
+
+                    if (book.Readers != null)
                     {
-                        InnerText = book.Title + ", " + book.Author
-                    });
+                        span = new HtmlGenericControl("span");
+                        span.Attributes.Add("class", "reader");
+                        span.InnerText = book.Readers.FirstName + " " + book.Readers.LastName;
+                        li.Controls.Add(span);
+
+                    }
+
+                    insertList.Controls.Add(li);
                 }
             }
 

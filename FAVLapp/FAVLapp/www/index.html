@@ -80,6 +80,18 @@
             </table>
         </div>
     </section>
+    <section id="signIn" hidden>
+        <div>
+            <form id="signInForm">
+                <div><input type="text" name="username" placeholder="Username" required /></div>
+                <div><input type="password" name="password" placeholder="Password" required /></div>
+                <div>
+                    <button type="submit">Sign In</button>
+                    <button type="button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </section>
     <section id="addUser" hidden>
         <h2>Add User</h2>
         <div>
@@ -94,13 +106,8 @@
                             <td><input type="text" name="lastName" placeholder="Last Name" required /></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="address" placeholder="Address" required /></td>
-                        </tr>
-                        <tr>
-                            <td><input type="tel" name="phone" placeholder="Phone Number" required /></td>
-                        </tr>
-                        <tr>
                             <td>
+                                <input type="hidden" id="barcodeString" name="barcode" />
                                 <!--<input type="button" class="addBarcodeButton" value="Add Barcode" />-->
                                 <button type="button" class="addBarcodeButton">
                                     <i class="fa fa-barcode" aria-hidden="true"></i><h1>Add<br />Barcode</h1>
@@ -153,6 +160,16 @@
 
         </div>
     </section>
+
+    <section id="inventory" hidden>
+        <h2>Inventory</h2>
+        <div>
+            <ul id="inventoryList">
+
+            </ul>
+        </div>
+    </section>
+
 
     <script src="scripts/main.js"></script>
     <script type="text/javascript" src="cordova.js"></script>

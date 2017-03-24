@@ -20,7 +20,9 @@ namespace website
         public Nullable<int> LibraryID { get; set; }
         public string Barcode { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
+        public Nullable<int> CheckedOutTo { get; set; }
     
         public virtual Libraries Libraries { get; set; }
+        public virtual Readers Readers { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Books</h1>
-    <ul id="insertList" runat="server"></ul>
+    <ul id="insertList" class="bookList" runat="server"></ul>
     <p>
         <button type="button" onclick="location.href='addBook.aspx'">Add Book</button>
     </p>

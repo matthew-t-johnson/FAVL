@@ -97,7 +97,6 @@
     <Content Include="admin\default.aspx" />
     <Content Include="admin\librarians.aspx" />
     <Content Include="admin\libraries.aspx" />
-    <Content Include="admin\sample.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -177,6 +176,10 @@
       <DependentUpon>favlDB.edmx</DependentUpon>
     </Content>
     <Content Include="admin\Admin.Master" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -240,13 +243,6 @@
     </Compile>
     <Compile Include="admin\libraries.aspx.designer.cs">
       <DependentUpon>libraries.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="admin\sample.aspx.cs">
-      <DependentUpon>sample.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="admin\sample.aspx.designer.cs">
-      <DependentUpon>sample.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Books.cs">

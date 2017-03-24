@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="favlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="favlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Books">
           <Key>
             <PropertyRef Name="Id" />
@@ -15,6 +15,7 @@
           <Property Name="LibraryID" Type="int" />
           <Property Name="Barcode" Type="varchar" MaxLength="50" />
           <Property Name="DateAdded" Type="datetime2" Precision="0" />
+          <Property Name="CheckedOutTo" Type="int" />
         </EntityType>
         <EntityType Name="Librarians">
           <Key>
@@ -58,6 +59,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Books_Readers">
+          <End Role="Readers" Type="Self.Readers" Multiplicity="0..1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Readers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="CheckedOutTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="favlModelStoreContainer">
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Librarians" EntityType="Self.Librarians" Schema="dbo" store:Type="Tables" />
@@ -67,9 +80,12 @@
             <End Role="Libraries" EntitySet="Libraries" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
+          <AssociationSet Name="FK_Books_Readers" Association="Self.FK_Books_Readers">
+            <End Role="Readers" EntitySet="Readers" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="favlModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -84,6 +100,8 @@
           <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateAdded" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Libraries" Relationship="Self.FK_Books_Libraries" FromRole="Books" ToRole="Libraries" />
+          <Property Name="CheckedOutTo" Type="Int32" />
+          <NavigationProperty Name="Readers" Relationship="favlModel.FK_Books_Readers" FromRole="Books" ToRole="Readers" />
         </EntityType>
         <EntityType Name="Librarians">
           <Key>
@@ -115,6 +133,7 @@
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="favlModel.FK_Books_Readers" FromRole="Readers" ToRole="Books" />
         </EntityType>
         <Association Name="FK_Books_Libraries">
           <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
@@ -137,7 +156,23 @@
             <End Role="Libraries" EntitySet="Libraries" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
+          <AssociationSet Name="FK_Books_Readers" Association="favlModel.FK_Books_Readers">
+            <End Role="Readers" EntitySet="Readers" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Books_Readers">
+          <End Type="favlModel.Readers" Role="Readers" Multiplicity="0..1" />
+          <End Type="favlModel.Books" Role="Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Readers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="CheckedOutTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -147,6 +182,7 @@
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="favlModel.Books">
               <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="CheckedOutTo" ColumnName="CheckedOutTo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Author" ColumnName="Author" />

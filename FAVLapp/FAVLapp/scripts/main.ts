@@ -5,30 +5,36 @@ export function mainInit(): void {
     AddUser.addUserInit();
 }
 
+export function viewSection(id: string): void {
+    var sections = document.querySelectorAll("#mainbody > section");
+
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].setAttribute("hidden", "");
+    }
+
+    document.getElementById(id).removeAttribute("hidden");
+
+    if (id !== "index")
+    {
+        document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+    }
+
+}
+
 function initClick(): void {
     document.getElementById("signInButton").addEventListener("click", () => {
-        document.getElementById('index').setAttribute('hidden', '');
-        document.getElementById('hub').removeAttribute('hidden');
-        document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+        viewSection("signIn");
     });
 
     document.getElementById("scanLogoHeader").addEventListener("click", () => {
-        document.getElementById('index').setAttribute('hidden', '');
-        document.getElementById('addUser').setAttribute('hidden', '');
-        document.getElementById('editUser').setAttribute('hidden', '');
-        document.getElementById('hub').removeAttribute('hidden');
-        document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+        viewSection("hub");
     });
 
     document.getElementById("addUserButton").addEventListener("click", () => {
-        document.getElementById('hub').setAttribute('hidden', '');
-        document.getElementById('addUser').removeAttribute('hidden');
-        document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+        viewSection("addUser");
     });
 
     document.getElementById("editUserButton").addEventListener("click", () => {
-        document.getElementById('hub').setAttribute('hidden', '');
-        document.getElementById('editUser').removeAttribute('hidden');
-        document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+        viewSection("editUser");
     });
 }

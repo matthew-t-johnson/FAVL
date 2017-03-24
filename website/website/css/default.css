@@ -357,3 +357,19 @@ footer {
 .dbForm input[type=text], .dbForm input[type=password] {
     width: 500px;
 }
+
+.bookList {
+    list-style: none;
+}
+
+.bookList li {
+
+}
+
+.bookList span {
+    margin-right: .5em;
+}
+
+.bookList span:last-child {
+    margin-right: 0;
+}

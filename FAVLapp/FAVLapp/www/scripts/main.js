@@ -5,28 +5,29 @@ define(["require", "exports", "./addUser"], function (require, exports, AddUser)
         AddUser.addUserInit();
     }
     exports.mainInit = mainInit;
+    function viewSection(id) {
+        var sections = document.querySelectorAll("#mainbody > section");
+        for (var i = 0; i < sections.length; i++) {
+            sections[i].setAttribute("hidden", "");
+        }
+        document.getElementById(id).removeAttribute("hidden");
+        if (id !== "index") {
+            document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+        }
+    }
+    exports.viewSection = viewSection;
     function initClick() {
         document.getElementById("signInButton").addEventListener("click", function () {
-            document.getElementById('index').setAttribute('hidden', '');
-            document.getElementById('hub').removeAttribute('hidden');
-            document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+            viewSection("signIn");
         });
         document.getElementById("scanLogoHeader").addEventListener("click", function () {
-            document.getElementById('index').setAttribute('hidden', '');
-            document.getElementById('addUser').setAttribute('hidden', '');
-            document.getElementById('editUser').setAttribute('hidden', '');
-            document.getElementById('hub').removeAttribute('hidden');
-            document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+            viewSection("hub");
         });
         document.getElementById("addUserButton").addEventListener("click", function () {
-            document.getElementById('hub').setAttribute('hidden', '');
-            document.getElementById('addUser').removeAttribute('hidden');
-            document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+            viewSection("addUser");
         });
         document.getElementById("editUserButton").addEventListener("click", function () {
-            document.getElementById('hub').setAttribute('hidden', '');
-            document.getElementById('editUser').removeAttribute('hidden');
-            document.getElementById('headerLogoWrapper').removeAttribute('hidden');
+            viewSection("editUser");
         });
     }
 });
