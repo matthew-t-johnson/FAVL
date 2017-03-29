@@ -360,14 +360,16 @@ footer {
 
 .bookList {
     list-style: none;
+    display: table;
 }
 
 .bookList li {
-
+    display: table-row;
 }
 
 .bookList span {
     margin-right: .5em;
+    display: table-cell;
 }
 
 .bookList span:last-child {
