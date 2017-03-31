@@ -52,6 +52,7 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Barcode" Type="varchar" MaxLength="50" />
           <Property Name="TotalCheckouts" Type="int" Nullable="false" />
+          <Property Name="LibraryID" Type="int" />
         </EntityType>
         <Association Name="FK_Books_Libraries">
           <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
@@ -89,6 +90,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Readers_Libraries">
+          <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
+          <End Role="Readers" Type="Self.Readers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libraries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Readers">
+              <PropertyRef Name="LibraryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="favlModelStoreContainer">
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Librarians" EntityType="Self.Librarians" Schema="dbo" store:Type="Tables" />
@@ -105,6 +118,10 @@
           <AssociationSet Name="FK_Librarians_Libraries" Association="Self.FK_Librarians_Libraries">
             <End Role="Libraries" EntitySet="Libraries" />
             <End Role="Librarians" EntitySet="Librarians" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Readers_Libraries" Association="Self.FK_Readers_Libraries">
+            <End Role="Libraries" EntitySet="Libraries" />
+            <End Role="Readers" EntitySet="Readers" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -152,6 +169,7 @@
           <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Books" Relationship="Self.FK_Books_Libraries" FromRole="Libraries" ToRole="Books" />
           <NavigationProperty Name="Librarians" Relationship="favlModel.FK_Librarians_Libraries" FromRole="Library" ToRole="Librarian" />
+          <NavigationProperty Name="Readers" Relationship="favlModel.FK_Readers_Libraries" FromRole="Library" ToRole="Reader" />
         </EntityType>
         <EntityType Name="Reader">
           <Key>
@@ -164,6 +182,8 @@
           <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TotalCheckouts" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Books" Relationship="Self.FK_Books_Readers" FromRole="Readers" ToRole="Books" />
+          <Property Name="LibraryID" Type="Int32" />
+          <NavigationProperty Name="Library" Relationship="favlModel.FK_Readers_Libraries" FromRole="Reader" ToRole="Library" />
         </EntityType>
         <Association Name="FK_Books_Libraries">
           <End Role="Libraries" Type="Self.Library" Multiplicity="0..1" />
@@ -206,6 +226,10 @@
             <End Role="Library" EntitySet="Libraries" />
             <End Role="Librarian" EntitySet="Librarians" />
           </AssociationSet>
+          <AssociationSet Name="FK_Readers_Libraries" Association="favlModel.FK_Readers_Libraries">
+            <End Role="Library" EntitySet="Libraries" />
+            <End Role="Reader" EntitySet="Readers" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Librarians_Libraries">
           <End Type="favlModel.Library" Role="Library" Multiplicity="0..1" />
@@ -215,6 +239,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Librarian">
+              <PropertyRef Name="LibraryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Readers_Libraries">
+          <End Type="favlModel.Library" Role="Library" Multiplicity="0..1" />
+          <End Type="favlModel.Reader" Role="Reader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Library">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Reader">
               <PropertyRef Name="LibraryID" />
             </Dependent>
           </ReferentialConstraint>
@@ -268,6 +304,7 @@
           <EntitySetMapping Name="Readers">
             <EntityTypeMapping TypeName="favlModel.Reader">
               <MappingFragment StoreEntitySet="Readers">
+                <ScalarProperty Name="LibraryID" ColumnName="LibraryID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />

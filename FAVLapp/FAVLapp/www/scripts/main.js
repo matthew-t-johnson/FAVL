@@ -29,6 +29,9 @@ define(["require", "exports", "./addUser"], function (require, exports, AddUser)
         document.getElementById("editUserButton").addEventListener("click", function () {
             viewSection("editUser");
         });
+        document.getElementById("returnButton").addEventListener("click", function () {
+            viewSection("readers");
+        });
     }
 });
 //# sourceMappingURL=main.js.map

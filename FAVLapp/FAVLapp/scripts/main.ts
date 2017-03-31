@@ -37,4 +37,8 @@ function initClick(): void {
     document.getElementById("editUserButton").addEventListener("click", () => {
         viewSection("editUser");
     });
+
+    document.getElementById("returnButton").addEventListener("click", () => {
+        viewSection("readers");
+    });
 }

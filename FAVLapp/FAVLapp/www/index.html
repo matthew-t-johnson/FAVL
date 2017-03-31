@@ -99,18 +99,31 @@
                 <fieldset>
                     <legend>User Information</legend>
                     <table class="formTable">
+
+                        <!--
+                        public string FirstName { get; set; }
+                        public string MiddleName { get; set; }
+                        public string LastName { get; set; }
+                        public string Barcode { get; set; }
+                            -->
+
                         <tr>
-                            <td><input type="text" name="firstName" placeholder="First Name" required /></td>
+                            <td><input type="text" name="FirstName" placeholder="First Name" required /></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="lastName" placeholder="Last Name" required /></td>
+                            <td><input type="text" name="MiddleName" placeholder="Middle Name" /></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="LastName" placeholder="Last Name" required /></td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="hidden" id="barcodeString" name="barcode" />
-                                <!--<input type="button" class="addBarcodeButton" value="Add Barcode" />-->
+                                <input type="hidden" id="barcodeString" name="Barcode" />
                                 <button type="button" class="addBarcodeButton">
-                                    <i class="fa fa-barcode" aria-hidden="true"></i><h1>Add<br />Barcode</h1>
+                                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                                    <h1>
+                                        Add<br />Barcode
+                                    </h1>
                                 </button>
                             </td>
 
@@ -118,12 +131,14 @@
                         <tr class="formButtons">
                             <td>
                                 <button type="submit" class="formSubmit">
-                                    <i class="fa fa-check" aria-hidden="true"></i><h1>Submit</h1>
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <h1>Create</h1>
                                 </button>
                                 <button type="button" class="formCancel">
-                                    <i class="fa fa-times" aria-hidden="true"></i><h1>Cancel</h1>
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <h1>Cancel</h1>
                                 </button>
-                                <!--<input class="formSubmit" type="submit" value="Submit" /><input class="formCancel" type="button" value="Cancel" />-->
+                                <!--<input class="formSubmit" type="submit" value="Submit"/><input class="formCancel" type="button" value="Cancel"/>-->
                             </td>
                         </tr>
                     </table>
@@ -135,24 +150,51 @@
     <section id="editUser" hidden>
         <h2>Edit User</h2>
         <div>
-            <form class="userForm" id="addUserForm">
+            <form class="userForm" id="editUserForm">
                 <fieldset>
                     <legend>User Information</legend>
                     <table class="formTable">
+
+                        <!--
+                        public string FirstName { get; set; }
+                        public string MiddleName { get; set; }
+                        public string LastName { get; set; }
+                        public string Barcode { get; set; }
+                        -->
+
                         <tr>
-                            <td><input type="text" name="firstName" placeholder="First Name" required /></td>
+                            <td><input type="text" name="FirstName" placeholder="First Name" required /></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="lastName" placeholder="Last Name" required /></td>
+                            <td><input type="text" name="MiddleName" placeholder="Middle Name" /></td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="address" placeholder="Address" required /></td>
+                            <td><input type="text" name="LastName" placeholder="Last Name" required /></td>
                         </tr>
                         <tr>
-                            <td><input type="tel" name="phone" placeholder="Phone Number" required /></td>
+                            <td>
+                                <input type="hidden" id="barcodeString" name="Barcode" />
+                                <button type="button" class="addBarcodeButton">
+                                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                                    <h1>
+                                        Update<br />Barcode
+                                    </h1>
+                                </button>
+                            </td>
+
                         </tr>
                         <tr class="formButtons">
-                            <td><input class="formSubmit" type="submit" value="SUBMIT" /><input class="formCancel" type="button" value="CANCEL" /></td>
+                            <td>
+                                <button type="submit" class="formSubmit">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <h1>Update</h1>
+                                </button>
+                                <button type="button" class="formCancel">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <h1>Cancel</h1>
+                                </button>
+                                <!--<input class="formSubmit" type="submit" value="Submit"/><input class="formCancel" type="button" value="Cancel"/>-->
+                            </td>
                         </tr>
                     </table>
                 </fieldset>
@@ -161,12 +203,19 @@
         </div>
     </section>
 
+    <section id="readers" hidden>
+        <h2>Readers</h2>
+        <div>
+            <ul id="readersList"></ul>
+        </div>
+    </section>
+
+
+
     <section id="inventory" hidden>
         <h2>Inventory</h2>
         <div>
-            <ul id="inventoryList">
-
-            </ul>
+            <ul id="inventoryList"></ul>
         </div>
     </section>
 

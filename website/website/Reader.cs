@@ -26,8 +26,10 @@ namespace website
         public string LastName { get; set; }
         public string Barcode { get; set; }
         public int TotalCheckouts { get; set; }
+        public Nullable<int> LibraryID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book> Books { get; set; }
+        public virtual Library Library { get; set; }
     }
 }

@@ -10,24 +10,15 @@
 namespace website.admin {
     
     
-    public partial class addBook {
+    public partial class readers {
         
         /// <summary>
-        /// dbForm control.
+        /// insertList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm dbForm;
-        
-        /// <summary>
-        /// librarySelectOptions control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder librarySelectOptions;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl insertList;
     }
 }

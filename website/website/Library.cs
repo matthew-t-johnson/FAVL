@@ -19,6 +19,7 @@ namespace website
         {
             this.Books = new HashSet<Book>();
             this.Librarians = new HashSet<Librarian>();
+            this.Readers = new HashSet<Reader>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace website
         public virtual ICollection<Book> Books { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Librarian> Librarians { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Reader> Readers { get; set; }
     }
 }

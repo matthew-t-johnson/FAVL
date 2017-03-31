@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -9,61 +8,70 @@ namespace website.Controllers
 {
     public class APIController : ApiController
     {
-        public class AddUserArgs
-        {
-            public string firstName;
-            public string lastName;
-            public string barcode;
-            public int ID;
-        }
-
-        public class SignInArgs
-        {
-            public string username;
-            public string password;
-        }
-
-
         [HttpGet]
-        [Route("api/user/{userID}")]
-        public AddUserArgs GetUser(int userID)
+        [Route("api/reader/{userID}")]
+        public Reader GetUser(int userID)
         {
             using (var db = new favlEntities())
             {
                 var reader = db.Readers.FirstOrDefault(r => r.Id == userID);
 
                 if (reader == null)
-                {
                     throw new HttpResponseException(HttpStatusCode.NotFound);
-                }
 
-                return new AddUserArgs
-                {
-                    firstName = reader.FirstName,
-                    lastName = reader.LastName,
-                    barcode = reader.Barcode,
-                    ID = reader.Id
-                };
+                return reader;
             }
         }
 
-        [HttpPost]
-        [Route("api/user/add")]
-        public int AddUser([FromBody] AddUserArgs args)
+        [HttpGet]
+        [Route("api/libraries")]
+        public IEnumerable<Library> GetLibraries()
         {
             using (var db = new favlEntities())
             {
-                var addedReader = db.Readers.Add(new Reader {
-                    FirstName = args.firstName,
-                    LastName = args.lastName,
-                    Barcode = args.barcode
-                });
-
-                db.SaveChanges();
-
-                return addedReader.Id;
+                return db.Libraries.ToList();
             }
         }
+
+
+        [HttpGet]
+        [Route("api/readers")]
+        public List<Reader> GetReaders()
+        {
+            using (var db = new favlEntities())
+            {
+                var readers = db.Readers.ToList();
+                return readers.Select(reader => new Reader
+                {
+                    Id = reader.Id,
+                    FirstName = reader.FirstName,
+                    MiddleName = reader.MiddleName,
+                    LastName = reader.LastName,
+                    Barcode = reader.Barcode,
+                    TotalCheckouts = reader.TotalCheckouts
+                }).ToList();
+            }
+        }
+
+        [HttpGet]
+        [Route("api/readers/{libraryID}")]
+        public IEnumerable<Reader> GetReaders(int libraryID)
+        {
+            using (var db = new favlEntities())
+            {
+                var readers = db.Readers.Where(r => r.LibraryID == libraryID).ToList();
+                return readers.Select(reader => new Reader
+                {
+                    Id = reader.Id,
+                    FirstName = reader.FirstName,
+                    MiddleName = reader.MiddleName,
+                    LastName = reader.LastName,
+                    Barcode = reader.Barcode,
+                    TotalCheckouts = reader.TotalCheckouts
+                }).ToList();
+            }
+        }
+
 
         [HttpPost]
         [Route("api/user/signin")]
@@ -95,7 +103,6 @@ namespace website.Controllers
 
                 return addedReader;
             }
-
         }
 
         [HttpGet]
@@ -128,9 +135,7 @@ namespace website.Controllers
                 var book = db.Books.Find(bookID);
 
                 if (book == null)
-                {
                     throw new HttpResponseException(HttpStatusCode.NotFound);
-                }
 
                 book.CheckedOutTo = readerID;
 
@@ -138,6 +143,12 @@ namespace website.Controllers
 
                 return book;
             }
+        }
+
+        public class SignInArgs
+        {
+            public string password;
+            public string username;
         }
     }
 }

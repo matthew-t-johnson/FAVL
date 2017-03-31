@@ -93,10 +93,12 @@
     <Content Include="admin\addBook.aspx" />
     <Content Include="admin\addLibrarian.aspx" />
     <Content Include="admin\addLibrary.aspx" />
+    <Content Include="admin\addReader.aspx" />
     <Content Include="admin\books.aspx" />
     <Content Include="admin\default.aspx" />
     <Content Include="admin\librarians.aspx" />
     <Content Include="admin\libraries.aspx" />
+    <Content Include="admin\readers.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -209,6 +211,13 @@
     <Compile Include="admin\addLibrary.aspx.designer.cs">
       <DependentUpon>addLibrary.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\addReader.aspx.cs">
+      <DependentUpon>addReader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\addReader.aspx.designer.cs">
+      <DependentUpon>addReader.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -243,6 +252,13 @@
     </Compile>
     <Compile Include="admin\libraries.aspx.designer.cs">
       <DependentUpon>libraries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\readers.aspx.cs">
+      <DependentUpon>readers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\readers.aspx.designer.cs">
+      <DependentUpon>readers.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Book.cs">
