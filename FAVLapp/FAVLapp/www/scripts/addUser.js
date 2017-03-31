@@ -13,10 +13,15 @@ define(["require", "exports", "./main"], function (require, exports, main) {
         var data = {};
         for (var i = 0; i < inputs.length; i++) {
             var field = inputs[i];
-            data[field.name] = field.value || "";
+            data[field.name] = prepField(field.value);
         }
         var response = postData("/api/reader/add", data);
         return false;
+    }
+    function prepField(str) {
+        if (!str)
+            str = "";
+        return str.trim();
     }
     function signInSubmit(ev) {
         ev.preventDefault();
@@ -25,7 +30,7 @@ define(["require", "exports", "./main"], function (require, exports, main) {
         var data = {};
         for (var i = 0; i < inputs.length; i++) {
             var field = inputs[i];
-            data[field.name] = field.value || "";
+            data[field.name] = prepField(field.value);
         }
         var response = postData("/api/user/signin", data);
         if (response) {

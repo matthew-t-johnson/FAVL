@@ -16,12 +16,19 @@ function addUserSubmit(ev: Event): boolean {
 
     for (let i = 0; i < inputs.length; i++) {
         const field = inputs[i] as HTMLInputElement;
-        data[field.name] = field.value || "";
+        data[field.name] = prepField(field.value);
     }
 
     const response = postData("/api/reader/add", data);
 
     return false;
+}
+
+function prepField(str: string): string {
+    if (!str)
+        str = "";
+
+    return str.trim();
 }
 
 function signInSubmit(ev: Event): boolean {
@@ -33,7 +40,7 @@ function signInSubmit(ev: Event): boolean {
 
     for (let i = 0; i < inputs.length; i++) {
         const field = inputs[i] as HTMLInputElement;
-        data[field.name] = field.value || "";
+        data[field.name] = prepField(field.value);
     }
 
     const response = postData("/api/user/signin", data);
