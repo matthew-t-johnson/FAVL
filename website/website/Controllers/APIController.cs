@@ -19,7 +19,15 @@ namespace website.Controllers
                 if (reader == null)
                     throw new HttpResponseException(HttpStatusCode.NotFound);
 
-                return reader;
+                return new Reader
+                {
+                    Id = reader.Id,
+                    FirstName = reader.FirstName,
+                    MiddleName = reader.MiddleName,
+                    LastName = reader.LastName,
+                    Barcode = reader.Barcode,
+                    TotalCheckouts = reader.TotalCheckouts
+                };
             }
         }
 
@@ -29,7 +37,16 @@ namespace website.Controllers
         {
             using (var db = new favlEntities())
             {
-                return db.Libraries.ToList();
+                var libraries = db.Libraries.ToList();
+
+                return libraries.Select(library => new Library
+                {
+                    Id = library.Id,
+                    Name = library.Name,
+                    Village = library.Village,
+                    Country = library.Country
+                }).ToList();
+
             }
         }
 
@@ -75,7 +92,7 @@ namespace website.Controllers
 
         [HttpPost]
         [Route("api/user/signin")]
-        public int SignIn([FromBody] SignInArgs args)
+        public Reader SignIn([FromBody] SignInArgs args)
         {
             using (var db = new favlEntities())
             {
@@ -87,9 +104,35 @@ namespace website.Controllers
                 if (!PW.Verify(args.password, signer.PasswordHash, signer.PasswordSalt))
                     throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
-                return signer.Id;
+                return new Reader
+                {
+                    Id = signer.Id,
+                    FirstName = signer.FirstName,
+                    LastName = signer.LastName,
+                    Barcode = signer.Barcode,
+                };
             }
         }
+
+        [HttpGet]
+        [Route("api/user/signin/{barcode}")]
+        public Librarian SignIn(string barcode)
+        {
+            using (var db = new favlEntities())
+            {
+                var signer = db.Librarians.FirstOrDefault(l => l.Barcode == barcode);
+
+                if (signer == null)
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+
+                return new Librarian {
+                    Id = signer.Id,
+                    FirstName = signer.FirstName,
+                    LastName = signer.LastName
+                };
+            }
+        }
+
 
         [HttpPost]
         [Route("api/reader/add")]
@@ -97,11 +140,22 @@ namespace website.Controllers
         {
             using (var db = new favlEntities())
             {
+                if (string.IsNullOrEmpty(reader.Barcode))
+                    reader.Barcode = null;
+
                 var addedReader = db.Readers.Add(reader);
 
                 db.SaveChanges();
 
-                return addedReader;
+                return new Reader
+                {
+                    Id = reader.Id,
+                    FirstName = reader.FirstName,
+                    MiddleName = reader.MiddleName,
+                    LastName = reader.LastName,
+                    Barcode = reader.Barcode,
+                    TotalCheckouts = reader.TotalCheckouts
+                };
             }
         }
 
@@ -111,7 +165,17 @@ namespace website.Controllers
         {
             using (var db = new favlEntities())
             {
-                return db.Books.ToList();
+                var books = db.Books.ToList();
+
+                return books.Select(book => new Book
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    AuthorFirst = book.AuthorFirst,
+                    AuthorMiddle = book.AuthorMiddle,
+                    AuthorLast = book.AuthorLast,
+                    Barcode = book.Barcode                    
+                }).ToList();
             }
         }
 
@@ -121,7 +185,16 @@ namespace website.Controllers
         {
             using (var db = new favlEntities())
             {
-                return db.Books.Where(b => b.LibraryID == libraryID).ToList();
+                var books = db.Books.Where(b => b.LibraryID == libraryID).ToList();
+
+                return books.Select(book => new Book
+                {
+                    Title = book.Title,
+                    AuthorFirst = book.AuthorFirst,
+                    AuthorMiddle = book.AuthorMiddle,
+                    AuthorLast = book.AuthorLast,
+                    Barcode = book.Barcode
+                }).ToList();
             }
         }
 
@@ -141,7 +214,14 @@ namespace website.Controllers
 
                 db.SaveChanges();
 
-                return book;
+                return new Book
+                {
+                    Title = book.Title,
+                    AuthorFirst = book.AuthorFirst,
+                    AuthorMiddle = book.AuthorMiddle,
+                    AuthorLast = book.AuthorLast,
+                    Barcode = book.Barcode
+                };
             }
         }
 

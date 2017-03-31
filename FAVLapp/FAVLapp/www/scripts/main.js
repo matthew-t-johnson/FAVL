@@ -27,6 +27,12 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
         document.getElementById("returnButton").addEventListener("click", function () {
             viewSection("readers");
         });
+        document.getElementById("goToHubButton").addEventListener("click", function () {
+            viewSection("hub");
+        });
+        document.getElementById("inventoryButton").addEventListener("click", function () {
+            viewSection("inventory");
+        });
     }
 });
 //# sourceMappingURL=main.js.map

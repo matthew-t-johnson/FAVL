@@ -16,6 +16,7 @@
     <title>FAVL Scan</title>
 </head>
 <body id="mainbody">
+    <!--USELESS - DO NOT TOUCH-->
     <div class="app" hidden>
         <h1>Apache Cordova</h1>
         <div id="deviceready" class="blink">
@@ -23,15 +24,21 @@
             <p class="event received">Device is Ready</p>
         </div>
     </div>
+
+    <!--HEADER LOGO WRAPPER-->
     <div id="headerLogoWrapper" hidden>
         <img id="scanLogoHeader" src="images/scan_logo.svg" />
     </div>
+
+    <!--LANDING SIGN-IN-->
     <section id="index">
         <div>
             <img id="scanLogoIndex" src="images/scan_logo.svg" />
             <h3><button class="hubutton" id="signInButton" type="button">SIGN IN</button></h3>
         </div>
     </section>
+
+    <!--HUB-->
     <section id="hub" hidden>
         <div>
             <table class="hubtable">
@@ -80,6 +87,8 @@
             </table>
         </div>
     </section>
+
+    <!--SIGN IN-->
     <section id="signIn" hidden>
         <div>
             <form id="signInForm">
@@ -90,8 +99,18 @@
                     <button type="button">Cancel</button>
                 </div>
             </form>
+            <div>
+                <button type="button" class="BarcodeButton" id="signInBarcode">
+                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                    <h1>
+                        Scan<br />Barcode
+                    </h1>
+                </button>
+            </div>
         </div>
     </section>
+
+    <!--ADD USER-->
     <section id="addUser" hidden>
         <h2>Add User</h2>
         <div>
@@ -118,7 +137,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <button type="button" class="addBarcodeButton" id="addBarcodeButton">
+                                <button type="button" class="BarcodeButton" id="addBarcodeButton">
                                     <i class="fa fa-barcode" aria-hidden="true"></i>
                                     <h1>
                                         Add<br />Barcode
@@ -147,6 +166,8 @@
 
         </div>
     </section>
+
+    <!--EDIT USER-->
     <section id="editUser" hidden>
         <h2>Edit User</h2>
         <div>
@@ -203,6 +224,7 @@
         </div>
     </section>
 
+    <!--READERS-->
     <section id="readers" hidden>
         <h2>Readers</h2>
         <div>
@@ -210,14 +232,43 @@
         </div>
     </section>
 
+    <!--ADD USER SUCCESS-->
+    <section id="addUserSuccess" hidden>
+        <h2>Success!</h2>
+        <div id="userInfo"></div>
+        <button class="goToHubButton" id="goToHubButton">Go to Hub</button>
+    </section>
 
-
+    <!--INVENTORY-->
     <section id="inventory" hidden>
         <h2>Inventory</h2>
         <div>
             <ul id="inventoryList"></ul>
         </div>
     </section>
+
+    <!--CHECKOUT SCAN OPTION-->
+    <section id="chooseScanOption" hidden>
+        <div>
+            <button type="button" class="scanUser">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <h1>Scan Reader</h1>
+            </button>
+            <button type="button" class="scanBook">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                <h1>Scan Book</h1>
+            </button>
+            <button type="button" class="selectUser">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <h1>Select Reader</h1>
+            </button>
+            <button type="button" class="selectBook">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                <h1>Select Book</h1>
+            </button>
+        </div>
+    </section>
+
 
 
     <script src="scripts/main.js"></script>

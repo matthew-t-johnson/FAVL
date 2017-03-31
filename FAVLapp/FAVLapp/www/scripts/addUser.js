@@ -1,12 +1,33 @@
-define(["require", "exports", "./main"], function (require, exports, main) {
+define(["require", "exports", "./main", "../lib/view"], function (require, exports, main, view) {
     "use strict";
     function addUserInit() {
         document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
         document.getElementById("signInForm").addEventListener("submit", signInSubmit);
         document.getElementById("readers").addEventListener("view:show", initReaders);
         document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
+        document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
+        document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
+        document.getElementById("inventory").addEventListener("view:show", showInventory);
     }
     exports.addUserInit = addUserInit;
+    function showInventory() {
+        var ul = document.getElementById("inventoryList");
+        ul.textContent = "";
+        var books = getData("/api/books");
+        books.forEach(function (b) {
+            var li = document.createElement("li");
+            var span = document.createElement("span");
+            span.className = "title";
+            span.textContent = b.Title;
+            li.appendChild(span);
+            span = document.createElement("span");
+            span.className = "author";
+            span.textContent = b.AuthorFirst + " " + b.AuthorMiddle + " " + b.AuthorLast;
+            li.appendChild(span);
+            li.setAttribute("data-book-id", b.Id.toString());
+            ul.appendChild(li);
+        });
+    }
     function addUserSubmit(ev) {
         ev.preventDefault();
         var form = ev.target;
@@ -16,14 +37,28 @@ define(["require", "exports", "./main"], function (require, exports, main) {
             var field = inputs[i];
             data[field.name] = prepField(field.value);
         }
-        var response = postData("/api/reader/add", data);
+        currentReader = postData("/api/reader/add", data);
+        if (currentReader) {
+            main.viewSection("addUserSuccess");
+            for (var i = 0; i < inputs.length; i++) {
+                var field = inputs[i];
+                field.value = "";
+            }
+            view.hide("#barcodeString");
+        }
         return false;
+    }
+    var currentReader;
+    function showAddUserSuccess() {
+        console.log(currentReader);
+        document.getElementById("userInfo").innerHTML = "\n<p>First name: " + currentReader.FirstName + "</p>\n<p>Last name: " + currentReader.LastName + "</p>\n<p>Barcode: " + currentReader.Barcode + "</p>\n<p>Total Checkouts: " + currentReader.TotalCheckouts + "</p>";
     }
     function prepField(str) {
         if (!str)
             str = "";
         return str.trim();
     }
+    var currentLibrarian;
     function signInSubmit(ev) {
         ev.preventDefault();
         var form = ev.target;
@@ -33,8 +68,8 @@ define(["require", "exports", "./main"], function (require, exports, main) {
             var field = inputs[i];
             data[field.name] = prepField(field.value);
         }
-        var response = postData("/api/user/signin", data);
-        if (response) {
+        currentLibrarian = postData("/api/user/signin", data);
+        if (currentLibrarian) {
             main.viewSection("hub");
         }
         return false;
@@ -53,7 +88,7 @@ define(["require", "exports", "./main"], function (require, exports, main) {
         xhr.setRequestHeader("content-type", "application/json");
         xhr.send(JSON.stringify(data));
         if (xhr.status === 200) {
-            return xhr.responseText;
+            return JSON.parse(xhr.responseText);
         }
         alert("Error Received: " + xhr.statusText);
         return null;
@@ -94,7 +129,15 @@ define(["require", "exports", "./main"], function (require, exports, main) {
         scanBarcode(function (result) {
             var el = document.getElementById("barcodeString");
             el.value = result.text + " (" + result.format + ")";
-            el.removeAttribute("hidden");
+            view.show(el);
+        });
+    }
+    function onSignInGetBarcode() {
+        scanBarcode(function (result) {
+            var response = getData("/api/user/signin/" + result.text + " (" + result.format + ")");
+            if (response) {
+                main.viewSection("hub");
+            }
         });
     }
     function scanBarcode(onSuccess) {

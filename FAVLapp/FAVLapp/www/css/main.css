@@ -65,6 +65,22 @@ button.hubutton i {
   border-style: none;
   border: 1px solid #1E363A;
 }
+.BarcodeButton {
+  height: 100px;
+  color: white;
+  background-color: rgba(30, 54, 58, 0.78);
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+}
+.BarcodeButton i {
+  font-size: 50pt;
+}
+.BarcodeButton h1 {
+  font-size: 20pt;
+  padding-left: 20px;
+  display: inline-block;
+}
 .userForm {
   padding: 0 5px;
 }
@@ -82,22 +98,24 @@ button.hubutton i {
 }
 .userForm .formTable td {
   padding: 10px 5px;
-}
-.userForm .formTable td .addBarcodeButton {
-  height: 100px;
-  color: white;
-  background-color: rgba(30, 54, 58, 0.78);
-  border: none;
-  border-radius: 10px;
-  width: 100%;
-}
-.userForm .formTable td .addBarcodeButton i {
-  font-size: 50pt;
-}
-.userForm .formTable td .addBarcodeButton h1 {
-  font-size: 20pt;
-  padding-left: 20px;
-  display: inline-block;
+  /*.addBarcodeButton {
+                height: 100px;
+                color: white;
+                background-color: rgba(30, 54, 58, 0.78);
+                border: none;
+                border-radius: 10px;
+                width: 100%;
+
+                i {
+                    font-size: 50pt;
+                }
+
+                h1 {
+                    font-size: 20pt;
+                    padding-left: 20px;
+                    display: inline-block;
+                }
+            }*/
 }
 .userForm .formTable td .formSubmit {
   height: 90px;
@@ -135,11 +153,6 @@ button.hubutton i {
   border: 1px solid #1E363A;
   border-radius: 5px;
   padding: 3px 0;
-  /*&.addBarcodeButton {
-                    height: 100px;
-                    background-color: lightblue;
-                    border: none;
-                }*/
 }
 .userForm .formTable td input:focus {
   outline: none !important;

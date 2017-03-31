@@ -33,4 +33,12 @@ function initClick(): void {
     document.getElementById("returnButton").addEventListener("click", () => {
         viewSection("readers");
     });
+
+    document.getElementById("goToHubButton").addEventListener("click", () => {
+        viewSection("hub");
+    });
+
+    document.getElementById("inventoryButton").addEventListener("click", () => {
+        viewSection("inventory");
+    });
 }
