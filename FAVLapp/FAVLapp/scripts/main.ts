@@ -1,4 +1,5 @@
 ﻿import AddUser = require('./addUser');
+import view = require('../lib/view');
 
 export function mainInit(): void {
     initClick();
@@ -6,19 +7,10 @@ export function mainInit(): void {
 }
 
 export function viewSection(id: string): void {
-    var sections = document.querySelectorAll("#mainbody > section");
-
-    for (var i = 0; i < sections.length; i++) {
-        sections[i].setAttribute("hidden", "");
-    }
-
-    document.getElementById(id).removeAttribute("hidden");
+    view(`#${id}`);
 
     if (id !== "index")
-    {
-        document.getElementById('headerLogoWrapper').removeAttribute('hidden');
-    }
-
+        view.show("#headerLogoWrapper");
 }
 
 function initClick(): void {

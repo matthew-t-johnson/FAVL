@@ -1,4 +1,4 @@
-define(["require", "exports", "./addUser"], function (require, exports, AddUser) {
+define(["require", "exports", "./addUser", "../lib/view"], function (require, exports, AddUser, view) {
     "use strict";
     function mainInit() {
         initClick();
@@ -6,14 +6,9 @@ define(["require", "exports", "./addUser"], function (require, exports, AddUser)
     }
     exports.mainInit = mainInit;
     function viewSection(id) {
-        var sections = document.querySelectorAll("#mainbody > section");
-        for (var i = 0; i < sections.length; i++) {
-            sections[i].setAttribute("hidden", "");
-        }
-        document.getElementById(id).removeAttribute("hidden");
-        if (id !== "index") {
-            document.getElementById('headerLogoWrapper').removeAttribute('hidden');
-        }
+        view("#" + id);
+        if (id !== "index")
+            view.show("#headerLogoWrapper");
     }
     exports.viewSection = viewSection;
     function initClick() {

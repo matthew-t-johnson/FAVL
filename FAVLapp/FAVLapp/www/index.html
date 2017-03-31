@@ -5,7 +5,7 @@
         Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
         For details, see http://go.microsoft.com/fwlink/?LinkID=617521
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="format-detection" content="telephone=no">
@@ -118,13 +118,13 @@
                         </tr>
                         <tr>
                             <td>
-                                <input type="hidden" id="barcodeString" name="Barcode" />
-                                <button type="button" class="addBarcodeButton">
+                                <button type="button" class="addBarcodeButton" id="addBarcodeButton">
                                     <i class="fa fa-barcode" aria-hidden="true"></i>
                                     <h1>
                                         Add<br />Barcode
                                     </h1>
                                 </button>
+                                <input type="text" id="barcodeString" name="Barcode" hidden readonly /><br />
                             </td>
 
                         </tr>

@@ -3,8 +3,8 @@
 export function addUserInit(): void {
     document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
     document.getElementById("signInForm").addEventListener("submit", signInSubmit);
-    document.getElementById("returnButton").addEventListener("click", initReaders);
-
+    document.getElementById("readers").addEventListener("view:show", initReaders);
+    document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
 }
 
 function addUserSubmit(ev: Event): boolean {
@@ -46,15 +46,16 @@ function signInSubmit(ev: Event): boolean {
     const response = postData("/api/user/signin", data);
 
 
-    if (response)
-    {
+    if (response) {
         main.viewSection("hub");
     }
 
     return false;
 }
 
-const serverURL = "http://localhost:51754";
+//const serverURL = "http://localhost:51754";
+const serverURL = "https://favl.azurewebsites.net";
+
 
 function postData(path: string, data: Object): string {
     const xhr = new XMLHttpRequest();
@@ -70,8 +71,7 @@ function postData(path: string, data: Object): string {
     xhr.setRequestHeader("content-type", "application/json");
     xhr.send(JSON.stringify(data));
 
-    if (xhr.status === 200)
-    {
+    if (xhr.status === 200) {
         return xhr.responseText;
     }
     alert("Error Received: " + xhr.statusText);
@@ -85,7 +85,7 @@ function getData(path: string): Object {
     xhr.send();
 
     if (xhr.status === 200) {
-            return JSON.parse(xhr.responseText);
+        return JSON.parse(xhr.responseText);
     }
     alert("Error Received: " + xhr.statusText);
     return null;
@@ -111,4 +111,36 @@ function initReaders() {
         li.textContent = r.FirstName + " " + r.LastName;
         ul.appendChild(li);
     });
+}
+
+const scannerSetUp = {
+    preferFrontCamera: false, // iOS and Android
+    showFlipCameraButton: false, // iOS and Android
+    showTorchButton: true, // iOS and Android
+    torchOn: false, // Android, launch with the torch switched on (if available)
+    prompt: "Place a barcode inside the scan area", // Android
+    resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+    //formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+    //orientation: "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
+    disableAnimations: true, // iOS
+    disableSuccessBeep: false // iOS
+};
+
+function onAddUserGetBarcode(): void {
+    scanBarcode(result => {
+        var el = document.getElementById("barcodeString") as HTMLInputElement;
+        el.value = result.text + " (" + result.format + ")";
+        el.removeAttribute("hidden");
+    });
+}
+
+function scanBarcode(onSuccess): void {
+    (cordova as any).plugins.barcodeScanner.scan(
+        result => {
+            if (!result.cancelled)
+                onSuccess(result);
+        },
+        error => alert("Scanning failed: " + error),
+        scannerSetUp
+    );
 }

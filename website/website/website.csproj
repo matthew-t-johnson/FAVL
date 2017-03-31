@@ -182,6 +182,7 @@
     <Content Include="favlDB.edmx.diagram">
       <DependentUpon>favlDB.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\favl - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
