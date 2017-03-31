@@ -168,6 +168,11 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="css\default.css" />
+    <Content Include="admin\Admin.Master" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <EntityDeploy Include="favlDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>favlDB.Designer.cs</LastGenOutput>
@@ -175,11 +180,6 @@
     <Content Include="favlDB.edmx.diagram">
       <DependentUpon>favlDB.edmx</DependentUpon>
     </Content>
-    <Content Include="admin\Admin.Master" />
-    <None Include="compilerconfig.json" />
-    <None Include="compilerconfig.json.defaults">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </None>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -245,7 +245,7 @@
       <DependentUpon>libraries.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Books.cs">
+    <Compile Include="Book.cs">
       <DependentUpon>favlDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\APIController.cs" />
@@ -267,14 +267,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Librarians.cs">
+    <Compile Include="Librarian.cs">
       <DependentUpon>favlDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Libraries.cs">
+    <Compile Include="Library.cs">
       <DependentUpon>favlDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Readers.cs">
+    <Compile Include="Reader.cs">
       <DependentUpon>favlDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>

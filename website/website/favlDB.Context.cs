@@ -25,9 +25,9 @@ namespace website
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Books> Books { get; set; }
-        public virtual DbSet<Librarians> Librarians { get; set; }
-        public virtual DbSet<Libraries> Libraries { get; set; }
-        public virtual DbSet<Readers> Readers { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Librarian> Librarians { get; set; }
+        public virtual DbSet<Library> Libraries { get; set; }
+        public virtual DbSet<Reader> Readers { get; set; }
     }
 }

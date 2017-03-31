@@ -16,10 +16,12 @@ namespace website.admin
             
             using (var db = new favlEntities())
             {
-                db.Books.Add(new Books
+                db.Books.Add(new Book
                 {
                     Title = Request.Form["Title"],
-                    Author = Request.Form["Author"],
+                    AuthorFirst = Request.Form["AuthorFirst"],
+                    AuthorMiddle = Request.Form["AuthorMiddle"],
+                    AuthorLast = Request.Form["AuthorLast"],
                     Barcode = Request.Form["Barcode"],
                 });
 

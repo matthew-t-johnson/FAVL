@@ -12,17 +12,19 @@ namespace website
     using System;
     using System.Collections.Generic;
     
-    public partial class Books
+    public partial class Book
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Author { get; set; }
+        public string AuthorFirst { get; set; }
+        public string AuthorMiddle { get; set; }
+        public string AuthorLast { get; set; }
         public Nullable<int> LibraryID { get; set; }
         public string Barcode { get; set; }
-        public Nullable<System.DateTime> DateAdded { get; set; }
         public Nullable<int> CheckedOutTo { get; set; }
+        public int TotalCheckouts { get; set; }
     
-        public virtual Libraries Libraries { get; set; }
-        public virtual Readers Readers { get; set; }
+        public virtual Library Library { get; set; }
+        public virtual Reader Reader { get; set; }
     }
 }

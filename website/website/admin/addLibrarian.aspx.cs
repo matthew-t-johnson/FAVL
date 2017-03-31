@@ -23,7 +23,7 @@ namespace website.admin
                 string hash, salt;
                 PW.Encrypt(Request.Form["Password"], out hash, out salt);
 
-                var librarian = new Librarians
+                var librarian = new Librarian
                 {
                     FirstName = Request.Form["FirstName"],
                     LastName = Request.Form["LastName"],

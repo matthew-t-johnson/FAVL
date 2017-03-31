@@ -23,19 +23,19 @@ namespace website.admin
 
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "author");
-                    span.InnerText = book.Author;
+                    span.InnerText = book.AuthorFirst + " " + book.AuthorMiddle + " " + book.AuthorLast;
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "library");
-                    span.InnerText = book.Libraries != null ? book.Libraries.Name : "UNASSIGNED";
+                    span.InnerText = book.Library != null ? book.Library.Name : "UNASSIGNED";
                     li.Controls.Add(span);
 
-                    if (book.Readers != null)
+                    if (book.Reader != null)
                     {
                         span = new HtmlGenericControl("span");
                         span.Attributes.Add("class", "reader");
-                        span.InnerText = book.Readers.FirstName + " " + book.Readers.LastName;
+                        span.InnerText = book.Reader.FirstName + " " + book.Reader.LastName;
                         li.Controls.Add(span);
 
                     }

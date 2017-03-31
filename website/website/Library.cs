@@ -12,12 +12,13 @@ namespace website
     using System;
     using System.Collections.Generic;
     
-    public partial class Libraries
+    public partial class Library
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Libraries()
+        public Library()
         {
-            this.Books = new HashSet<Books>();
+            this.Books = new HashSet<Book>();
+            this.Librarians = new HashSet<Librarian>();
         }
     
         public int Id { get; set; }
@@ -26,6 +27,8 @@ namespace website
         public string Country { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Books> Books { get; set; }
+        public virtual ICollection<Book> Books { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Librarian> Librarians { get; set; }
     }
 }

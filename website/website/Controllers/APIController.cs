@@ -53,7 +53,7 @@ namespace website.Controllers
         {
             using (var db = new favlEntities())
             {
-                var addedReader = db.Readers.Add(new Readers {
+                var addedReader = db.Readers.Add(new Reader {
                     FirstName = args.firstName,
                     LastName = args.lastName,
                     Barcode = args.barcode
@@ -85,7 +85,7 @@ namespace website.Controllers
 
         [HttpPost]
         [Route("api/reader/add")]
-        public Readers AddReader([FromBody] Readers reader)
+        public Reader AddReader([FromBody] Reader reader)
         {
             using (var db = new favlEntities())
             {
@@ -100,7 +100,7 @@ namespace website.Controllers
 
         [HttpGet]
         [Route("api/books")]
-        public IEnumerable<Books> GetBooks()
+        public IEnumerable<Book> GetBooks()
         {
             using (var db = new favlEntities())
             {
@@ -110,7 +110,7 @@ namespace website.Controllers
 
         [HttpGet]
         [Route("api/books/{libraryID}")]
-        public IEnumerable<Books> GetLibraryBooks(int libraryID)
+        public IEnumerable<Book> GetLibraryBooks(int libraryID)
         {
             using (var db = new favlEntities())
             {
@@ -121,7 +121,7 @@ namespace website.Controllers
 
         [HttpGet]
         [Route("api/books/checkout/{bookID}/{readerID}")]
-        public Books CheckOutBook(int bookID, int readerID)
+        public Book CheckOutBook(int bookID, int readerID)
         {
             using (var db = new favlEntities())
             {

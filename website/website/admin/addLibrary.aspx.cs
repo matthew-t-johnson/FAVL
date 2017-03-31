@@ -11,7 +11,7 @@ namespace website.admin
 
             using (var db = new favlEntities())
             {
-                db.Libraries.Add(new Libraries
+                db.Libraries.Add(new Library
                 {
                     Name = Request.Form["Name"],
                     Village = Request.Form["Village"],

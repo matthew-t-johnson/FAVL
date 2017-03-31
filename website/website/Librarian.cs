@@ -12,7 +12,7 @@ namespace website
     using System;
     using System.Collections.Generic;
     
-    public partial class Librarians
+    public partial class Librarian
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -21,5 +21,9 @@ namespace website
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public bool IsAdmin { get; set; }
+        public string Barcode { get; set; }
+        public Nullable<int> LibraryID { get; set; }
+    
+        public virtual Library Library { get; set; }
     }
 }

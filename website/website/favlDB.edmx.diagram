@@ -4,13 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9a7191c44c31428980891ce0535db230" Name="Diagram1">
-        <EntityTypeShape EntityType="favlModel.Books" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="favlModel.Librarians" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="favlModel.Libraries" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="favlModel.Readers" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+      <Diagram DiagramId="2cec458d26814c87974a18bb21104951" Name="Diagram1">
+        <EntityTypeShape EntityType="favlModel.Book" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="favlModel.Librarian" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="favlModel.Library" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="favlModel.Reader" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <AssociationConnector Association="favlModel.FK_Books_Libraries" ManuallyRouted="false" />
-        <AssociationConnector Association="favlModel.FK_Books_Readers" />
+        <AssociationConnector Association="favlModel.FK_Books_Readers" ManuallyRouted="false" />
+        <AssociationConnector Association="favlModel.FK_Librarians_Libraries" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

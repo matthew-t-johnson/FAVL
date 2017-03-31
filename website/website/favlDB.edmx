@@ -4,18 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="favlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="favlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Books">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="Author" Type="nvarchar" MaxLength="200" />
+          <Property Name="AuthorFirst" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AuthorMiddle" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AuthorLast" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="LibraryID" Type="int" />
           <Property Name="Barcode" Type="varchar" MaxLength="50" />
-          <Property Name="DateAdded" Type="datetime2" Precision="0" />
           <Property Name="CheckedOutTo" Type="int" />
+          <Property Name="TotalCheckouts" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Librarians">
           <Key>
@@ -24,10 +26,12 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="100" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="Barcode" Type="varchar" MaxLength="50" />
+          <Property Name="LibraryID" Type="int" />
         </EntityType>
         <EntityType Name="Libraries">
           <Key>
@@ -44,8 +48,10 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Barcode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Barcode" Type="varchar" MaxLength="50" />
+          <Property Name="TotalCheckouts" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Books_Libraries">
           <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
@@ -71,6 +77,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Librarians_Libraries">
+          <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
+          <End Role="Librarians" Type="Self.Librarians" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libraries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Librarians">
+              <PropertyRef Name="LibraryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="favlModelStoreContainer">
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Librarians" EntityType="Self.Librarians" Schema="dbo" store:Type="Tables" />
@@ -84,38 +102,47 @@
             <End Role="Readers" EntitySet="Readers" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
+          <AssociationSet Name="FK_Librarians_Libraries" Association="Self.FK_Librarians_Libraries">
+            <End Role="Libraries" EntitySet="Libraries" />
+            <End Role="Librarians" EntitySet="Librarians" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="favlModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Books">
+        <EntityType Name="Book">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Author" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorFirst" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AuthorMiddle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AuthorLast" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LibraryID" Type="Int32" />
           <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateAdded" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Libraries" Relationship="Self.FK_Books_Libraries" FromRole="Books" ToRole="Libraries" />
           <Property Name="CheckedOutTo" Type="Int32" />
-          <NavigationProperty Name="Readers" Relationship="favlModel.FK_Books_Readers" FromRole="Books" ToRole="Readers" />
+          <Property Name="TotalCheckouts" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Library" Relationship="Self.FK_Books_Libraries" FromRole="Books" ToRole="Libraries" />
+          <NavigationProperty Name="Reader" Relationship="Self.FK_Books_Readers" FromRole="Books" ToRole="Readers" />
         </EntityType>
-        <EntityType Name="Librarians">
+        <EntityType Name="Librarian">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordSalt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LibraryID" Type="Int32" />
+          <NavigationProperty Name="Library" Relationship="favlModel.FK_Librarians_Libraries" FromRole="Librarian" ToRole="Library" />
         </EntityType>
-        <EntityType Name="Libraries">
+        <EntityType Name="Library">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -124,20 +151,23 @@
           <Property Name="Village" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Books" Relationship="Self.FK_Books_Libraries" FromRole="Libraries" ToRole="Books" />
+          <NavigationProperty Name="Librarians" Relationship="favlModel.FK_Librarians_Libraries" FromRole="Library" ToRole="Librarian" />
         </EntityType>
-        <EntityType Name="Readers">
+        <EntityType Name="Reader">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="favlModel.FK_Books_Readers" FromRole="Readers" ToRole="Books" />
+          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalCheckouts" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Books_Readers" FromRole="Readers" ToRole="Books" />
         </EntityType>
         <Association Name="FK_Books_Libraries">
-          <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
-          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <End Role="Libraries" Type="Self.Library" Multiplicity="0..1" />
+          <End Role="Books" Type="Self.Book" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Libraries">
               <PropertyRef Name="Id" />
@@ -147,29 +177,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="favlEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Books" EntityType="Self.Books" />
-          <EntitySet Name="Librarians" EntityType="Self.Librarians" />
-          <EntitySet Name="Libraries" EntityType="Self.Libraries" />
-          <EntitySet Name="Readers" EntityType="Self.Readers" />
-          <AssociationSet Name="FK_Books_Libraries" Association="Self.FK_Books_Libraries">
-            <End Role="Libraries" EntitySet="Libraries" />
-            <End Role="Books" EntitySet="Books" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Books_Readers" Association="favlModel.FK_Books_Readers">
-            <End Role="Readers" EntitySet="Readers" />
-            <End Role="Books" EntitySet="Books" />
-          </AssociationSet>
-        </EntityContainer>
         <Association Name="FK_Books_Readers">
-          <End Type="favlModel.Readers" Role="Readers" Multiplicity="0..1" />
-          <End Type="favlModel.Books" Role="Books" Multiplicity="*" />
+          <End Role="Readers" Type="Self.Reader" Multiplicity="0..1" />
+          <End Role="Books" Type="Self.Book" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Readers">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Books">
               <PropertyRef Name="CheckedOutTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="favlEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Librarians" EntityType="Self.Librarian" />
+          <EntitySet Name="Libraries" EntityType="Self.Library" />
+          <EntitySet Name="Readers" EntityType="Self.Reader" />
+          <AssociationSet Name="FK_Books_Libraries" Association="Self.FK_Books_Libraries">
+            <End Role="Libraries" EntitySet="Libraries" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Books_Readers" Association="Self.FK_Books_Readers">
+            <End Role="Readers" EntitySet="Readers" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Librarians_Libraries" Association="favlModel.FK_Librarians_Libraries">
+            <End Role="Library" EntitySet="Libraries" />
+            <End Role="Librarian" EntitySet="Librarians" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Librarians_Libraries">
+          <End Type="favlModel.Library" Role="Library" Multiplicity="0..1" />
+          <End Type="favlModel.Librarian" Role="Librarian" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Library">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Librarian">
+              <PropertyRef Name="LibraryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -180,21 +226,24 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="favlModelStoreContainer" CdmEntityContainer="favlEntities">
           <EntitySetMapping Name="Books">
-            <EntityTypeMapping TypeName="favlModel.Books">
+            <EntityTypeMapping TypeName="favlModel.Book">
               <MappingFragment StoreEntitySet="Books">
-                <ScalarProperty Name="CheckedOutTo" ColumnName="CheckedOutTo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="AuthorFirst" ColumnName="AuthorFirst" />
+                <ScalarProperty Name="AuthorMiddle" ColumnName="AuthorMiddle" />
+                <ScalarProperty Name="AuthorLast" ColumnName="AuthorLast" />
                 <ScalarProperty Name="LibraryID" ColumnName="LibraryID" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="CheckedOutTo" ColumnName="CheckedOutTo" />
+                <ScalarProperty Name="TotalCheckouts" ColumnName="TotalCheckouts" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Librarians">
-            <EntityTypeMapping TypeName="favlModel.Librarians">
+            <EntityTypeMapping TypeName="favlModel.Librarian">
               <MappingFragment StoreEntitySet="Librarians">
+                <ScalarProperty Name="LibraryID" ColumnName="LibraryID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -202,11 +251,12 @@
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
                 <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Libraries">
-            <EntityTypeMapping TypeName="favlModel.Libraries">
+            <EntityTypeMapping TypeName="favlModel.Library">
               <MappingFragment StoreEntitySet="Libraries">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -216,12 +266,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Readers">
-            <EntityTypeMapping TypeName="favlModel.Readers">
+            <EntityTypeMapping TypeName="favlModel.Reader">
               <MappingFragment StoreEntitySet="Readers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="TotalCheckouts" ColumnName="TotalCheckouts" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -239,7 +291,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
