@@ -65,24 +65,48 @@ button.hubutton {
     width: 60%;
 }
 
-#signInForm {
-    margin-top: 75%;
+#signIn {
 
-    input {
-        font-size: 14pt;
-        padding: 3px;
-        width: 250px;
-        margin-bottom: 15px;
-        border-radius: 7px;
-        border-style: none;
-        border: 1px solid #1E363A;
+    #signInForm {
+        margin-top: 75%;
+
+        input {
+            font-size: 14pt;
+            padding: 3px;
+            width: 250px;
+            margin-bottom: 15px;
+            border-radius: 7px;
+            border-style: none;
+            border: 1px solid #1E363A;
+        }
+
+        button[type=submit] {
+        }
     }
 
-    button[type=submit] {
+    #signInBarcode {
+        height: 100px;
+        color: white;
+        background-color: rgba(30, 54, 58, 0.78);
+        border: none;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        i {
+            font-size: 50pt;
+        }
+
+        h1 {
+            font-size: 20pt;
+            padding-left: 20px;
+            display: inline-block;
+        }
     }
 }
 
-.BarcodeButton {
+.BarcodeButton:not(#signInBarcode) {
     height: 100px;
     color: white;
     background-color: rgba(30, 54, 58, 0.78);

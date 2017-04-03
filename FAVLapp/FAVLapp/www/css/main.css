@@ -53,10 +53,10 @@ button.hubutton i {
   height: 50px;
   width: 60%;
 }
-#signInForm {
+#signIn #signInForm {
   margin-top: 75%;
 }
-#signInForm input {
+#signIn #signInForm input {
   font-size: 14pt;
   padding: 3px;
   width: 250px;
@@ -65,7 +65,25 @@ button.hubutton i {
   border-style: none;
   border: 1px solid #1E363A;
 }
-.BarcodeButton {
+#signIn #signInBarcode {
+  height: 100px;
+  color: white;
+  background-color: rgba(30, 54, 58, 0.78);
+  border: none;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+#signIn #signInBarcode i {
+  font-size: 50pt;
+}
+#signIn #signInBarcode h1 {
+  font-size: 20pt;
+  padding-left: 20px;
+  display: inline-block;
+}
+.BarcodeButton:not(#signInBarcode) {
   height: 100px;
   color: white;
   background-color: rgba(30, 54, 58, 0.78);
@@ -73,10 +91,10 @@ button.hubutton i {
   border-radius: 10px;
   width: 100%;
 }
-.BarcodeButton i {
+.BarcodeButton:not(#signInBarcode) i {
   font-size: 50pt;
 }
-.BarcodeButton h1 {
+.BarcodeButton:not(#signInBarcode) h1 {
   font-size: 20pt;
   padding-left: 20px;
   display: inline-block;
