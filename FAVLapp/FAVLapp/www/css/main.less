@@ -127,23 +127,29 @@ button.hubutton {
 
 
 .userForm {
-    padding: 0 5px;
+    padding: 0;
 
     fieldset {
         /*border-style: solid;
         border-color: #1E363A;
         border-radius: 10px;*/
         border: none;
+        padding: 0;
+        margin: 0;
     }
 
     .formTable {
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: 0;
+        margin-right: 0;
         width: 100%;
         height: 550px;
 
         td {
-            padding: 10px 5px;
+            padding: 0;
+
+            &.inputTD {
+                padding: 10px 5px;
+            }
 
 
             /*.addBarcodeButton {
@@ -167,11 +173,12 @@ button.hubutton {
 
             .formSubmit {
                 height: 90px;
-                width: 45%;
+                width: 50%;
                 border: none;
                 color: #005200;
                 background-color: rgba(74, 232, 108, 0.76);
-                border-radius: 10px;
+                float: left;
+                padding: 0;
 
                 i {
                     font-size: 40pt;
@@ -183,13 +190,12 @@ button.hubutton {
             }
 
             .formCancel {
-                width: 45%;
-                margin-left: 28px;
+                width: 50%;
                 background-color: rgba(232, 74, 74, 0.76);
                 color: #520000;
                 border: none;
                 height: 90px;
-                border-radius: 10px;
+                padding: 0;
 
                 i {
                     font-size: 40pt;

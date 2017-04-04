@@ -7,7 +7,7 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
     exports.mainInit = mainInit;
     function viewSection(id) {
         view("#" + id);
-        if (id !== "index")
+        if (id !== "index" && id !== "signIn")
             view.show("#headerLogoWrapper");
     }
     exports.viewSection = viewSection;
