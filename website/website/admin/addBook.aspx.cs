@@ -11,9 +11,9 @@ namespace website.admin
             if (!IsPostBack)
             {
                 addLibraries();
-
                 return;
             }
+
             using (var db = new favlEntities())
             {
                 var barcode = Request.Form["Barcode"].Trim();

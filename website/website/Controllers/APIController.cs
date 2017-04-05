@@ -10,7 +10,7 @@ namespace website.Controllers
     {
         [HttpGet]
         [Route("api/reader/{userID}")]
-        public Reader GetUser(int userID)
+        public Reader GetReader(int userID)
         {
             using (var db = new favlEntities())
             {
@@ -30,26 +30,6 @@ namespace website.Controllers
                 };
             }
         }
-
-        [HttpGet]
-        [Route("api/libraries")]
-        public IEnumerable<Library> GetLibraries()
-        {
-            using (var db = new favlEntities())
-            {
-                var libraries = db.Libraries.ToList();
-
-                return libraries.Select(library => new Library
-                {
-                    Id = library.Id,
-                    Name = library.Name,
-                    Village = library.Village,
-                    Country = library.Country
-                }).ToList();
-
-            }
-        }
-
 
         [HttpGet]
         [Route("api/readers")]
@@ -86,6 +66,67 @@ namespace website.Controllers
                     Barcode = reader.Barcode,
                     TotalCheckouts = reader.TotalCheckouts
                 }).ToList();
+            }
+        }
+
+        [HttpPost]
+        [Route("api/reader/add")]
+        public Reader AddReader([FromBody] Reader reader)
+        {
+            using (var db = new favlEntities())
+            {
+                if (string.IsNullOrEmpty(reader.Barcode))
+                    reader.Barcode = null;
+
+                var addedReader = db.Readers.Add(reader);
+
+                db.SaveChanges();
+
+                return new Reader
+                {
+                    Id = reader.Id,
+                    FirstName = reader.FirstName,
+                    MiddleName = reader.MiddleName,
+                    LastName = reader.LastName,
+                    Barcode = reader.Barcode,
+                    TotalCheckouts = reader.TotalCheckouts
+                };
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/reader/{userID}")]
+        public void DeleteReader(int userID)
+        {
+            using (var db = new favlEntities())
+            {
+                var reader = db.Readers.FirstOrDefault(r => r.Id == userID);
+
+                if (reader == null)
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+
+                db.Readers.Remove(reader);
+                db.SaveChanges();
+            }
+        }
+
+
+        [HttpGet]
+        [Route("api/libraries")]
+        public IEnumerable<Library> GetLibraries()
+        {
+            using (var db = new favlEntities())
+            {
+                var libraries = db.Libraries.ToList();
+
+                return libraries.Select(library => new Library
+                {
+                    Id = library.Id,
+                    Name = library.Name,
+                    Village = library.Village,
+                    Country = library.Country
+                }).ToList();
+
             }
         }
 
@@ -133,32 +174,6 @@ namespace website.Controllers
             }
         }
 
-
-        [HttpPost]
-        [Route("api/reader/add")]
-        public Reader AddReader([FromBody] Reader reader)
-        {
-            using (var db = new favlEntities())
-            {
-                if (string.IsNullOrEmpty(reader.Barcode))
-                    reader.Barcode = null;
-
-                var addedReader = db.Readers.Add(reader);
-
-                db.SaveChanges();
-
-                return new Reader
-                {
-                    Id = reader.Id,
-                    FirstName = reader.FirstName,
-                    MiddleName = reader.MiddleName,
-                    LastName = reader.LastName,
-                    Barcode = reader.Barcode,
-                    TotalCheckouts = reader.TotalCheckouts
-                };
-            }
-        }
-
         [HttpGet]
         [Route("api/books")]
         public IEnumerable<Book> GetBooks()
@@ -197,7 +212,6 @@ namespace website.Controllers
                 }).ToList();
             }
         }
-
 
         [HttpGet]
         [Route("api/books/checkout/{bookID}/{readerID}")]

@@ -1,0 +1,34 @@
+Books
+-barcode CHAR(13) NOT NULL
+-libraryId INT NOT NULL
+-title VARCHAR(40) NOT NULL
+-firstName VARCHAR(12) NOT NULL
+-middleName VARCHAR(12) NULL
+-lastName VARCHAR(12) NOT NULL
+-frequency INT UNSIGNED NOT NULL
+-dueDate DATE NULL
+-readerId CHAR(13) NULL
+-PRIMARY KEY(barcode, libraryID)
+
+Readers
+-readerId CHAR(13) NOT NULL
+-libraryId INT NOT NULL
+-firstName VARCHAR(12) NOT NULL
+-middleName VARCHAR(12) NULL
+-lastName VARCHAR(12) NOT NULL
+-totalRentals INT UNSIGNED NOT NULL
+-PRIMARY KEY(readerId, libraryId)
+
+Libraries
+-libraryId INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+-village VARCHAR(15) NOT NULL
+-country CHAR(2) NOT NULL
+
+Librarians
+-librarianId CHAR(13) NOT NULL
+-libraryId INT UNSIGNED NOT NULL
+
+Administrators
+-userName VARCHAR(12) NOT NULL PRIMARY KEY
+-password VARCHAR(12) NOT NULL
+

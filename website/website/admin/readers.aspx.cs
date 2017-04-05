@@ -13,27 +13,35 @@ namespace website.admin
             {
                 var list = db.Readers.ToList();
 
+                insertList.Controls.Add(
+                    new HtmlGenericControl("li") { InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='checkouts'>Checkouts</span><span></span><span></span>" }
+                    );
+
                 foreach (var reader in list)
                 {
                     var li = new HtmlGenericControl("li");
 
                     var span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "reader");
-                    span.InnerText = reader.FirstName + " " + reader.MiddleName + " " + reader.LastName;
+                    var readerName = reader.FirstName + " " + reader.MiddleName + " " + reader.LastName;
+                    span.InnerText = readerName;
                     li.Controls.Add(span);
 
-                    if (reader.Barcode != null)
-                    {
-                        span = new HtmlGenericControl("span");
-                        span.Attributes.Add("class", "barcode");
-                        span.InnerText = reader.Barcode;
-                        li.Controls.Add(span);
-                    }
+                    span = new HtmlGenericControl("span");
+                    span.Attributes.Add("class", "barcode");
+                    span.InnerText = reader.Barcode ?? string.Empty;
+                    li.Controls.Add(span);
+
 
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "checkouts");
                     span.InnerText = reader.TotalCheckouts.ToString("#,###;;None");
                     li.Controls.Add(span);
+
+                    li.Controls.Add(
+                        new LiteralControl($"<span class='edit'><a href='editReader.aspx?id={reader.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteReader({reader.Id}, \"{readerName}\")'>Delete</a></span>")
+                    );
+
 
                     insertList.Controls.Add(li);
                 }

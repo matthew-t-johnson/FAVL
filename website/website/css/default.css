@@ -358,20 +358,42 @@ footer {
     width: 500px;
 }
 
-.bookList {
+.listAsTable {
     list-style: none;
     display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-.bookList li {
-    display: table-row;
-}
+    .listAsTable li {
+        display: table-row;
+    }
+        .listAsTable li:nth-child(2n+3) {
+            background-color: #eee;
+        }
 
-.bookList span {
-    padding-right: 20px;
-    display: table-cell;
-}
+        .listAsTable li:first-child {
+            font-weight: bold;
+            border-bottom: 1px solid black;
+        }
 
-.bookList span:last-child {
-    padding-right: 0;
-}
+        .listAsTable li:first-child span {
+            padding-bottom: 0;
+            padding-bottom: 2px;
+        }
+
+
+    .listAsTable span {
+        padding: 3px 10px 4px 10px;
+        display: table-cell;
+        text-align: left;
+        vertical-align: baseline;
+    }
+
+        .listAsTable span:first-child {
+            padding-left: 0;
+        }
+
+        .listAsTable span:last-child {
+            padding-right: 0;
+        }

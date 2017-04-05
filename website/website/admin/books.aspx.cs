@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Web.UI;
 
 namespace website.admin
 {
@@ -12,6 +13,10 @@ namespace website.admin
             using (var db = new favlEntities())
             {
                 var list = db.Books.ToList();
+
+                insertList.Controls.Add(
+                    new HtmlGenericControl("li") { InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='reader'>Checked Out To</span><span></span><span></span>" }
+                );
 
                 foreach (var book in list)
                 {
@@ -28,17 +33,18 @@ namespace website.admin
 
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "library");
-                    span.InnerText = book.Library != null ? book.Library.Name : "UNASSIGNED";
+                    span.InnerText = book.Library != null ? book.Library.Name : "—";
                     li.Controls.Add(span);
 
-                    if (book.Reader != null)
-                    {
-                        span = new HtmlGenericControl("span");
-                        span.Attributes.Add("class", "reader");
-                        span.InnerText = book.Reader.FirstName + " " + book.Reader.LastName;
-                        li.Controls.Add(span);
+                    span = new HtmlGenericControl("span");
+                    span.Attributes.Add("class", "reader");
+                    span.InnerText = book.Reader != null ? book.Reader.FirstName + " " + book.Reader.LastName : "—";
+                    li.Controls.Add(span);
 
-                    }
+                    li.Controls.Add(
+                        new LiteralControl($"<span class='edit'><a href='editBook.aspx?id={book.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteBook({book.Id}, \"{book.Title}\")'>Delete</a></span>")
+                    );
+
 
                     insertList.Controls.Add(li);
                 }

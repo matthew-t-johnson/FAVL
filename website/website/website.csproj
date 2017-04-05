@@ -54,9 +54,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
@@ -96,6 +95,10 @@
     <Content Include="admin\addReader.aspx" />
     <Content Include="admin\books.aspx" />
     <Content Include="admin\default.aspx" />
+    <Content Include="admin\deleteBook.aspx" />
+    <Content Include="admin\deleteReader.aspx" />
+    <Content Include="admin\editBook.aspx" />
+    <Content Include="admin\editReader.aspx" />
     <Content Include="admin\librarians.aspx" />
     <Content Include="admin\libraries.aspx" />
     <Content Include="admin\readers.aspx" />
@@ -239,6 +242,34 @@
     </Compile>
     <Compile Include="admin\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\deleteBook.aspx.cs">
+      <DependentUpon>deleteBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\deleteBook.aspx.designer.cs">
+      <DependentUpon>deleteBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\deleteReader.aspx.cs">
+      <DependentUpon>deleteReader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\deleteReader.aspx.designer.cs">
+      <DependentUpon>deleteReader.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editBook.aspx.cs">
+      <DependentUpon>editBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editBook.aspx.designer.cs">
+      <DependentUpon>editBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editReader.aspx.cs">
+      <DependentUpon>editReader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editReader.aspx.designer.cs">
+      <DependentUpon>editReader.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\librarians.aspx.cs">
       <DependentUpon>librarians.aspx</DependentUpon>
