@@ -8,6 +8,6 @@
         <p><input type="text" placeholder="Library Name" name="Name" required /></p>
         <p><input type="text" placeholder="Village" name="Village" required /></p>
         <p><input type="text" placeholder="Country" name ="Country" required /></p>
-        <p><input type="submit" value="Submit"/></p>
+        <p><input type="submit" value="Add Library"/></p>
     </form>
 </asp:Content>

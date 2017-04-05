@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
         function deleteLibrary(id, name) {
-            if (window.confirm("Are you sure you want to delete " + name + "?")) {
+            if (window.confirm("Are you sure you want to delete library " + name + "?")) {
                 location.href = "deleteLibrary.aspx?id=" + id;
             }
         }

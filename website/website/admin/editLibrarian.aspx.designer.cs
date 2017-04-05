@@ -10,7 +10,7 @@
 namespace website.admin {
     
     
-    public partial class addBook {
+    public partial class editLibrarian {
         
         /// <summary>
         /// dbForm control.
@@ -29,5 +29,14 @@ namespace website.admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::website.admin.librarySelect librarySelect;
+        
+        /// <summary>
+        /// insertLibrarian control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder insertLibrarian;
     }
 }

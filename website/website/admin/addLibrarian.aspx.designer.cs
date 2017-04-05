@@ -22,12 +22,12 @@ namespace website.admin {
         protected global::System.Web.UI.HtmlControls.HtmlForm dbForm;
         
         /// <summary>
-        /// passwordError control.
+        /// librarySelect control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl passwordError;
+        protected global::website.admin.librarySelect librarySelect;
     }
 }

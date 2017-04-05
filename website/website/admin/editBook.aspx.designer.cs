@@ -22,13 +22,13 @@ namespace website.admin {
         protected global::System.Web.UI.HtmlControls.HtmlForm dbForm;
         
         /// <summary>
-        /// librarySelectOptions control.
+        /// librarySelect control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder librarySelectOptions;
+        protected global::website.admin.librarySelect librarySelect;
         
         /// <summary>
         /// insertBook control.

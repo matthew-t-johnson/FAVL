@@ -8,7 +8,7 @@
         <p><input type="text" placeholder="Middle" name="ReaderMiddle" /></p>
         <p><input type="text" placeholder="Last" name="ReaderLast" required /></p>
         <p><input type="text" placeholder="Barcode" name ="Barcode" /></p>
-        <p><input type="submit" value="Submit"/></p>
+        <p><input type="submit" value="Add Reader"/></p>
     </form>
 
 </asp:Content>

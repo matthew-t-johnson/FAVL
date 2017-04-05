@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/Admin.Master" AutoEventWireup="true" CodeBehind="editBook.aspx.cs" Inherits="website.admin.editBook" %>
+
+<%@ Register Src="~/admin/librarySelect.ascx" TagPrefix="uc1" TagName="librarySelect" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -10,9 +13,7 @@
         <p><input type="text" placeholder="Author Last" name="AuthorLast" required /></p>
         <p><input type="text" placeholder="Barcode" name ="Barcode" /></p>
         <p>
-            <select name="LibraryID" required>
-                <asp:PlaceHolder runat="server" id="librarySelectOptions"></asp:PlaceHolder>
-            </select>
+            <uc1:librarySelect runat="server" ID="librarySelect" />
         </p>
         <p><input type="submit" value="Save Changes"/>&emsp;<input type="button" value="Cancel" onclick="location.href = 'books.aspx'" /></p>
     </form>

@@ -10,7 +10,7 @@
 namespace website.admin {
     
     
-    public partial class addBook {
+    public partial class editLibrary {
         
         /// <summary>
         /// dbForm control.
@@ -22,12 +22,12 @@ namespace website.admin {
         protected global::System.Web.UI.HtmlControls.HtmlForm dbForm;
         
         /// <summary>
-        /// librarySelect control.
+        /// insertLibrary control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::website.admin.librarySelect librarySelect;
+        protected global::System.Web.UI.WebControls.PlaceHolder insertLibrary;
     }
 }

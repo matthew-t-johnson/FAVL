@@ -96,11 +96,16 @@
     <Content Include="admin\books.aspx" />
     <Content Include="admin\default.aspx" />
     <Content Include="admin\deleteBook.aspx" />
+    <Content Include="admin\deleteLibrarian.aspx" />
+    <Content Include="admin\deleteLibrary.aspx" />
     <Content Include="admin\deleteReader.aspx" />
     <Content Include="admin\editBook.aspx" />
+    <Content Include="admin\editLibrarian.aspx" />
+    <Content Include="admin\editLibrary.aspx" />
     <Content Include="admin\editReader.aspx" />
     <Content Include="admin\librarians.aspx" />
     <Content Include="admin\libraries.aspx" />
+    <Content Include="admin\librarySelect.ascx" />
     <Content Include="admin\readers.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -250,6 +255,20 @@
     <Compile Include="admin\deleteBook.aspx.designer.cs">
       <DependentUpon>deleteBook.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\deleteLibrarian.aspx.cs">
+      <DependentUpon>deleteLibrarian.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\deleteLibrarian.aspx.designer.cs">
+      <DependentUpon>deleteLibrarian.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\deleteLibrary.aspx.cs">
+      <DependentUpon>deleteLibrary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\deleteLibrary.aspx.designer.cs">
+      <DependentUpon>deleteLibrary.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\deleteReader.aspx.cs">
       <DependentUpon>deleteReader.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -263,6 +282,20 @@
     </Compile>
     <Compile Include="admin\editBook.aspx.designer.cs">
       <DependentUpon>editBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editLibrarian.aspx.cs">
+      <DependentUpon>editLibrarian.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editLibrarian.aspx.designer.cs">
+      <DependentUpon>editLibrarian.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editLibrary.aspx.cs">
+      <DependentUpon>editLibrary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editLibrary.aspx.designer.cs">
+      <DependentUpon>editLibrary.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\editReader.aspx.cs">
       <DependentUpon>editReader.aspx</DependentUpon>
@@ -284,6 +317,13 @@
     </Compile>
     <Compile Include="admin\libraries.aspx.designer.cs">
       <DependentUpon>libraries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\librarySelect.ascx.cs">
+      <DependentUpon>librarySelect.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\librarySelect.ascx.designer.cs">
+      <DependentUpon>librarySelect.ascx</DependentUpon>
     </Compile>
     <Compile Include="admin\readers.aspx.cs">
       <DependentUpon>readers.aspx</DependentUpon>
