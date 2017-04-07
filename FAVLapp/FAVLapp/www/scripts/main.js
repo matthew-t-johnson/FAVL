@@ -22,7 +22,7 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
             viewSection("addUser");
         });
         document.getElementById("editUserButton").addEventListener("click", function () {
-            viewSection("editUser");
+            viewSection("readers");
         });
         document.getElementById("returnButton").addEventListener("click", function () {
             viewSection("returnBook");

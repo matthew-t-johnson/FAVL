@@ -181,3 +181,37 @@ button.hubutton i {
   outline: none !important;
   border: 1px solid #0B697F;
 }
+#inventoryList,
+#readersList {
+  list-style: none;
+  padding: 0 10px;
+  margin: 0;
+}
+#inventoryList li,
+#readersList li {
+  padding: 3px 10px 5px;
+  margin: 10px;
+  color: #0B697F;
+  background-color: #eee;
+  margin-bottom: 5px;
+  text-align: left;
+  border-radius: 7px;
+  text-transform: none;
+}
+#inventoryList li .title,
+#readersList li .title,
+#inventoryList li .name,
+#readersList li .name {
+  font-weight: 600;
+  font-size: 12pt;
+  display: block;
+}
+#inventoryList li .author,
+#readersList li .author,
+#inventoryList li .barcode,
+#readersList li .barcode {
+  font-weight: normal;
+  font-size: 10pt;
+  display: block;
+  padding-left: .5em;
+}

@@ -6,6 +6,7 @@ export function addUserInit(): void {
     document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
     document.getElementById("signInForm").addEventListener("submit", signInSubmit);
     document.getElementById("readers").addEventListener("view:show", initReaders);
+    document.getElementById("editUser").addEventListener("view:show", showEditUser);
     document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
     document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
     document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
@@ -25,6 +26,13 @@ interface Book {
     Barcode: string  
 }
 
+function showEditUser(): void {
+    (document.querySelector("#editUser input[name='FirstName']") as HTMLInputElement).value = currentEditUser.FirstName;
+    (document.querySelector("#editUser input[name='MiddleName']") as HTMLInputElement).value = currentEditUser.MiddleName;
+    (document.querySelector("#editUser input[name='LastName']") as HTMLInputElement).value = currentEditUser.LastName;
+    (document.querySelector("#editUser input[name='Barcode']") as HTMLInputElement).value = currentEditUser.Barcode || "";
+}
+
 function showInventory(): void {
     const ul = document.getElementById("inventoryList");
     ul.textContent = "";
@@ -33,6 +41,7 @@ function showInventory(): void {
 
     books.forEach(b => {
         const li = document.createElement("li");
+
         var span = document.createElement("span");
         span.className = "title";
         span.textContent = b.Title;
@@ -144,6 +153,7 @@ function addUserSubmit(ev: Event): boolean {
         const field = inputs[i] as HTMLInputElement;
         data[field.name] = prepField(field.value);
     }
+    data["LibraryID"] = currentLibrary.Id;
 
     currentReader = postData("/api/reader/add", data) as Reader;
 
@@ -258,6 +268,8 @@ interface Reader {
     Barcode: string;
 }
 
+var currentEditUser: Reader;
+
 function initReaders() {
     const ul = document.getElementById("readersList");
     ul.textContent = "";
@@ -265,8 +277,22 @@ function initReaders() {
     const readers = getData("/api/readers/" + currentLibrary.Id) as Array<Reader>;
 
     readers.forEach(r => {
-        const li = document.createElement("li");
-        li.textContent = r.FirstName + " " + r.LastName;
+        const li = document.createElement("li") as HTMLLIElement;
+        li.addEventListener("click", () => {
+            currentEditUser = r;
+            main.viewSection("editUser");
+        });
+
+        var span = document.createElement("span");
+        span.className = "name";
+        span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
+        li.appendChild(span);
+
+        span = document.createElement("span");
+        span.className = "barcode";
+        span.textContent = r.Barcode || "—";
+        li.appendChild(span);
+
         ul.appendChild(li);
     });
 }

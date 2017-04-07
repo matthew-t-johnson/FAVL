@@ -27,7 +27,7 @@ function initClick(): void {
     });
 
     document.getElementById("editUserButton").addEventListener("click", () => {
-        viewSection("editUser");
+        viewSection("readers");
     });
 
     document.getElementById("returnButton").addEventListener("click", () => {

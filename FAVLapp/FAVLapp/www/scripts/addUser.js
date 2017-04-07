@@ -4,6 +4,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
         document.getElementById("signInForm").addEventListener("submit", signInSubmit);
         document.getElementById("readers").addEventListener("view:show", initReaders);
+        document.getElementById("editUser").addEventListener("view:show", showEditUser);
         document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
         document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
         document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
@@ -14,6 +15,12 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
     }
     exports.addUserInit = addUserInit;
+    function showEditUser() {
+        document.querySelector("#editUser input[name='FirstName']").value = currentEditUser.FirstName;
+        document.querySelector("#editUser input[name='MiddleName']").value = currentEditUser.MiddleName;
+        document.querySelector("#editUser input[name='LastName']").value = currentEditUser.LastName;
+        document.querySelector("#editUser input[name='Barcode']").value = currentEditUser.Barcode || "";
+    }
     function showInventory() {
         var ul = document.getElementById("inventoryList");
         ul.textContent = "";
@@ -108,6 +115,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             var field = inputs[i];
             data[field.name] = prepField(field.value);
         }
+        data["LibraryID"] = currentLibrary.Id;
         currentReader = postData("/api/reader/add", data);
         if (currentReader) {
             main.viewSection("addUserSuccess");
@@ -174,13 +182,25 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         alert("Error Received: " + xhr.statusText);
         return null;
     }
+    var currentEditUser;
     function initReaders() {
         var ul = document.getElementById("readersList");
         ul.textContent = "";
         var readers = getData("/api/readers/" + currentLibrary.Id);
         readers.forEach(function (r) {
             var li = document.createElement("li");
-            li.textContent = r.FirstName + " " + r.LastName;
+            li.addEventListener("click", function () {
+                currentEditUser = r;
+                main.viewSection("editUser");
+            });
+            var span = document.createElement("span");
+            span.className = "name";
+            span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
+            li.appendChild(span);
+            span = document.createElement("span");
+            span.className = "barcode";
+            span.textContent = r.Barcode || "—";
+            li.appendChild(span);
             ul.appendChild(li);
         });
     }
