@@ -25,13 +25,16 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
             viewSection("editUser");
         });
         document.getElementById("returnButton").addEventListener("click", function () {
-            viewSection("readers");
+            viewSection("returnBook");
         });
         document.getElementById("goToHubButton").addEventListener("click", function () {
             viewSection("hub");
         });
         document.getElementById("inventoryButton").addEventListener("click", function () {
             viewSection("inventory");
+        });
+        document.getElementById("checkOutButton").addEventListener("click", function () {
+            viewSection("checkOut");
         });
     }
 });

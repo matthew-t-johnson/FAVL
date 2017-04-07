@@ -11,10 +11,10 @@
         <p><input type="text" placeholder="Author First" name="AuthorFirst" required /></p>
         <p><input type="text" placeholder="Author Middle" name="AuthorMiddle" /></p>
         <p><input type="text" placeholder="Author Last" name="AuthorLast" required /></p>
-        <p><input type="text" placeholder="Barcode" name ="Barcode" /></p>
         <p>
             <uc1:librarySelect runat="server" id="librarySelect" />
         </p>
+        <p><input type="text" placeholder="Barcode" name="Barcode" required pattern="^\d{13}$" title="13-digit EAN_13 Barcode Number" /></p>
         <p><input type="submit" value="Add Book"/></p>
     </form>
 

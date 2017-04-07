@@ -10,7 +10,10 @@ export function addUserInit(): void {
     document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
     document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
     document.getElementById("inventory").addEventListener("view:show", showInventory);
-
+    document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
+    document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
+    document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
+    document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
 }
 
 interface Book {
@@ -26,7 +29,7 @@ function showInventory(): void {
     const ul = document.getElementById("inventoryList");
     ul.textContent = "";
 
-    const books = getData("/api/books") as Array<Book>;
+    const books = getData("/api/books/" + currentLibrary.Id) as Array<Book>;
 
     books.forEach(b => {
         const li = document.createElement("li");
@@ -48,6 +51,88 @@ function showInventory(): void {
 
 }
 
+function showCheckOut(): void {
+    view.hide("#checkOutError");
+    view.hide("#checkOutReader");
+    view.hide("#checkOutBook");
+}
+
+var checkOutReader: Reader;
+
+function scanReader(): void {
+    view.hide("#checkOutError");
+    scanBarcode(result => {
+        checkOutReader = getData("/api/reader/barcode/" + result.text + " (" + result.format + ")") as Reader;
+
+        if (checkOutReader) {
+            document.getElementById("checkOutReader").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
+            view.show("#checkOutReader");
+
+            if (checkOutBook && checkOutReader) {
+                checkOutTheBook(checkOutReader, checkOutBook);
+            }
+        }
+        else {
+            document.getElementById("checkOutReader").textContent = "";
+            view.hide("#checkOutReader");
+        }
+    });
+}
+var checkOutBook: Book;
+
+function scanBook(): void {
+    view.hide("#checkOutError");
+    scanBarcode(result => {
+        checkOutBook = getData("/api/book/barcode/" + result.text + " (" + result.format + ")") as Book;
+
+        if (checkOutBook) {
+            document.getElementById("checkOutBook").textContent = checkOutBook.Title;
+            view.show("#checkOutBook");
+
+            if (checkOutBook && checkOutReader)
+            {
+                checkOutTheBook(checkOutReader, checkOutBook);
+            }
+        }
+        else {
+            document.getElementById("checkOutBook").textContent = "";
+            view.hide("#checkOutBook");
+        }
+    });
+}
+
+function checkOutTheBook(reader: Reader, book: Book) {
+    view.hide("#checkOutError");
+    var ok = getData("/api/books/checkout/" + book.Id + "/" + reader.Id) as string;
+
+    if (ok === "ok") {
+        main.viewSection("checkOutSuccess");
+        document.querySelector("#checkOutSuccess .message").textContent = checkOutBook.Title + " has been checked out to " + checkOutReader.FirstName + " " + checkOutReader.LastName;
+        document.getElementById("checkOutBook").textContent = "";
+        checkOutBook = null;
+    }
+    else {
+        document.getElementById("checkOutError").textContent = ok;
+        view.show("#checkOutError");
+    }
+}
+
+function scanReturn(): void {
+    scanBarcode(result => {
+        var returnBook = getData("/api/book/barcode/" + result.text + " (" + result.format + ")") as Book;
+
+        if (returnBook) {
+            var ok = getData("/api/books/return/" + returnBook.Id) as string;
+
+            if (ok === "ok") {
+                document.querySelector("#returnBookSuccess .message").textContent = returnBook.Title + " has been returned to inventory!";
+                main.viewSection("returnBookSuccess");
+            }
+        }
+    });
+}
+
+
 function addUserSubmit(ev: Event): boolean {
     ev.preventDefault();
 
@@ -65,7 +150,7 @@ function addUserSubmit(ev: Event): boolean {
     if (currentReader) {
         main.viewSection("addUserSuccess");
 
-        for (let i = 0; i < inputs.length; i++) {
+        for (let i = 0; i < inputs.length; i++)  {
             const field = inputs[i] as HTMLInputElement;
             field.value = "";
         }
@@ -96,7 +181,14 @@ function prepField(str: string): string {
     return str.trim();
 }
 
-var currentLibrarian: Reader;
+interface Library {
+    Id: number;
+    Name: string;
+    Village: string;
+    Country: string;
+}
+
+var currentLibrary: Library;
 
 function signInSubmit(ev: Event): boolean {
     ev.preventDefault();
@@ -110,10 +202,9 @@ function signInSubmit(ev: Event): boolean {
         data[field.name] = prepField(field.value);
     }
 
-    currentLibrarian = postData("/api/user/signin", data) as Reader;
+    currentLibrary = postData("/api/signin", data) as Library;
 
-
-    if (currentLibrarian) {
+    if (currentLibrary) {
         main.viewSection("hub");
     }
 
@@ -159,19 +250,19 @@ function getData(path: string): Object {
 }
 
 interface Reader {
+    Id: number;
     FirstName: string;
     MiddleName: string;
     LastName: string;
-    Barcode: number;
     TotalCheckouts: number;
+    Barcode: string;
 }
-
 
 function initReaders() {
     const ul = document.getElementById("readersList");
     ul.textContent = "";
 
-    const readers = getData("/api/readers") as Array<Reader>;
+    const readers = getData("/api/readers/" + currentLibrary.Id) as Array<Reader>;
 
     readers.forEach(r => {
         const li = document.createElement("li");
@@ -210,8 +301,9 @@ interface Librarian {
 
 function onSignInGetBarcode(): void {
     scanBarcode(result => {
-        var response = getData("/api/user/signin/" + result.text + " (" + result.format + ")") as Librarian;
-        if (response) {
+        currentLibrary = getData("/api/signin/" + result.text + " (" + result.format + ")") as Library;
+
+        if (currentLibrary) {
             main.viewSection("hub");
         }
     });

@@ -248,25 +248,48 @@
     </section>
 
     <!--CHECKOUT SCAN OPTION-->
-    <section id="chooseScanOption" hidden>
+    <section id="checkOut" hidden>
         <div>
-            <button type="button" class="scanUser">
+            <button type="button" class="scanReader">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 <h1>Scan Reader</h1>
             </button>
+            <h3 id="checkOutReader">
+            </h3>
             <button type="button" class="scanBook">
                 <i class="fa fa-times" aria-hidden="true"></i>
                 <h1>Scan Book</h1>
             </button>
-            <button type="button" class="selectUser">
+            <h3 id="checkOutBook"></h3>
+            <h3 id="checkOutError" hidden></h3>
+            <!--<button type="button" class="selectUser">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 <h1>Select Reader</h1>
             </button>
             <button type="button" class="selectBook">
                 <i class="fa fa-times" aria-hidden="true"></i>
                 <h1>Select Book</h1>
-            </button>
+            </button>-->
         </div>
+    </section>
+
+    <section id="checkOutSuccess" hidden>
+        <h2>Successful Checkout!</h2>
+        <p class="message"></p>
+        <button></button>
+    </section>
+
+    <section id="returnBook" hidden>
+        <button type="button" class="scanBook">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            <h1>Scan Book</h1>
+        </button>
+    </section>
+
+    <section id="returnBookSuccess" hidden>
+        <h2>Book Returned!</h2>
+        <p class="message"></p>
+        <button></button>
     </section>
 
 

@@ -15,7 +15,7 @@ namespace website.admin
                 var list = db.Books.ToList();
 
                 insertList.Controls.Add(
-                    new HtmlGenericControl("li") { InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='reader'>Checked Out To</span><span></span><span></span>" }
+                    new HtmlGenericControl("li") { InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>" }
                 );
 
                 foreach (var book in list)
@@ -34,6 +34,11 @@ namespace website.admin
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "library");
                     span.InnerText = book.Library != null ? book.Library.Name : "—";
+                    li.Controls.Add(span);
+
+                    span = new HtmlGenericControl("span");
+                    span.Attributes.Add("class", "barcode");
+                    span.InnerText = book.Barcode ?? "—";
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");

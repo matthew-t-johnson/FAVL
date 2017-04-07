@@ -8,12 +8,16 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
         document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
         document.getElementById("inventory").addEventListener("view:show", showInventory);
+        document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
+        document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
+        document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
+        document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
     }
     exports.addUserInit = addUserInit;
     function showInventory() {
         var ul = document.getElementById("inventoryList");
         ul.textContent = "";
-        var books = getData("/api/books");
+        var books = getData("/api/books/" + currentLibrary.Id);
         books.forEach(function (b) {
             var li = document.createElement("li");
             var span = document.createElement("span");
@@ -26,6 +30,73 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             li.appendChild(span);
             li.setAttribute("data-book-id", b.Id.toString());
             ul.appendChild(li);
+        });
+    }
+    function showCheckOut() {
+        view.hide("#checkOutError");
+        view.hide("#checkOutReader");
+        view.hide("#checkOutBook");
+    }
+    var checkOutReader;
+    function scanReader() {
+        view.hide("#checkOutError");
+        scanBarcode(function (result) {
+            checkOutReader = getData("/api/reader/barcode/" + result.text + " (" + result.format + ")");
+            if (checkOutReader) {
+                document.getElementById("checkOutReader").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
+                view.show("#checkOutReader");
+                if (checkOutBook && checkOutReader) {
+                    checkOutTheBook(checkOutReader, checkOutBook);
+                }
+            }
+            else {
+                document.getElementById("checkOutReader").textContent = "";
+                view.hide("#checkOutReader");
+            }
+        });
+    }
+    var checkOutBook;
+    function scanBook() {
+        view.hide("#checkOutError");
+        scanBarcode(function (result) {
+            checkOutBook = getData("/api/book/barcode/" + result.text + " (" + result.format + ")");
+            if (checkOutBook) {
+                document.getElementById("checkOutBook").textContent = checkOutBook.Title;
+                view.show("#checkOutBook");
+                if (checkOutBook && checkOutReader) {
+                    checkOutTheBook(checkOutReader, checkOutBook);
+                }
+            }
+            else {
+                document.getElementById("checkOutBook").textContent = "";
+                view.hide("#checkOutBook");
+            }
+        });
+    }
+    function checkOutTheBook(reader, book) {
+        view.hide("#checkOutError");
+        var ok = getData("/api/books/checkout/" + book.Id + "/" + reader.Id);
+        if (ok === "ok") {
+            main.viewSection("checkOutSuccess");
+            document.querySelector("#checkOutSuccess .message").textContent = checkOutBook.Title + " has been checked out to " + checkOutReader.FirstName + " " + checkOutReader.LastName;
+            document.getElementById("checkOutBook").textContent = "";
+            checkOutBook = null;
+        }
+        else {
+            document.getElementById("checkOutError").textContent = ok;
+            view.show("#checkOutError");
+        }
+    }
+    function scanReturn() {
+        scanBarcode(function (result) {
+            var returnBook = getData("/api/book/barcode/" + result.text + " (" + result.format + ")");
+            if (returnBook) {
+                var ok = getData("/api/books/return/" + returnBook.Id);
+                if (ok === "ok") {
+                    document.querySelector("#returnBookSuccess .message").textContent = returnBook.Title + " has been returned to inventory!";
+                    main.viewSection("returnBookSuccess");
+                }
+            }
         });
     }
     function addUserSubmit(ev) {
@@ -58,7 +129,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             str = "";
         return str.trim();
     }
-    var currentLibrarian;
+    var currentLibrary;
     function signInSubmit(ev) {
         ev.preventDefault();
         var form = ev.target;
@@ -68,8 +139,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             var field = inputs[i];
             data[field.name] = prepField(field.value);
         }
-        currentLibrarian = postData("/api/user/signin", data);
-        if (currentLibrarian) {
+        currentLibrary = postData("/api/signin", data);
+        if (currentLibrary) {
             main.viewSection("hub");
         }
         return false;
@@ -106,7 +177,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     function initReaders() {
         var ul = document.getElementById("readersList");
         ul.textContent = "";
-        var readers = getData("/api/readers");
+        var readers = getData("/api/readers/" + currentLibrary.Id);
         readers.forEach(function (r) {
             var li = document.createElement("li");
             li.textContent = r.FirstName + " " + r.LastName;
@@ -134,8 +205,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     }
     function onSignInGetBarcode() {
         scanBarcode(function (result) {
-            var response = getData("/api/user/signin/" + result.text + " (" + result.format + ")");
-            if (response) {
+            currentLibrary = getData("/api/signin/" + result.text + " (" + result.format + ")");
+            if (currentLibrary) {
                 main.viewSection("hub");
             }
         });

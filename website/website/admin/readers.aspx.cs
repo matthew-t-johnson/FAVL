@@ -14,7 +14,7 @@ namespace website.admin
                 var list = db.Readers.ToList();
 
                 insertList.Controls.Add(
-                    new HtmlGenericControl("li") { InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='checkouts'>Checkouts</span><span></span><span></span>" }
+                    new HtmlGenericControl("li") { InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>" }
                     );
 
                 foreach (var reader in list)
@@ -30,6 +30,11 @@ namespace website.admin
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "barcode");
                     span.InnerText = reader.Barcode ?? string.Empty;
+                    li.Controls.Add(span);
+
+                    span = new HtmlGenericControl("span");
+                    span.Attributes.Add("class", "library");
+                    span.InnerText = reader.Library?.Name ?? string.Empty;
                     li.Controls.Add(span);
 
 

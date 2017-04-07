@@ -32,6 +32,30 @@ namespace website.Controllers
         }
 
         [HttpGet]
+        [Route("api/reader/barcode/{barcode}")]
+        public Reader GetReaderByBarcode(string barcode)
+        {
+            using (var db = new favlEntities())
+            {
+                var reader = db.Readers.FirstOrDefault(r => r.Barcode == barcode);
+
+                if (reader == null)
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+
+                return new Reader
+                {
+                    Id = reader.Id,
+                    FirstName = reader.FirstName,
+                    MiddleName = reader.MiddleName,
+                    LastName = reader.LastName,
+                    Barcode = reader.Barcode,
+                    TotalCheckouts = reader.TotalCheckouts
+                };
+            }
+        }
+
+
+        [HttpGet]
         [Route("api/readers")]
         public List<Reader> GetReaders()
         {
@@ -132,44 +156,45 @@ namespace website.Controllers
 
 
         [HttpPost]
-        [Route("api/user/signin")]
-        public Reader SignIn([FromBody] SignInArgs args)
+        [Route("api/signin")]
+        public Library SignIn([FromBody] SignInArgs args)
         {
             using (var db = new favlEntities())
             {
-                var signer = db.Librarians.FirstOrDefault(l => l.Username == args.username);
+                var librarian = db.Librarians.FirstOrDefault(l => l.Username == args.username);
 
-                if (signer == null)
+                if (librarian == null)
                     throw new HttpResponseException(HttpStatusCode.NotFound);
 
-                if (!PW.Verify(args.password, signer.PasswordHash, signer.PasswordSalt))
+                if (!PW.Verify(args.password, librarian.PasswordHash, librarian.PasswordSalt))
                     throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
-                return new Reader
+                return new Library
                 {
-                    Id = signer.Id,
-                    FirstName = signer.FirstName,
-                    LastName = signer.LastName,
-                    Barcode = signer.Barcode,
+                    Id = librarian.Library.Id,
+                    Name = librarian.Library.Name,
+                    Village = librarian.Library.Village,
+                    Country = librarian.Library.Country
                 };
             }
         }
 
         [HttpGet]
-        [Route("api/user/signin/{barcode}")]
-        public Librarian SignIn(string barcode)
+        [Route("api/signin/{barcode}")]
+        public Library SignIn(string barcode)
         {
             using (var db = new favlEntities())
             {
-                var signer = db.Librarians.FirstOrDefault(l => l.Barcode == barcode);
+                var librarian = db.Librarians.FirstOrDefault(l => l.Barcode == barcode);
 
-                if (signer == null)
+                if (librarian == null)
                     throw new HttpResponseException(HttpStatusCode.NotFound);
 
-                return new Librarian {
-                    Id = signer.Id,
-                    FirstName = signer.FirstName,
-                    LastName = signer.LastName
+                return new Library {
+                    Id = librarian.Library.Id,
+                    Name = librarian.Library.Name,
+                    Village = librarian.Library.Village,
+                    Country = librarian.Library.Country
                 };
             }
         }
@@ -204,6 +229,7 @@ namespace website.Controllers
 
                 return books.Select(book => new Book
                 {
+                    Id = book.Id,
                     Title = book.Title,
                     AuthorFirst = book.AuthorFirst,
                     AuthorMiddle = book.AuthorMiddle,
@@ -214,22 +240,19 @@ namespace website.Controllers
         }
 
         [HttpGet]
-        [Route("api/books/checkout/{bookID}/{readerID}")]
-        public Book CheckOutBook(int bookID, int readerID)
+        [Route("api/book/barcode/{barcode}")]
+        public Book GetBookByBarcode(string barcode)
         {
             using (var db = new favlEntities())
             {
-                var book = db.Books.Find(bookID);
+                var book = db.Books.FirstOrDefault(b => b.Barcode == barcode);
 
                 if (book == null)
                     throw new HttpResponseException(HttpStatusCode.NotFound);
 
-                book.CheckedOutTo = readerID;
-
-                db.SaveChanges();
-
                 return new Book
                 {
+                    Id = book.Id,
                     Title = book.Title,
                     AuthorFirst = book.AuthorFirst,
                     AuthorMiddle = book.AuthorMiddle,
@@ -238,6 +261,47 @@ namespace website.Controllers
                 };
             }
         }
+
+
+        [HttpGet]
+        [Route("api/books/checkout/{bookID}/{readerID}")]
+        public string CheckOutBook(int bookID, int readerID)
+        {
+            using (var db = new favlEntities())
+            {
+                var book = db.Books.Find(bookID);
+
+                if (book == null)
+                    return "Book not found";
+
+                book.CheckedOutTo = readerID;
+
+                db.SaveChanges();
+
+                return "ok";
+            }
+        }
+
+        [HttpGet]
+        [Route("api/books/return/{bookID}")]
+        public string ReturnBook(int bookID)
+        {
+            using (var db = new favlEntities())
+            {
+                var book = db.Books.Find(bookID);
+
+                if (book == null)
+                    return "Book not found";
+
+                book.CheckedOutTo = null;
+
+                db.SaveChanges();
+
+                return "ok";
+            }
+        }
+
+
 
         public class SignInArgs
         {

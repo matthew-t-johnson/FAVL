@@ -18,7 +18,8 @@ namespace website.admin
                     FirstName = Request.Form["ReaderFirst"].Trim(),
                     MiddleName = Request.Form["ReaderMiddle"].Trim(),
                     LastName = Request.Form["ReaderLast"].Trim(),
-                    Barcode = string.IsNullOrEmpty(barcode) ? null : barcode
+                    Barcode = string.IsNullOrEmpty(barcode) ? null : barcode + " (CODE_128)",
+                    LibraryID = int.Parse(Request.Form["LibraryID"])
                 });
 
                 db.SaveChanges();

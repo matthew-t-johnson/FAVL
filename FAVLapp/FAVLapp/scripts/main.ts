@@ -31,7 +31,7 @@ function initClick(): void {
     });
 
     document.getElementById("returnButton").addEventListener("click", () => {
-        viewSection("readers");
+        viewSection("returnBook");
     });
 
     document.getElementById("goToHubButton").addEventListener("click", () => {
@@ -41,4 +41,9 @@ function initClick(): void {
     document.getElementById("inventoryButton").addEventListener("click", () => {
         viewSection("inventory");
     });
+
+    document.getElementById("checkOutButton").addEventListener("click", () => {
+        viewSection("checkOut");
+    });
+
 }

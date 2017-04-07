@@ -22,7 +22,7 @@ namespace website.admin
                     AuthorFirst = Request.Form["AuthorFirst"].Trim(),
                     AuthorMiddle = Request.Form["AuthorMiddle"].Trim(),
                     AuthorLast = Request.Form["AuthorLast"].Trim(),
-                    Barcode = string.IsNullOrEmpty(barcode) ? null : barcode,
+                    Barcode = string.IsNullOrEmpty(barcode) ? null : barcode + " (EAN_13)",
                     LibraryID = int.Parse(Request.Form["LibraryID"])
                 });
 

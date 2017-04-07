@@ -10,28 +10,28 @@ namespace website.admin
             if (!IsPostBack)
                 return;
 
-            //if (Request.Form["Password"] != Request.Form["Password2"])
-            //{
-            //    passwordError.Visible = true;
-            //    return;
-            //}
+            if (Request.Form["Password"] != Request.Form["Password2"])
+            {
+                passwordError.Visible = true;
+                return;
+            }
 
-            //passwordError.Visible = false;
+            passwordError.Visible = false;
 
             using (var db = new favlEntities())
             {
-                //string hash, salt;
-                //PW.Encrypt(Request.Form["Password"], out hash, out salt);
+                string hash, salt;
+                PW.Encrypt(Request.Form["Password"], out hash, out salt);
                 var barcode = Request.Form["Barcode"].Trim();
 
                 var librarian = new Librarian
                 {
                     FirstName = string.Empty,
                     LastName = string.Empty,
-                    Username = string.Empty,
+                    Username = Request.Form["Username"].Trim(),
                     IsAdmin = false,
-                    PasswordHash = string.Empty,
-                    PasswordSalt = string.Empty,
+                    PasswordHash = hash,
+                    PasswordSalt = salt,
 
 
                     Barcode = string.IsNullOrEmpty(barcode) ? null : barcode + " (CODE_128)",

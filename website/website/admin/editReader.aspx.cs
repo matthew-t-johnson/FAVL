@@ -28,11 +28,19 @@ namespace website.admin
                         reader.FirstName = Request.Form["ReaderFirst"].Trim();
                         reader.MiddleName = Request.Form["ReaderMiddle"].Trim();
                         reader.LastName = Request.Form["ReaderLast"].Trim();
-                        reader.Barcode = string.IsNullOrEmpty(barcode) ? null : barcode;
+                        reader.Barcode = string.IsNullOrEmpty(barcode) ? null : barcode + " (CODE_128)";
+                        reader.LibraryID = int.Parse(Request.Form["LibraryID"]);
 
                         db.SaveChanges();
-                        Response.Redirect("reader.aspx");
+                        Response.Redirect("readers.aspx");
                         return;
+                    }
+
+                    var originalBarcode = reader.Barcode;
+
+                    if (!string.IsNullOrEmpty(originalBarcode) && originalBarcode.Length > 7)
+                    {
+                        originalBarcode = originalBarcode.Substring(0, 7);
                     }
 
                     var s = new HtmlGenericControl("script")
@@ -44,7 +52,8 @@ namespace website.admin
                                 FirstName = reader.FirstName,
                                 MiddleName = reader.MiddleName,
                                 LastName = reader.LastName,
-                                Barcode = reader.Barcode
+                                Barcode = originalBarcode ?? string.Empty,
+                                LibraryID = reader.LibraryID
                             })
                     };
 
