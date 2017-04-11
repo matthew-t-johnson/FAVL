@@ -9,8 +9,8 @@ var Quagga;
         inputStream: {
             type: "LiveStream",
             constraints: {
-                width: { min: 200, max: 320 },
-                height: { min: 112, max: 160 },
+                width: { min: 320, max: 640 },
+                height: { min: 180, max: 360 },
                 facingMode: "environment" // or user
             }
         },
