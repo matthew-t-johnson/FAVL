@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using Newtonsoft.Json;
 
 namespace website.admin
 {
-    public partial class editReader : System.Web.UI.Page
+    public partial class editReader : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,28 +40,26 @@ namespace website.admin
                     var originalBarcode = reader.Barcode;
 
                     if (!string.IsNullOrEmpty(originalBarcode) && originalBarcode.Length > 7)
-                    {
                         originalBarcode = originalBarcode.Substring(0, 7);
-                    }
 
                     var s = new HtmlGenericControl("script")
                     {
                         InnerHtml = "var reader = " + JsonConvert.SerializeObject(
-                            new Reader
-                            {
-                                Id = reader.Id,
-                                FirstName = reader.FirstName,
-                                MiddleName = reader.MiddleName,
-                                LastName = reader.LastName,
-                                Barcode = originalBarcode ?? string.Empty,
-                                LibraryID = reader.LibraryID
-                            })
+                                        new Reader
+                                        {
+                                            Id = reader.Id,
+                                            FirstName = reader.FirstName,
+                                            MiddleName = reader.MiddleName,
+                                            LastName = reader.LastName,
+                                            Barcode = originalBarcode ?? string.Empty,
+                                            LibraryID = reader.LibraryID
+                                        })
                     };
 
                     insertReader.Controls.Add(s);
                 }
-            };
-
+            }
+            ;
         }
     }
 }

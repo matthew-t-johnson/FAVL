@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using Newtonsoft.Json;
 
 namespace website.admin
 {
-    public partial class editLibrarian : System.Web.UI.Page
+    public partial class editLibrarian : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,25 +36,23 @@ namespace website.admin
                     var originalBarcode = librarian.Barcode;
 
                     if (!string.IsNullOrEmpty(originalBarcode) && originalBarcode.Length > 7)
-                    {
                         originalBarcode = originalBarcode.Substring(0, 7);
-                    }
 
                     var s = new HtmlGenericControl("script")
                     {
                         InnerHtml = "var librarian = " + JsonConvert.SerializeObject(
-                            new Librarian
-                            {
-                                Id = librarian.Id,
-                                Barcode = originalBarcode ?? string.Empty,
-                                LibraryID = librarian.LibraryID
-                            })
+                                        new Librarian
+                                        {
+                                            Id = librarian.Id,
+                                            Barcode = originalBarcode ?? string.Empty,
+                                            LibraryID = librarian.LibraryID
+                                        })
                     };
 
                     insertLibrarian.Controls.Add(s);
                 }
-            };
-
+            }
+            ;
         }
     }
 }

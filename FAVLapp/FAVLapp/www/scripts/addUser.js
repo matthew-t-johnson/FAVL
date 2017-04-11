@@ -17,9 +17,11 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     exports.addUserInit = addUserInit;
     function showEditUser() {
         document.querySelector("#editUser input[name='FirstName']").value = currentEditUser.FirstName;
-        document.querySelector("#editUser input[name='MiddleName']").value = currentEditUser.MiddleName;
+        document.querySelector("#editUser input[name='MiddleName']").value =
+            currentEditUser.MiddleName;
         document.querySelector("#editUser input[name='LastName']").value = currentEditUser.LastName;
-        document.querySelector("#editUser input[name='Barcode']").value = currentEditUser.Barcode || "";
+        document.querySelector("#editUser input[name='Barcode']").value =
+            currentEditUser.Barcode || "";
     }
     function showInventory() {
         var ul = document.getElementById("inventoryList");
@@ -50,7 +52,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         scanBarcode(function (result) {
             checkOutReader = getData("/api/reader/barcode/" + result.text + " (" + result.format + ")");
             if (checkOutReader) {
-                document.getElementById("checkOutReader").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
+                document.getElementById("checkOutReader").textContent =
+                    checkOutReader.FirstName + " " + checkOutReader.LastName;
                 view.show("#checkOutReader");
                 if (checkOutBook && checkOutReader) {
                     checkOutTheBook(checkOutReader, checkOutBook);
@@ -85,7 +88,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         var ok = getData("/api/books/checkout/" + book.Id + "/" + reader.Id);
         if (ok === "ok") {
             main.viewSection("checkOutSuccess");
-            document.querySelector("#checkOutSuccess .message").textContent = checkOutBook.Title + " has been checked out to " + checkOutReader.FirstName + " " + checkOutReader.LastName;
+            document.querySelector("#checkOutSuccess .message").textContent =
+                checkOutBook.Title + " has been checked out to " + checkOutReader.FirstName + " " + checkOutReader.LastName;
             document.getElementById("checkOutBook").textContent = "";
             checkOutBook = null;
         }
@@ -100,7 +104,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             if (returnBook) {
                 var ok = getData("/api/books/return/" + returnBook.Id);
                 if (ok === "ok") {
-                    document.querySelector("#returnBookSuccess .message").textContent = returnBook.Title + " has been returned to inventory!";
+                    document.querySelector("#returnBookSuccess .message").textContent =
+                        returnBook.Title + " has been returned to inventory!";
                     main.viewSection("returnBookSuccess");
                 }
             }
@@ -128,9 +133,14 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         return false;
     }
     var currentReader;
+    function encodeHTML(str) {
+        if (!str)
+            return "";
+        return str.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+    }
     function showAddUserSuccess() {
         console.log(currentReader);
-        document.getElementById("userInfo").innerHTML = "\n<p>First name: " + currentReader.FirstName + "</p>\n<p>Last name: " + currentReader.LastName + "</p>\n<p>Barcode: " + currentReader.Barcode + "</p>\n<p>Total Checkouts: " + currentReader.TotalCheckouts + "</p>";
+        document.getElementById("userInfo").innerHTML = "\n<p>First name: " + encodeHTML(currentReader.FirstName) + "</p>\n<p>Last name: " + encodeHTML(currentReader.LastName) + "</p>\n<p>Barcode: " + encodeHTML(currentReader.Barcode) + "</p>\n<p>Total Checkouts: " + currentReader.TotalCheckouts + "</p>";
     }
     function prepField(str) {
         if (!str)

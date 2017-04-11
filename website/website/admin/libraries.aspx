@@ -12,6 +12,6 @@
     <h1>Libraries</h1>
     <ul id="insertList" class="listAsTable" runat="server"></ul>
     <p>
-        <button type="button" onclick="location.href='addLibrary.aspx'">Add Library</button>
+        <button type="button" onclick="location.href = 'addLibrary.aspx'">Add Library</button>
     </p>
 </asp:Content>

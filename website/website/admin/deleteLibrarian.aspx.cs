@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace website.admin
 {
-    public partial class deleteLibrarian : System.Web.UI.Page
+    public partial class deleteLibrarian : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,7 +23,8 @@ namespace website.admin
                     db.Librarians.Remove(librarian);
                     db.SaveChanges();
                 }
-            };
+            }
+            ;
 
             Response.Redirect("librarians.aspx");
         }

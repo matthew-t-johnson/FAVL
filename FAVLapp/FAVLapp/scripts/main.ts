@@ -1,5 +1,5 @@
-﻿import AddUser = require('./addUser');
-import view = require('../lib/view');
+﻿import AddUser = require("./addUser");
+import view = require("../lib/view");
 
 export function mainInit(): void {
     initClick();

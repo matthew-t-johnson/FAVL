@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 
 namespace website.admin
 {
-    public partial class librarians : System.Web.UI.Page
+    public partial class librarians : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -17,7 +14,11 @@ namespace website.admin
                 var list = db.Librarians.Where(l => l.LibraryID != null).ToList();
 
                 insertList.Controls.Add(
-                    new HtmlGenericControl("li") { InnerHtml = "<span class='barcode'>Barcode</span><span class='name'>Library Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>" }
+                    new HtmlGenericControl("li")
+                    {
+                        InnerHtml =
+                            "<span class='barcode'>Barcode</span><span class='name'>Library Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>"
+                    }
                 );
 
 
@@ -45,13 +46,13 @@ namespace website.admin
                     li.Controls.Add(span);
 
                     li.Controls.Add(
-                        new LiteralControl($"<span class='edit'><a href='editLibrarian.aspx?id={librarian.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteLibrarian({librarian.Id}, \"{librarian.Library.Name}\")'>Delete</a></span>")
+                        new LiteralControl(
+                            $"<span class='edit'><a href='editLibrarian.aspx?id={librarian.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteLibrarian({librarian.Id}, \"{librarian.Library.Name}\")'>Delete</a></span>")
                     );
 
                     insertList.Controls.Add(li);
                 }
             }
-
         }
     }
 }

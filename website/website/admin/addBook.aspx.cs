@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 
 namespace website.admin
 {
@@ -9,9 +8,7 @@ namespace website.admin
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
                 return;
-            }
 
             using (var db = new favlEntities())
             {

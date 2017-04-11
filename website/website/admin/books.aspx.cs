@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 
 namespace website.admin
 {
-    public partial class books : System.Web.UI.Page
+    public partial class books : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -15,7 +14,11 @@ namespace website.admin
                 var list = db.Books.ToList();
 
                 insertList.Controls.Add(
-                    new HtmlGenericControl("li") { InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>" }
+                    new HtmlGenericControl("li")
+                    {
+                        InnerHtml =
+                            "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>"
+                    }
                 );
 
                 foreach (var book in list)
@@ -47,14 +50,14 @@ namespace website.admin
                     li.Controls.Add(span);
 
                     li.Controls.Add(
-                        new LiteralControl($"<span class='edit'><a href='editBook.aspx?id={book.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteBook({book.Id}, \"{book.Title}\")'>Delete</a></span>")
+                        new LiteralControl(
+                            $"<span class='edit'><a href='editBook.aspx?id={book.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteBook({book.Id}, \"{book.Title}\")'>Delete</a></span>")
                     );
 
 
                     insertList.Controls.Add(li);
                 }
             }
-
         }
     }
 }

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace website.admin
 {
-    public partial class deleteReader : System.Web.UI.Page
+    public partial class deleteReader : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,10 +23,10 @@ namespace website.admin
                     db.Readers.Remove(reader);
                     db.SaveChanges();
                 }
-            };
+            }
+            ;
 
             Response.Redirect("readers.aspx");
-
         }
     }
 }

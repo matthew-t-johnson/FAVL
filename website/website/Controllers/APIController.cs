@@ -14,7 +14,7 @@ namespace website.Controllers
         {
             using (var db = new favlEntities())
             {
-                var reader = db.Readers.FirstOrDefault(r => r.Id == userID);
+                var reader = db.Readers.Find(userID);
 
                 if (reader == null)
                     throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -53,8 +53,7 @@ namespace website.Controllers
                 };
             }
         }
-
-
+        
         [HttpGet]
         [Route("api/readers")]
         public List<Reader> GetReaders()
@@ -63,14 +62,15 @@ namespace website.Controllers
             {
                 var readers = db.Readers.ToList();
                 return readers.Select(reader => new Reader
-                {
-                    Id = reader.Id,
-                    FirstName = reader.FirstName,
-                    MiddleName = reader.MiddleName,
-                    LastName = reader.LastName,
-                    Barcode = reader.Barcode,
-                    TotalCheckouts = reader.TotalCheckouts
-                }).ToList();
+                    {
+                        Id = reader.Id,
+                        FirstName = reader.FirstName,
+                        MiddleName = reader.MiddleName,
+                        LastName = reader.LastName,
+                        Barcode = reader.Barcode,
+                        TotalCheckouts = reader.TotalCheckouts
+                    })
+                    .ToList();
             }
         }
 
@@ -82,14 +82,15 @@ namespace website.Controllers
             {
                 var readers = db.Readers.Where(r => r.LibraryID == libraryID).ToList();
                 return readers.Select(reader => new Reader
-                {
-                    Id = reader.Id,
-                    FirstName = reader.FirstName,
-                    MiddleName = reader.MiddleName,
-                    LastName = reader.LastName,
-                    Barcode = reader.Barcode,
-                    TotalCheckouts = reader.TotalCheckouts
-                }).ToList();
+                    {
+                        Id = reader.Id,
+                        FirstName = reader.FirstName,
+                        MiddleName = reader.MiddleName,
+                        LastName = reader.LastName,
+                        Barcode = reader.Barcode,
+                        TotalCheckouts = reader.TotalCheckouts
+                    })
+                    .ToList();
             }
         }
 
@@ -108,12 +109,12 @@ namespace website.Controllers
 
                 return new Reader
                 {
-                    Id = reader.Id,
-                    FirstName = reader.FirstName,
-                    MiddleName = reader.MiddleName,
-                    LastName = reader.LastName,
-                    Barcode = reader.Barcode,
-                    TotalCheckouts = reader.TotalCheckouts
+                    Id = addedReader.Id,
+                    FirstName = addedReader.FirstName,
+                    MiddleName = addedReader.MiddleName,
+                    LastName = addedReader.LastName,
+                    Barcode = addedReader.Barcode,
+                    TotalCheckouts = addedReader.TotalCheckouts
                 };
             }
         }
@@ -124,7 +125,7 @@ namespace website.Controllers
         {
             using (var db = new favlEntities())
             {
-                var reader = db.Readers.FirstOrDefault(r => r.Id == userID);
+                var reader = db.Readers.Find(userID);
 
                 if (reader == null)
                     throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -133,8 +134,7 @@ namespace website.Controllers
                 db.SaveChanges();
             }
         }
-
-
+        
         [HttpGet]
         [Route("api/libraries")]
         public IEnumerable<Library> GetLibraries()
@@ -144,17 +144,16 @@ namespace website.Controllers
                 var libraries = db.Libraries.ToList();
 
                 return libraries.Select(library => new Library
-                {
-                    Id = library.Id,
-                    Name = library.Name,
-                    Village = library.Village,
-                    Country = library.Country
-                }).ToList();
-
+                    {
+                        Id = library.Id,
+                        Name = library.Name,
+                        Village = library.Village,
+                        Country = library.Country
+                    })
+                    .ToList();
             }
         }
-
-
+        
         [HttpPost]
         [Route("api/signin")]
         public Library SignIn([FromBody] SignInArgs args)
@@ -190,7 +189,8 @@ namespace website.Controllers
                 if (librarian == null)
                     throw new HttpResponseException(HttpStatusCode.NotFound);
 
-                return new Library {
+                return new Library
+                {
                     Id = librarian.Library.Id,
                     Name = librarian.Library.Name,
                     Village = librarian.Library.Village,
@@ -208,14 +208,15 @@ namespace website.Controllers
                 var books = db.Books.ToList();
 
                 return books.Select(book => new Book
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    AuthorFirst = book.AuthorFirst,
-                    AuthorMiddle = book.AuthorMiddle,
-                    AuthorLast = book.AuthorLast,
-                    Barcode = book.Barcode                    
-                }).ToList();
+                    {
+                        Id = book.Id,
+                        Title = book.Title,
+                        AuthorFirst = book.AuthorFirst,
+                        AuthorMiddle = book.AuthorMiddle,
+                        AuthorLast = book.AuthorLast,
+                        Barcode = book.Barcode
+                    })
+                    .ToList();
             }
         }
 
@@ -228,14 +229,15 @@ namespace website.Controllers
                 var books = db.Books.Where(b => b.LibraryID == libraryID).ToList();
 
                 return books.Select(book => new Book
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    AuthorFirst = book.AuthorFirst,
-                    AuthorMiddle = book.AuthorMiddle,
-                    AuthorLast = book.AuthorLast,
-                    Barcode = book.Barcode
-                }).ToList();
+                    {
+                        Id = book.Id,
+                        Title = book.Title,
+                        AuthorFirst = book.AuthorFirst,
+                        AuthorMiddle = book.AuthorMiddle,
+                        AuthorLast = book.AuthorLast,
+                        Barcode = book.Barcode
+                    })
+                    .ToList();
             }
         }
 
@@ -261,8 +263,7 @@ namespace website.Controllers
                 };
             }
         }
-
-
+        
         [HttpGet]
         [Route("api/books/checkout/{bookID}/{readerID}")]
         public string CheckOutBook(int bookID, int readerID)
@@ -300,9 +301,7 @@ namespace website.Controllers
                 return "ok";
             }
         }
-
-
-
+        
         public class SignInArgs
         {
             public string password;

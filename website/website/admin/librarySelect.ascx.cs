@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
 namespace website.admin
 {
-    public partial class librarySelect : System.Web.UI.UserControl
+    public partial class librarySelect : UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             using (var db = new favlEntities())
             {
-                librarySelectOptions.Controls.Add(new HtmlGenericControl("option") { InnerText = "Choose Library" });
+                librarySelectOptions.Controls.Add(new HtmlGenericControl("option") {InnerText = "Choose Library"});
 
                 foreach (var library in db.Libraries)
                 {

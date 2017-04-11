@@ -9,13 +9,13 @@
     <h1>Edit Librarian</h1>
     <form id="dbForm" class="dbForm" runat="server">
         <p>
-            <uc1:librarySelect runat="server" ID="librarySelect" />
+            <uc1:librarySelect runat="server" ID="librarySelect"/>
         </p>
         <p>
-            <input type="text" placeholder="Barcode" name="Barcode" required pattern="^\d{7}$" title="7-digit CODE_128 Barcode Number" />
+            <input type="text" placeholder="Barcode" name="Barcode" required pattern="^\d{7}$" title="7-digit CODE_128 Barcode Number"/>
         </p>
         <p>
-            <input type="submit" value="Save Changes" />&emsp;<input type="button" value="Cancel" onclick="location.href = 'librarians.aspx'" />
+            <input type="submit" value="Save Changes"/>&emsp;<input type="button" value="Cancel" onclick="location.href = 'librarians.aspx'"/>
         </p>
     </form>
     <asp:placeholder id="insertLibrarian" runat="server"></asp:placeholder>

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using Newtonsoft.Json;
 
 namespace website.admin
 {
-    public partial class editLibrary : System.Web.UI.Page
+    public partial class editLibrary : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,18 +36,19 @@ namespace website.admin
                     var s = new HtmlGenericControl("script")
                     {
                         InnerHtml = "var library = " + JsonConvert.SerializeObject(
-                            new Library
-                            {
-                                Id = library.Id,
-                                Name = library.Name,
-                                Village = library.Village,
-                                Country = library.Country
-                            })
+                                        new Library
+                                        {
+                                            Id = library.Id,
+                                            Name = library.Name,
+                                            Village = library.Village,
+                                            Country = library.Country
+                                        })
                     };
 
                     insertLibrary.Controls.Add(s);
                 }
-            };
+            }
+            ;
         }
     }
 }

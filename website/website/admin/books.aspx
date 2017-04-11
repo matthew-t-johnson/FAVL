@@ -13,7 +13,7 @@
     <h1>Books</h1>
     <ul id="insertList" class="bookList listAsTable" runat="server"></ul>
     <p>
-        <button type="button" onclick="location.href='addBook.aspx'">Add Book</button>
+        <button type="button" onclick="location.href = 'addBook.aspx'">Add Book</button>
     </p>
 
 </asp:Content>

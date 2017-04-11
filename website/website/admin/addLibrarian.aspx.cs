@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Web.UI;
 
 namespace website.admin
 {
-    public partial class addLibrarian : System.Web.UI.Page
+    public partial class addLibrarian : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -36,7 +37,6 @@ namespace website.admin
 
                     Barcode = string.IsNullOrEmpty(barcode) ? null : barcode + " (CODE_128)",
                     LibraryID = int.Parse(Request.Form["LibraryID"])
-
                 };
 
                 db.Librarians.Add(librarian);
@@ -45,13 +45,13 @@ namespace website.admin
 
             Response.Redirect("librarians.aspx");
         }
-
     }
 
     public class PW
     {
         //	encryption and validation routines based on information available on the Web including https://crackstation.net/hashing-security.htm#aspsourcecode
         private const int SALT_SIZE = 24;
+
         private const int HASH_SIZE = 24;
         private const int ENCRYPTION_ITERATIONS = 377;
 
@@ -62,7 +62,7 @@ namespace website.admin
             new RNGCryptoServiceProvider().GetBytes(saltBytes);
 
             //	hash the password using the salt
-            var encrypter = new Rfc2898DeriveBytes(userPassword, saltBytes) { IterationCount = ENCRYPTION_ITERATIONS };
+            var encrypter = new Rfc2898DeriveBytes(userPassword, saltBytes) {IterationCount = ENCRYPTION_ITERATIONS};
             var hashBytes = encrypter.GetBytes(HASH_SIZE);
 
             //	return base-64 strings of each pw and salt
@@ -73,11 +73,15 @@ namespace website.admin
         public static bool Verify(string userPassword, string pw, string salt)
         {
             //	hash the incoming password using the provided base64 salt
-            var encrypter = new Rfc2898DeriveBytes(userPassword, Convert.FromBase64String(salt)) { IterationCount = ENCRYPTION_ITERATIONS };
+            var encrypter =
+                new Rfc2898DeriveBytes(userPassword, Convert.FromBase64String(salt))
+                {
+                    IterationCount = ENCRYPTION_ITERATIONS
+                };
             var hashBytes = encrypter.GetBytes(HASH_SIZE);
 
             //  return the result of comparing the base64 encrypted hash to the incoming base64 pw
-            return (pw == Convert.ToBase64String(hashBytes));
+            return pw == Convert.ToBase64String(hashBytes);
         }
     }
 }

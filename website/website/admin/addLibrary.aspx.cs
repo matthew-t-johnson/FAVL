@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Web.UI;
 
 namespace website.admin
 {
-    public partial class addLibrary : System.Web.UI.Page
+    public partial class addLibrary : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,7 +23,6 @@ namespace website.admin
             }
 
             Response.Redirect("libraries.aspx");
-
         }
     }
 }

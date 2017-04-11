@@ -1,6 +1,5 @@
 ﻿import main = require("./main");
-import view = require('../lib/view');
-
+import view = require("../lib/view");
 
 export function addUserInit(): void {
     document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
@@ -18,26 +17,28 @@ export function addUserInit(): void {
 }
 
 interface Book {
-    Id: number,
-    Title: string,
-    AuthorFirst: string,
-    AuthorMiddle: string,
-    AuthorLast: string,
-    Barcode: string  
+    Id: number;
+    Title: string;
+    AuthorFirst: string;
+    AuthorMiddle: string;
+    AuthorLast: string;
+    Barcode: string;
 }
 
 function showEditUser(): void {
     (document.querySelector("#editUser input[name='FirstName']") as HTMLInputElement).value = currentEditUser.FirstName;
-    (document.querySelector("#editUser input[name='MiddleName']") as HTMLInputElement).value = currentEditUser.MiddleName;
+    (document.querySelector("#editUser input[name='MiddleName']") as HTMLInputElement).value =
+        currentEditUser.MiddleName;
     (document.querySelector("#editUser input[name='LastName']") as HTMLInputElement).value = currentEditUser.LastName;
-    (document.querySelector("#editUser input[name='Barcode']") as HTMLInputElement).value = currentEditUser.Barcode || "";
+    (document.querySelector("#editUser input[name='Barcode']") as HTMLInputElement).value =
+        currentEditUser.Barcode || "";
 }
 
 function showInventory(): void {
     const ul = document.getElementById("inventoryList");
     ul.textContent = "";
 
-    const books = getData("/api/books/" + currentLibrary.Id) as Array<Book>;
+    const books = getData(`/api/books/${currentLibrary.Id}`) as Array<Book>;
 
     books.forEach(b => {
         const li = document.createElement("li");
@@ -53,7 +54,6 @@ function showInventory(): void {
         li.appendChild(span);
 
         li.setAttribute("data-book-id", b.Id.toString());
-
         
         ul.appendChild(li);
     });
@@ -71,39 +71,38 @@ var checkOutReader: Reader;
 function scanReader(): void {
     view.hide("#checkOutError");
     scanBarcode(result => {
-        checkOutReader = getData("/api/reader/barcode/" + result.text + " (" + result.format + ")") as Reader;
+        checkOutReader = getData(`/api/reader/barcode/${result.text} (${result.format})`) as Reader;
 
         if (checkOutReader) {
-            document.getElementById("checkOutReader").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
+            document.getElementById("checkOutReader").textContent =
+                checkOutReader.FirstName + " " + checkOutReader.LastName;
             view.show("#checkOutReader");
 
             if (checkOutBook && checkOutReader) {
                 checkOutTheBook(checkOutReader, checkOutBook);
             }
-        }
-        else {
+        } else {
             document.getElementById("checkOutReader").textContent = "";
             view.hide("#checkOutReader");
         }
     });
 }
+
 var checkOutBook: Book;
 
 function scanBook(): void {
     view.hide("#checkOutError");
     scanBarcode(result => {
-        checkOutBook = getData("/api/book/barcode/" + result.text + " (" + result.format + ")") as Book;
+        checkOutBook = getData(`/api/book/barcode/${result.text} (${result.format})`) as Book;
 
         if (checkOutBook) {
             document.getElementById("checkOutBook").textContent = checkOutBook.Title;
             view.show("#checkOutBook");
 
-            if (checkOutBook && checkOutReader)
-            {
+            if (checkOutBook && checkOutReader) {
                 checkOutTheBook(checkOutReader, checkOutBook);
             }
-        }
-        else {
+        } else {
             document.getElementById("checkOutBook").textContent = "";
             view.hide("#checkOutBook");
         }
@@ -112,15 +111,15 @@ function scanBook(): void {
 
 function checkOutTheBook(reader: Reader, book: Book) {
     view.hide("#checkOutError");
-    var ok = getData("/api/books/checkout/" + book.Id + "/" + reader.Id) as string;
+    const ok = getData(`/api/books/checkout/${book.Id}/${reader.Id}`) as string;
 
     if (ok === "ok") {
         main.viewSection("checkOutSuccess");
-        document.querySelector("#checkOutSuccess .message").textContent = checkOutBook.Title + " has been checked out to " + checkOutReader.FirstName + " " + checkOutReader.LastName;
+        document.querySelector("#checkOutSuccess .message").textContent =
+            `${checkOutBook.Title} has been checked out to ${checkOutReader.FirstName} ${checkOutReader.LastName}`;
         document.getElementById("checkOutBook").textContent = "";
         checkOutBook = null;
-    }
-    else {
+    } else {
         document.getElementById("checkOutError").textContent = ok;
         view.show("#checkOutError");
     }
@@ -128,19 +127,19 @@ function checkOutTheBook(reader: Reader, book: Book) {
 
 function scanReturn(): void {
     scanBarcode(result => {
-        var returnBook = getData("/api/book/barcode/" + result.text + " (" + result.format + ")") as Book;
+        var returnBook = getData(`/api/book/barcode/${result.text} (${result.format})`) as Book;
 
         if (returnBook) {
-            var ok = getData("/api/books/return/" + returnBook.Id) as string;
+            const ok = getData(`/api/books/return/${returnBook.Id}`) as string;
 
             if (ok === "ok") {
-                document.querySelector("#returnBookSuccess .message").textContent = returnBook.Title + " has been returned to inventory!";
+                document.querySelector("#returnBookSuccess .message").textContent =
+                    returnBook.Title + " has been returned to inventory!";
                 main.viewSection("returnBookSuccess");
             }
         }
     });
 }
-
 
 function addUserSubmit(ev: Event): boolean {
     ev.preventDefault();
@@ -160,7 +159,7 @@ function addUserSubmit(ev: Event): boolean {
     if (currentReader) {
         main.viewSection("addUserSuccess");
 
-        for (let i = 0; i < inputs.length; i++)  {
+        for (let i = 0; i < inputs.length; i++) {
             const field = inputs[i] as HTMLInputElement;
             field.value = "";
         }
@@ -173,13 +172,20 @@ function addUserSubmit(ev: Event): boolean {
 
 var currentReader: Reader;
 
+function encodeHTML(str: string): string {
+    if (!str)
+        return "";
+
+    return str.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+}
+
 function showAddUserSuccess(): void {
     console.log(currentReader);
 
     document.getElementById("userInfo").innerHTML = `
-<p>First name: ${currentReader.FirstName}</p>
-<p>Last name: ${currentReader.LastName}</p>
-<p>Barcode: ${currentReader.Barcode}</p>
+<p>First name: ${encodeHTML(currentReader.FirstName)}</p>
+<p>Last name: ${encodeHTML(currentReader.LastName)}</p>
+<p>Barcode: ${encodeHTML(currentReader.Barcode)}</p>
 <p>Total Checkouts: ${currentReader.TotalCheckouts}</p>`;
 
 }
@@ -224,7 +230,6 @@ function signInSubmit(ev: Event): boolean {
 //const serverURL = "http://localhost:51754";
 const serverURL = "https://favl.azurewebsites.net";
 
-
 function postData(path: string, data: Object): Object {
     const xhr = new XMLHttpRequest();
 
@@ -242,7 +247,7 @@ function postData(path: string, data: Object): Object {
     if (xhr.status === 200) {
         return JSON.parse(xhr.responseText);
     }
-    alert("Error Received: " + xhr.statusText);
+    alert(`Error Received: ${xhr.statusText}`);
     return null;
 }
 
@@ -255,7 +260,7 @@ function getData(path: string): Object {
     if (xhr.status === 200) {
         return JSON.parse(xhr.responseText);
     }
-    alert("Error Received: " + xhr.statusText);
+    alert(`Error Received: ${xhr.statusText}`);
     return null;
 }
 
@@ -274,14 +279,15 @@ function initReaders() {
     const ul = document.getElementById("readersList");
     ul.textContent = "";
 
-    const readers = getData("/api/readers/" + currentLibrary.Id) as Array<Reader>;
+    const readers = getData(`/api/readers/${currentLibrary.Id}`) as Array<Reader>;
 
     readers.forEach(r => {
         const li = document.createElement("li") as HTMLLIElement;
-        li.addEventListener("click", () => {
-            currentEditUser = r;
-            main.viewSection("editUser");
-        });
+        li.addEventListener("click",
+            () => {
+                currentEditUser = r;
+                main.viewSection("editUser");
+            });
 
         var span = document.createElement("span");
         span.className = "name";
@@ -324,10 +330,9 @@ interface Librarian {
     Id: number;
 }
 
-
 function onSignInGetBarcode(): void {
     scanBarcode(result => {
-        currentLibrary = getData("/api/signin/" + result.text + " (" + result.format + ")") as Library;
+        currentLibrary = getData(`/api/signin/${result.text} (${result.format})`) as Library;
 
         if (currentLibrary) {
             main.viewSection("hub");
@@ -335,14 +340,13 @@ function onSignInGetBarcode(): void {
     });
 }
 
-
 function scanBarcode(onSuccess): void {
     (cordova as any).plugins.barcodeScanner.scan(
         result => {
             if (!result.cancelled)
                 onSuccess(result);
         },
-        error => alert("Scanning failed: " + error),
+        error => alert(`Scanning failed: ${error}`),
         scannerSetUp
     );
 }

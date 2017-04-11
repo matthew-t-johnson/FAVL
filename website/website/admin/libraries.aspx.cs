@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 
 namespace website.admin
 {
-    public partial class libraries : System.Web.UI.Page
+    public partial class libraries : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -17,7 +14,11 @@ namespace website.admin
                 var list = db.Libraries.ToList();
 
                 insertList.Controls.Add(
-                    new HtmlGenericControl("li") { InnerHtml = "<span class='name'>Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>" }
+                    new HtmlGenericControl("li")
+                    {
+                        InnerHtml =
+                            "<span class='name'>Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>"
+                    }
                 );
 
 
@@ -40,7 +41,8 @@ namespace website.admin
                     li.Controls.Add(span);
 
                     li.Controls.Add(
-                        new LiteralControl($"<span class='edit'><a href='editLibrary.aspx?id={library.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteLibrary({library.Id}, \"{library.Name}\")'>Delete</a></span>")
+                        new LiteralControl(
+                            $"<span class='edit'><a href='editLibrary.aspx?id={library.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteLibrary({library.Id}, \"{library.Name}\")'>Delete</a></span>")
                     );
 
                     insertList.Controls.Add(li);

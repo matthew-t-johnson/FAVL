@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Newtonsoft.Json;
 using System.Web.UI.HtmlControls;
+using Newtonsoft.Json;
 
 namespace website.admin
 {
-    public partial class editBook : System.Web.UI.Page
+    public partial class editBook : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(Request.QueryString["id"]))
+            if (string.IsNullOrEmpty(Request.QueryString["id"]))
             {
                 Response.Redirect("books.aspx");
                 return;
@@ -45,29 +41,27 @@ namespace website.admin
                     var originalBarcode = book.Barcode;
 
                     if (!string.IsNullOrEmpty(originalBarcode) && originalBarcode.Length > 13)
-                    {
                         originalBarcode = originalBarcode.Substring(0, 13);
-                    }
 
                     var s = new HtmlGenericControl("script")
                     {
                         InnerHtml = "var book = " + JsonConvert.SerializeObject(
-                            new Book
-                            {
-                                Id = book.Id,
-                                Title = book.Title,
-                                AuthorFirst = book.AuthorFirst,
-                                AuthorMiddle = book.AuthorMiddle,
-                                AuthorLast = book.AuthorLast,
-                                Barcode = originalBarcode ?? string.Empty,
-                                LibraryID = book.LibraryID
-                            })
+                                        new Book
+                                        {
+                                            Id = book.Id,
+                                            Title = book.Title,
+                                            AuthorFirst = book.AuthorFirst,
+                                            AuthorMiddle = book.AuthorMiddle,
+                                            AuthorLast = book.AuthorLast,
+                                            Barcode = originalBarcode ?? string.Empty,
+                                            LibraryID = book.LibraryID
+                                        })
                     };
 
                     insertBook.Controls.Add(s);
                 }
-            };
-
+            }
+            ;
         }
     }
 }

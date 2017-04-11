@@ -14,8 +14,12 @@ namespace website.admin
                 var list = db.Readers.ToList();
 
                 insertList.Controls.Add(
-                    new HtmlGenericControl("li") { InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>" }
-                    );
+                    new HtmlGenericControl("li")
+                    {
+                        InnerHtml =
+                            "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>"
+                    }
+                );
 
                 foreach (var reader in list)
                 {
@@ -44,7 +48,8 @@ namespace website.admin
                     li.Controls.Add(span);
 
                     li.Controls.Add(
-                        new LiteralControl($"<span class='edit'><a href='editReader.aspx?id={reader.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteReader({reader.Id}, \"{readerName}\")'>Delete</a></span>")
+                        new LiteralControl(
+                            $"<span class='edit'><a href='editReader.aspx?id={reader.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteReader({reader.Id}, \"{readerName}\")'>Delete</a></span>")
                     );
 
 

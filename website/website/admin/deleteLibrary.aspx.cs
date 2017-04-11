@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace website.admin
 {
-    public partial class deleteLibrary : System.Web.UI.Page
+    public partial class deleteLibrary : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,10 +23,10 @@ namespace website.admin
                     db.Libraries.Remove(library);
                     db.SaveChanges();
                 }
-            };
+            }
+            ;
 
             Response.Redirect("libraries.aspx");
-
         }
     }
 }
