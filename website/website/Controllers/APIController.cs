@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using Newtonsoft.Json;
 using website.admin;
 
 namespace website.Controllers
@@ -53,7 +54,7 @@ namespace website.Controllers
                 };
             }
         }
-        
+
         [HttpGet]
         [Route("api/readers")]
         public List<Reader> GetReaders()
@@ -134,7 +135,7 @@ namespace website.Controllers
                 db.SaveChanges();
             }
         }
-        
+
         [HttpGet]
         [Route("api/libraries")]
         public IEnumerable<Library> GetLibraries()
@@ -153,7 +154,7 @@ namespace website.Controllers
                     .ToList();
             }
         }
-        
+
         [HttpPost]
         [Route("api/signin")]
         public Library SignIn([FromBody] SignInArgs args)
@@ -263,7 +264,7 @@ namespace website.Controllers
                 };
             }
         }
-        
+
         [HttpGet]
         [Route("api/books/checkout/{bookID}/{readerID}")]
         public string CheckOutBook(int bookID, int readerID)
@@ -301,7 +302,103 @@ namespace website.Controllers
                 return "ok";
             }
         }
-        
+
+        [HttpGet]
+        [Route("api/isbndb/{barcode}")]
+        public BookInfo GetBookInfoFromISBNDB(string barcode)
+        {
+            using (var wc = new WebClient())
+            {
+                var json = wc.DownloadString("http://isbndb.com/api/v2/json/RIZ5L70Q/book/" + barcode);
+
+                var isbnDbBook = JsonConvert.DeserializeObject<IsbnDbBook>(json);
+
+                if (!string.IsNullOrEmpty(isbnDbBook.error))
+                    return new BookInfo {error = isbnDbBook.error};
+
+                if (isbnDbBook.data == null || isbnDbBook.data.Length == 0)
+                    return new BookInfo { error = "ISBNDB API succeeded but no data returned" };
+
+                var book = new BookInfo
+                {
+                    authorLast = string.Empty,
+                    authorMiddle = string.Empty,
+                    authorFirst = string.Empty,
+                    title = isbnDbBook.data[0].title.TrimEnd('.'),
+                    isbn13 = isbnDbBook.data[0].isbn13
+                };
+
+                if (isbnDbBook.data[0].author_data.Length == 0)
+                    return book;
+                
+                var authorName = isbnDbBook.data[0].author_data[0].name.Trim();
+
+                //  convert single string author name into our three parts
+                //  name may be "last, first mi." or "first last"
+                if (authorName.Contains(","))
+                {
+                    var halves = authorName.Split(',');
+                    book.authorLast = halves[0].Trim();
+
+                    if (halves.Length > 1)
+                    {
+                        var firstMiddleParts = halves[1].Trim().Split(' ');
+                        book.authorFirst = firstMiddleParts[0];
+
+                        if (firstMiddleParts.Length > 1)
+                            book.authorMiddle = string.Join(" ", firstMiddleParts.Skip(1).Select(s => s.Trim()));
+                    }
+                }
+                else
+                {
+                    var parts = authorName.Split(' ');
+
+                    if (parts.Length == 1)
+                        book.authorLast = parts[0].Trim();
+                    else
+                    {
+                        book.authorFirst = parts[0].Trim();
+
+                        if (parts.Length > 2)
+                            book.authorMiddle = string.Join(" ", parts.Skip(1).Take(parts.Length - 2).Select(s => s.Trim()));
+
+                        book.authorLast = parts[parts.Length - 1].Trim();
+                    }
+                }
+
+                return book;
+            }
+        }
+
+        public class IsbnDbAuthorData
+        {
+            public string name;
+        }
+
+        public class IsbnDbData
+        {
+            public IsbnDbAuthorData[] author_data;
+            public string isbn13;
+            public string title;
+        }
+
+        public class IsbnDbBook
+        {
+            public string error;
+            public IsbnDbData[] data;
+            public string index_searched;
+        }
+
+        public class BookInfo
+        {
+            public string authorFirst;
+            public string authorLast;
+            public string authorMiddle;
+            public string isbn13;
+            public string title;
+            public string error;
+        }
+
         public class SignInArgs
         {
             public string password;

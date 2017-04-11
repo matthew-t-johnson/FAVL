@@ -1,0 +1,8 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "alwaysStrict": true,
+    "noResolve":  false 
+  }
+}
