@@ -1,11 +1,21 @@
 {
-     "android": {
-         "release": {
-             "keystore": "",
-             "storePassword": "",
-             "alias": "",
-             "password" : "",
-             "keystoreType": ""
-         }
-     }
- }
+  "android": {
+    "release": {
+      "keystore": "",
+      "storePassword": "",
+      "alias": "",
+      "password": "",
+      "keystoreType": ""
+    }
+  },
+  "ios": {
+    "debug": {
+      "developmentTeam": "Matthew Johnson"
+    },
+
+    "release": {
+      "developmentTeam": "Matthew Johnson",
+      "codeSignIdentity": "iPhone Developer"
+    }
+  }
+}
