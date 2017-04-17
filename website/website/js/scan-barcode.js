@@ -3,8 +3,7 @@ var Quagga;
 (function () {
     var onDetectedSet = false;
     var viewport = document.querySelector("#interactive.viewport");
-    //const isbndbApiKey = "RIZ5L70Q";
-    //const isbndbApiUrl = "http://isbndb.com/api/v2/json/RIZ5L70Q/book/?q=";
+    var viewportWrapper = document.querySelector("#viewportWrapper");
     var scannerState = {
         inputStream: {
             type: "LiveStream",
@@ -26,7 +25,7 @@ var Quagga;
     };
     var stopScan = function () {
         Quagga.stop();
-        viewport.setAttribute("hidden", "");
+        viewportWrapper.setAttribute("hidden", "");
         document.getElementById("btnStopScan").setAttribute("hidden", "");
         document.getElementById("btnScan").removeAttribute("hidden");
     };
@@ -46,6 +45,7 @@ var Quagga;
             p.textContent = "Failed to get book info from barcode";
             document.querySelector("div.contentWrapper").appendChild(p);
         };
+        //  use our api in APIController to work around cross-origin problems with isbndb
         xhr.open("GET", "/api/isbndb/" + code, true);
         xhr.send();
     };
@@ -66,7 +66,6 @@ var Quagga;
         document.querySelector("div.contentWrapper").appendChild(p);
     };
     function startScan() {
-        viewport.removeAttribute("hidden");
         Quagga.init(scannerState, function (err) {
             if (err) {
                 window.alert("Error initialzing Quagga: " + err);
@@ -76,9 +75,11 @@ var Quagga;
                 onDetectedSet = true;
                 Quagga.onDetected(onDetected);
             }
+            viewportWrapper.removeAttribute("hidden");
             var videoStyle = window.getComputedStyle(viewport.querySelector("video"));
             viewport.style.width = videoStyle.width;
             viewport.style.height = videoStyle.height;
+            viewportWrapper.style.height = "calc(" + videoStyle.height + " + 96px * 2)";
             Quagga.start();
             document.getElementById("btnScan").setAttribute("hidden", "");
             document.getElementById("btnStopScan").removeAttribute("hidden");

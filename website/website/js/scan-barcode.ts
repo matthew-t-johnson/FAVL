@@ -6,10 +6,7 @@ var Quagga: any;
     let onDetectedSet = false;
 
     const viewport = document.querySelector("#interactive.viewport") as HTMLDivElement;
-
-    //const isbndbApiKey = "RIZ5L70Q";
-
-    //const isbndbApiUrl = "http://isbndb.com/api/v2/json/RIZ5L70Q/book/?q=";
+    const viewportWrapper = document.querySelector("#viewportWrapper") as HTMLDivElement;
 
     const scannerState = {
         inputStream: {
@@ -33,7 +30,7 @@ var Quagga: any;
 
     const stopScan = () => {
         Quagga.stop();
-        viewport.setAttribute("hidden", "");
+        viewportWrapper.setAttribute("hidden", "");
         document.getElementById("btnStopScan").setAttribute("hidden", "");
         document.getElementById("btnScan").removeAttribute("hidden");
     };
@@ -69,6 +66,7 @@ var Quagga: any;
             document.querySelector("div.contentWrapper").appendChild(p);
         };
 
+        //  use our api in APIController to work around cross-origin problems with isbndb
         xhr.open("GET", `/api/isbndb/${code}`, true);
         xhr.send();
     }
@@ -97,8 +95,6 @@ var Quagga: any;
 
     function startScan() {
 
-        viewport.removeAttribute("hidden");
-
         Quagga.init(scannerState,
             err => {
                 if (err) {
@@ -111,14 +107,15 @@ var Quagga: any;
                     Quagga.onDetected(onDetected);
                 }
 
+                viewportWrapper.removeAttribute("hidden");
                 var videoStyle = window.getComputedStyle(viewport.querySelector("video"));
                 viewport.style.width = videoStyle.width;
                 viewport.style.height = videoStyle.height;
+                viewportWrapper.style.height = `calc(${videoStyle.height} + 96px * 2)`;
 
                 Quagga.start();
                 document.getElementById("btnScan").setAttribute("hidden", "");
                 document.getElementById("btnStopScan").removeAttribute("hidden");
-
             }
         );
     }
