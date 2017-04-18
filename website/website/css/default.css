@@ -393,8 +393,17 @@ footer {
     .listAsTable li {
         display: table-row;
     }
+
         .listAsTable li:nth-child(2n+3) {
             background-color: #eee;
+        }
+
+        .listAsTable li:hover {
+            background-color: lightblue;
+        }
+
+        .listAsTable li.listAsTableHeader:hover {
+            background-color: white;
         }
 
         .listAsTable li:first-child {

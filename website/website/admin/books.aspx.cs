@@ -12,14 +12,17 @@ namespace website.admin
             using (var db = new favlEntities())
             {
                 var list = db.Books.ToList();
+                var listHeader = new HtmlGenericControl("li");
+                listHeader.InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>";
+                listHeader.Attributes.Add("class", "listAsTableHeader");
 
-                insertList.Controls.Add(
-                    new HtmlGenericControl("li")
-                    {
-                        InnerHtml =
-                            "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>"
-                    }
-                );
+                insertList.Controls.Add(listHeader);
+                //insertList.Controls.Add(
+                //    {
+                //        InnerHtml =
+                //            "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>"
+                //    }
+                //);
 
                 foreach (var book in list)
                 {
