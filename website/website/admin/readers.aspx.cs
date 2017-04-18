@@ -13,13 +13,20 @@ namespace website.admin
             {
                 var list = db.Readers.ToList();
 
-                insertList.Controls.Add(
-                    new HtmlGenericControl("li")
-                    {
-                        InnerHtml =
-                            "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>"
-                    }
-                );
+                var listHeader = new HtmlGenericControl("li");
+                listHeader.InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>";
+                listHeader.Attributes.Add("class", "listAsTableHeader");
+
+                insertList.Controls.Add(listHeader);
+
+
+                //insertList.Controls.Add(
+                //    new HtmlGenericControl("li")
+                //    {
+                //        InnerHtml =
+                //            "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>"
+                //    }
+                //);
 
                 foreach (var reader in list)
                 {

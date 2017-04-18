@@ -13,13 +13,20 @@ namespace website.admin
             {
                 var list = db.Librarians.Where(l => l.LibraryID != null).ToList();
 
-                insertList.Controls.Add(
-                    new HtmlGenericControl("li")
-                    {
-                        InnerHtml =
-                            "<span class='barcode'>Barcode</span><span class='name'>Library Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>"
-                    }
-                );
+                var listHeader = new HtmlGenericControl("li");
+                listHeader.InnerHtml = "<span class='barcode'>Barcode</span><span class='name'>Library Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>";
+                listHeader.Attributes.Add("class", "listAsTableHeader");
+
+                insertList.Controls.Add(listHeader);
+
+
+                //insertList.Controls.Add(
+                //    new HtmlGenericControl("li")
+                //    {
+                //        InnerHtml =
+                //        "<span class='barcode'>Barcode</span><span class='name'>Library Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>"
+                //    }
+                //);
 
 
                 foreach (var librarian in list)

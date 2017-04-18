@@ -13,13 +13,20 @@ namespace website.admin
             {
                 var list = db.Libraries.ToList();
 
-                insertList.Controls.Add(
-                    new HtmlGenericControl("li")
-                    {
-                        InnerHtml =
-                            "<span class='name'>Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>"
-                    }
-                );
+                var listHeader = new HtmlGenericControl("li");
+                listHeader.InnerHtml = "<span class='name'>Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>";
+                listHeader.Attributes.Add("class", "listAsTableHeader");
+
+                insertList.Controls.Add(listHeader);
+
+
+                //insertList.Controls.Add(
+                //    new HtmlGenericControl("li")
+                //    {
+                //        InnerHtml =
+                //            "<span class='name'>Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>"
+                //    }
+                //);
 
 
                 foreach (var library in list)
