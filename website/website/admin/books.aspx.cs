@@ -18,6 +18,7 @@ namespace website.admin
 
                 insertList.Controls.Add(listHeader);
                 //insertList.Controls.Add(
+                //    new HtmlGenericControl("li")
                 //    {
                 //        InnerHtml =
                 //            "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>"
