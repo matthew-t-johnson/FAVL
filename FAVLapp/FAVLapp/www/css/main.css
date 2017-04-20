@@ -237,16 +237,26 @@ button.hubutton i {
   margin-left: 5px;
 }
 #checkOutSuccess {
-  background-color: #0B697F;
   color: white;
 }
-#checkOutSuccess h2 {
-  margin-top: 400px;
+#checkOutSuccess #checkOutSuccessWrapper {
+  background-color: #0B697F;
+  padding-top: 160px;
+  margin-top: 50px;
+  height: 100%;
+  padding-bottom: 106px;
+}
+#checkOutSuccess #checkOutSuccessWrapper h2 {
   font-size: 24pt;
 }
-#checkOutSuccess i {
-  font-size: 40pt;
+#checkOutSuccess #checkOutSuccessWrapper i {
+  font-size: 100pt;
 }
-#checkOutSuccess p {
+#checkOutSuccess #checkOutSuccessWrapper p {
   font-size: 14pt;
+}
+#checkOutSuccess #checkOutSuccessButton {
+  height: 100px;
+  width: 100%;
+  border: none;
 }

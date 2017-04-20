@@ -9,7 +9,7 @@ export function mainInit(): void {
 export function viewSection(id: string): void {
     view(`#${id}`);
 
-    if (id !== "index" && id !== "signIn")
+    if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess")
         view.show("#headerLogoWrapper");
 }
 
@@ -45,5 +45,10 @@ function initClick(): void {
     document.getElementById("checkOutButton").addEventListener("click", () => {
         viewSection("checkOut");
     });
+
+    document.getElementById("overdueButton").addEventListener("click", () => {
+        viewSection("checkOutSuccess");
+    });
+
 
 }

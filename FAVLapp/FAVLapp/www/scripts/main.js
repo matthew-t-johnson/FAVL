@@ -7,7 +7,7 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
     exports.mainInit = mainInit;
     function viewSection(id) {
         view("#" + id);
-        if (id !== "index" && id !== "signIn")
+        if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess")
             view.show("#headerLogoWrapper");
     }
     exports.viewSection = viewSection;
@@ -35,6 +35,9 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
         });
         document.getElementById("checkOutButton").addEventListener("click", function () {
             viewSection("checkOut");
+        });
+        document.getElementById("overdueButton").addEventListener("click", function () {
+            viewSection("checkOutSuccess");
         });
     }
 });

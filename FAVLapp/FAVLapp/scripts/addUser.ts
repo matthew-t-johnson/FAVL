@@ -14,6 +14,8 @@ export function addUserInit(): void {
     document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
     document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
     document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
+    //document.getElementById("overdueButton").addEventListener("view:show", showCheckOutSuccess);
+
 }
 
 interface Book {
@@ -65,6 +67,12 @@ function showCheckOut(): void {
     view.hide("#checkOutReader");
     view.hide("#checkOutBook");
 }
+
+//function showCheckOutSuccess(): void {
+//    var message = document.getElementById("checkOutSucessMessage");
+//    message.textContent = "The Right Stuff");
+//    main.viewSection("checkOutSuccess");
+//}
 
 var checkOutReader: Reader;
 

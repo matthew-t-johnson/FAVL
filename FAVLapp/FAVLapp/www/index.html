@@ -254,8 +254,7 @@
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <h1>Scan Reader</h1>
             </button>
-            <h3 id="checkOutReader">
-            </h3>
+            <h3 id="checkOutReader"></h3>
             <button type="button" class="scanBook">
                 <i class="fa fa-book" aria-hidden="true"></i>
                 <h1>Scan Book</h1>
@@ -274,10 +273,15 @@
     </section>
 
     <section id="checkOutSuccess" hidden>
-        <h2>Successful Checkout!</h2>
-        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-        <p class="message"></p>
-        <button></button>
+        <div id="checkOutSuccessWrapper">
+            <h2>Successful Checkout!</h2>
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+            <p class="message" id="checkOutSuccessMessage">The Right Stuff has been checkout to Scucci Mane</p>
+        </div>
+        <button id="checkOutSuccessButton">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            <h2>Go Home</h2>
+        </button>
     </section>
 
     <section id="returnBook" hidden>

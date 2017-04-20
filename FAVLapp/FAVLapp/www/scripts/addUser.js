@@ -13,6 +13,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
         document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
         document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
+        //document.getElementById("overdueButton").addEventListener("view:show", showCheckOutSuccess);
     }
     exports.addUserInit = addUserInit;
     function showEditUser() {
@@ -46,6 +47,11 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         view.hide("#checkOutReader");
         view.hide("#checkOutBook");
     }
+    //function showCheckOutSuccess(): void {
+    //    var message = document.getElementById("checkOutSucessMessage");
+    //    message.textContent = "The Right Stuff");
+    //    main.viewSection("checkOutSuccess");
+    //}
     var checkOutReader;
     function scanReader() {
         view.hide("#checkOutError");
