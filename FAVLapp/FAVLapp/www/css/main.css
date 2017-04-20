@@ -236,3 +236,17 @@ button.hubutton i {
 .scanBook {
   margin-left: 5px;
 }
+#checkOutSuccess {
+  background-color: #0B697F;
+  color: white;
+}
+#checkOutSuccess h2 {
+  margin-top: 400px;
+  font-size: 24pt;
+}
+#checkOutSuccess i {
+  font-size: 40pt;
+}
+#checkOutSuccess p {
+  font-size: 14pt;
+}
