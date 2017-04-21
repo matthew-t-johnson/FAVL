@@ -1,10 +1,19 @@
 ﻿@import url("../Content/font-awesome.min.css");
 
+html {
+    height: 100%;
+}
+
 #mainbody {
     background-color: white;
     color: #1E363A;
     background-image: none;
     text-align: center;
+    height: 100%;
+}
+
+section {
+    height: 100%;
 }
 
 .hubtable {
@@ -273,33 +282,60 @@ button.hubutton {
     margin-left: 5px;
 }
 
-#checkOutSuccess {
+.checkOutSuccess {
     color: white;
+    background-image: url('../images/sample.jpg');
+    background-size: contain;
 
-    #checkOutSuccessWrapper {
-        background-color: #0B697F;
-        padding-top: 160px;
-        margin-top: 50px;
-        height: 100%;
-        padding-bottom: 106px;
+    .checkOutSuccessWrapper {
+        /*background-color: rgba(116, 212, 136, 0.46);*/
+        /*background-color: rgba(162, 214, 226, 0.67);*/
+        /*background-color: rgba(30, 54, 58, 0.87);*/
+        background-color: rgba(30, 54, 58, 0.78);
+        height: 88%;
 
         h2 {
             font-size: 24pt;
+            margin: 0;
+            padding-top: 15%;
+            font-weight: 400;
+            color: rgb(116, 212, 136);
         }
 
         i {
             font-size: 100pt;
+            padding-top: 25%;
+            color: rgb(116, 212, 136);
         }
 
         p {
             font-size: 14pt;
+            margin: 15% auto 0;
+            width: 80%;
+            /*padding-top: 10%;*/
+            background-color: rgba(255, 255, 255, 0.16);
+            height: 200px;
+            border-radius: 10px;
         }
     }
 
-    #checkOutSuccessButton {
-        height: 100px;
+    .checkOutSuccessButton {
+        height: 12%;
         width: 100%;
         border: none;
+        background-color: white;
+        color: #1E363A;
+
+        i {
+            display: inline-block;
+            font-size: 50pt;
+        }
+
+        h2 {
+            display: inline-block;
+            margin: 0;
+            padding-left: 25px;
+        }
     }
 }
 

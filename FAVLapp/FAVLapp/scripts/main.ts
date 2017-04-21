@@ -9,7 +9,7 @@ export function mainInit(): void {
 export function viewSection(id: string): void {
     view(`#${id}`);
 
-    if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess")
+    if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess" && id !== "returnSuccess")
         view.show("#headerLogoWrapper");
 }
 

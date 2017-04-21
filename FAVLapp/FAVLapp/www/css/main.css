@@ -1,9 +1,16 @@
 ﻿@import url("../Content/font-awesome.min.css");
+html {
+  height: 100%;
+}
 #mainbody {
   background-color: white;
   color: #1E363A;
   background-image: none;
   text-align: center;
+  height: 100%;
+}
+section {
+  height: 100%;
 }
 .hubtable {
   width: 100%;
@@ -236,27 +243,52 @@ button.hubutton i {
 .scanBook {
   margin-left: 5px;
 }
-#checkOutSuccess {
+.checkOutSuccess {
   color: white;
+  background-image: url('../images/sample.jpg');
+  background-size: contain;
 }
-#checkOutSuccess #checkOutSuccessWrapper {
-  background-color: #0B697F;
-  padding-top: 160px;
-  margin-top: 50px;
-  height: 100%;
-  padding-bottom: 106px;
+.checkOutSuccess .checkOutSuccessWrapper {
+  /*background-color: rgba(116, 212, 136, 0.46);*/
+  /*background-color: rgba(162, 214, 226, 0.67);*/
+  /*background-color: rgba(30, 54, 58, 0.87);*/
+  background-color: rgba(30, 54, 58, 0.78);
+  height: 88%;
 }
-#checkOutSuccess #checkOutSuccessWrapper h2 {
+.checkOutSuccess .checkOutSuccessWrapper h2 {
   font-size: 24pt;
+  margin: 0;
+  padding-top: 15%;
+  font-weight: 400;
+  color: #74d488;
 }
-#checkOutSuccess #checkOutSuccessWrapper i {
+.checkOutSuccess .checkOutSuccessWrapper i {
   font-size: 100pt;
+  padding-top: 25%;
+  color: #74d488;
 }
-#checkOutSuccess #checkOutSuccessWrapper p {
+.checkOutSuccess .checkOutSuccessWrapper p {
   font-size: 14pt;
+  margin: 15% auto 0;
+  width: 80%;
+  /*padding-top: 10%;*/
+  background-color: rgba(255, 255, 255, 0.16);
+  height: 200px;
+  border-radius: 10px;
 }
-#checkOutSuccess #checkOutSuccessButton {
-  height: 100px;
+.checkOutSuccess .checkOutSuccessButton {
+  height: 12%;
   width: 100%;
   border: none;
+  background-color: white;
+  color: #1E363A;
+}
+.checkOutSuccess .checkOutSuccessButton i {
+  display: inline-block;
+  font-size: 50pt;
+}
+.checkOutSuccess .checkOutSuccessButton h2 {
+  display: inline-block;
+  margin: 0;
+  padding-left: 25px;
 }
