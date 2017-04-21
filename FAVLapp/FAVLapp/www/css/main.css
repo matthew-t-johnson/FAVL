@@ -16,13 +16,34 @@ section {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 80px;
+  padding-top: 90px;
   text-align: center;
 }
 .hubtable td {
   width: 50%;
 }
 button.hubutton {
+  font-size: 16px;
+  /*width: 90%;*/
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+  height: 200px;
+  /*margin-top: 20px;*/
+  /*border-radius: 15px;*/
+  /*border: 1px solid #0B697F;*/
+  color: #1E363A;
+}
+button.hubutton:focus {
+  outline: none !important;
+}
+button.hubutton i {
+  font-size: 30pt;
+  color: #0B697F;
+  margin-bottom: 10px;
+}
+#signInButton {
   font-size: 16px;
   width: 90%;
   background-color: white;
@@ -34,14 +55,6 @@ button.hubutton {
   border-radius: 15px;
   border: 1px solid #0B697F;
   color: #1E363A;
-}
-button.hubutton:focus {
-  outline: none !important;
-}
-button.hubutton i {
-  font-size: 30pt;
-  color: #0B697F;
-  margin-bottom: 10px;
 }
 #scanLogoHeader {
   height: 40px;
@@ -245,14 +258,14 @@ button.hubutton i {
 }
 .checkOutSuccess {
   color: white;
-  background-image: url('../images/sample.jpg');
+  background-image: url('../images/success_background_2.jpg');
   background-size: contain;
 }
 .checkOutSuccess .checkOutSuccessWrapper {
   /*background-color: rgba(116, 212, 136, 0.46);*/
   /*background-color: rgba(162, 214, 226, 0.67);*/
   /*background-color: rgba(30, 54, 58, 0.87);*/
-  background-color: rgba(30, 54, 58, 0.78);
+  background-color: rgba(30, 54, 58, 0.8);
   height: 88%;
 }
 .checkOutSuccess .checkOutSuccessWrapper h2 {
@@ -272,7 +285,7 @@ button.hubutton i {
   margin: 15% auto 0;
   width: 80%;
   /*padding-top: 10%;*/
-  background-color: rgba(255, 255, 255, 0.16);
+  background-color: rgba(255, 255, 255, 0.4);
   height: 200px;
   border-radius: 10px;
 }
