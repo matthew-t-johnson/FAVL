@@ -78,7 +78,7 @@ button.hubutton i {
   background-size: contain;
 }
 #signIn .wrapper {
-  height: 85%;
+  height: 88%;
   background-color: rgba(30, 54, 58, 0.9);
 }
 #signIn .wrapper .wrapperWrapper {
@@ -105,7 +105,7 @@ button.hubutton i {
   border: 1px solid #1E363A;
 }
 #signIn #signInBarcode {
-  height: 15%;
+  height: 12%;
   color: white;
   background-color: #0B697F;
   border: none;
