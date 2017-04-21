@@ -355,22 +355,50 @@ button.hubutton {
         }
     }
 
-    .checkOutSuccessButton {
+    .successButtonWrapper {
         height: 12%;
-        width: 100%;
-        border: none;
-        background-color: white;
-        color: #1E363A;
 
-        i {
+        .returnCheckOutButton {
+            height: 100%;
+            width: 60%;
+            border: none;
+            background-color: #0B697F;
+            color: white;
             display: inline-block;
-            font-size: 50pt;
+            padding: 0;
+            float: left;
+
+            i {
+                display: inline-block;
+                font-size: 40pt;
+            }
+
+            h2 {
+                display: inline-block;
+                margin: 0;
+                padding-left: 15px;
+            }
         }
 
-        h2 {
+        .checkOutSuccessButton {
+            height: 100%;
+            width: 40%;
+            border: none;
+            background-color: white;
+            color: #1E363A;
             display: inline-block;
-            margin: 0;
-            padding-left: 25px;
+            padding: 0;
+            border-left: 4px solid rgba(30, 54, 58, 0.79);
+            
+            img {
+                width: 70%;
+            }
+
+            h2 {
+                display: inline-block;
+                margin: 0;
+                padding-left: 25px;
+            }
         }
     }
 }

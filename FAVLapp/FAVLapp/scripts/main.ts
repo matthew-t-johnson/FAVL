@@ -50,5 +50,12 @@ function initClick(): void {
         viewSection("checkOutSuccess");
     });
 
+    document.getElementById("againButton").addEventListener("click", () => {
+        viewSection("checkOut");
+    });
+
+    document.getElementById("successButton").addEventListener("click", () => {
+        viewSection("hub");
+    });
 
 }

@@ -308,18 +308,42 @@ button.hubutton i {
   height: 200px;
   border-radius: 10px;
 }
-.checkOutSuccess .checkOutSuccessButton {
+.checkOutSuccess .successButtonWrapper {
   height: 12%;
-  width: 100%;
+}
+.checkOutSuccess .successButtonWrapper .returnCheckOutButton {
+  height: 100%;
+  width: 60%;
+  border: none;
+  background-color: #0B697F;
+  color: white;
+  display: inline-block;
+  padding: 0;
+  float: left;
+}
+.checkOutSuccess .successButtonWrapper .returnCheckOutButton i {
+  display: inline-block;
+  font-size: 40pt;
+}
+.checkOutSuccess .successButtonWrapper .returnCheckOutButton h2 {
+  display: inline-block;
+  margin: 0;
+  padding-left: 15px;
+}
+.checkOutSuccess .successButtonWrapper .checkOutSuccessButton {
+  height: 100%;
+  width: 40%;
   border: none;
   background-color: white;
   color: #1E363A;
-}
-.checkOutSuccess .checkOutSuccessButton i {
   display: inline-block;
-  font-size: 50pt;
+  padding: 0;
+  border-left: 4px solid rgba(30, 54, 58, 0.79);
 }
-.checkOutSuccess .checkOutSuccessButton h2 {
+.checkOutSuccess .successButtonWrapper .checkOutSuccessButton img {
+  width: 70%;
+}
+.checkOutSuccess .successButtonWrapper .checkOutSuccessButton h2 {
   display: inline-block;
   margin: 0;
   padding-left: 25px;

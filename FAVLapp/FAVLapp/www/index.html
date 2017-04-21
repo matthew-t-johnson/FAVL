@@ -94,9 +94,11 @@
             <div class="wrapperWrapper">
                 <div class="signInFormWrapper">
                     <form id="signInForm">
-                        <div><input type="text" name="username" placeholder="Username" required/>
+                        <div>
+                            <input type="text" name="username" placeholder="Username" required />
                         </div>
-                        <div><input type="password" name="password" placeholder="Password" required/>
+                        <div>
+                            <input type="password" name="password" placeholder="Password" required />
                         </div>
                         <div>
                             <button type="submit">Sign In</button>
@@ -293,10 +295,15 @@
             <i class="fa fa-check" aria-hidden="true"></i>
             <p class="message checkOutSuccessMessage">The Right Stuff has been checked out to Scucci Mane</p>
         </div>
-        <button class="checkOutSuccessButton">
-            <i class="fa fa-home" aria-hidden="true"></i>
-            <h2>Go Home</h2>
-        </button>
+        <div class="successButtonWrapper">
+            <button id="againButton" class="returnCheckOutButton">
+                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                <h2>New<br />Check Out</h2>
+            </button>
+            <button id="successButton" class="checkOutSuccessButton">
+                <img src="images/scan_logo.svg" />
+            </button>
+        </div>
     </section>
 
     <section id="returnBook" hidden>

@@ -39,6 +39,12 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
         document.getElementById("overdueButton").addEventListener("click", function () {
             viewSection("checkOutSuccess");
         });
+        document.getElementById("againButton").addEventListener("click", function () {
+            viewSection("checkOut");
+        });
+        document.getElementById("successButton").addEventListener("click", function () {
+            viewSection("hub");
+        });
     }
 });
 //# sourceMappingURL=main.js.map
