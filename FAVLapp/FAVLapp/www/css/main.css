@@ -73,10 +73,29 @@ button.hubutton i {
   height: 50px;
   width: 60%;
 }
-#signIn #signInForm {
-  margin-top: 75%;
+#signIn {
+  background-image: url('../images/success_background_2.jpg');
+  background-size: contain;
 }
-#signIn #signInForm input {
+#signIn .wrapper {
+  height: 85%;
+  background-color: rgba(30, 54, 58, 0.9);
+}
+#signIn .wrapper .wrapperWrapper {
+  padding-top: 60%;
+}
+#signIn .wrapper .wrapperWrapper .signInFormWrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 0;
+}
+#signIn .wrapper .wrapperWrapper .signInFormWrapper #signInForm {
+  /*margin-top: 75%;*/
+}
+#signIn .wrapper .wrapperWrapper .signInFormWrapper #signInForm input {
   font-size: 14pt;
   padding: 3px;
   width: 250px;
@@ -86,9 +105,9 @@ button.hubutton i {
   border: 1px solid #1E363A;
 }
 #signIn #signInBarcode {
-  height: 100px;
+  height: 15%;
   color: white;
-  background-color: rgba(30, 54, 58, 0.78);
+  background-color: #0B697F;
   border: none;
   width: 100%;
   position: absolute;
@@ -265,7 +284,7 @@ button.hubutton i {
   /*background-color: rgba(116, 212, 136, 0.46);*/
   /*background-color: rgba(162, 214, 226, 0.67);*/
   /*background-color: rgba(30, 54, 58, 0.87);*/
-  background-color: rgba(30, 54, 58, 0.8);
+  background-color: rgba(30, 54, 58, 0.9);
   height: 88%;
 }
 .checkOutSuccess .checkOutSuccessWrapper h2 {
