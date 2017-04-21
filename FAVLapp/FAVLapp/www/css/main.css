@@ -12,20 +12,42 @@ html {
 section {
   height: 100%;
 }
-.hubtable {
+/*wrapper {
+    height: 100%;
+}*/
+#hub {
+  background-image: url('../images/success_background_2.jpg');
+  background-size: contain;
+}
+#hub .hubWrapper {
+  height: 100%;
+  background-color: rgba(30, 54, 58, 0.9);
+}
+#hub .hubWrapper #headerLogoWrapper {
+  height: 7%;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+#hub .hubWrapper #headerLogoWrapper #scanLogoHeader {
+  height: 40px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  display: block;
+}
+#hub .hubWrapper .hubtable {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 90px;
+  padding-top: 16.25%;
   text-align: center;
 }
-.hubtable td {
+#hub .hubWrapper .hubtable td {
   width: 50%;
 }
-button.hubutton {
+#hub .hubWrapper button.hubutton {
   font-size: 16px;
-  /*width: 90%;*/
-  background-color: white;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.85);
   margin-left: auto;
   margin-right: auto;
   border: none;
@@ -35,13 +57,13 @@ button.hubutton {
   /*border: 1px solid #0B697F;*/
   color: #1E363A;
 }
-button.hubutton:focus {
+#hub .hubWrapper button.hubutton:focus {
   outline: none !important;
 }
-button.hubutton i {
-  font-size: 30pt;
+#hub .hubWrapper button.hubutton i {
+  font-size: 40pt;
   color: #0B697F;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 #signInButton {
   font-size: 16px;

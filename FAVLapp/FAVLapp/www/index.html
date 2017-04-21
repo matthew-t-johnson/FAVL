@@ -40,51 +40,57 @@
 
     <!--HUB-->
     <section id="hub" hidden>
-        <div>
-            <table class="hubtable">
-                <tr>
-                    <td>
-                        <button id="addUserButton" type="button" class="hubutton">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i><br />
-                            ADD USER
-                        </button>
-                    </td>
-                    <td>
-                        <button id="editUserButton" type="button" class="hubutton">
-                            <i class="fa fa-pencil" aria-hidden="true"></i><br />
-                            EDIT USER
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button id="overdueButton" type="button" class="hubutton">
-                            <i class="fa fa-hourglass-end" aria-hidden="true"></i><br />
-                            OVERDUE
-                        </button>
-                    </td>
-                    <td>
-                        <button id="inventoryButton" type="button" class="hubutton">
-                            <i class="fa fa-list-alt" aria-hidden="true"></i><br />
-                            INVENTORY
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button id="checkOutButton" type="button" class="hubutton">
-                            <i class="fa fa-cart-plus" aria-hidden="true"></i><br />
-                            CHECK OUT
-                        </button>
-                    </td>
-                    <td>
-                        <button id="returnButton" type="button" class="hubutton">
-                            <i class="fa fa-inbox" aria-hidden="true"></i><br />
-                            RETURN
-                        </button>
-                    </td>
-                </tr>
-            </table>
+        <div class="hubWrapper">
+            <div id="headerLogoWrapper">
+                <img id="scanLogoHeader" src="images/scan_logo.svg" />
+            </div>
+            <div>
+                <table class="hubtable">
+                    <tr>
+                        <td>
+                            <button id="addUserButton" type="button" class="hubutton">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i><br />
+                                ADD USER
+                            </button>
+                        </td>
+                        <td>
+                            <button id="editUserButton" type="button" class="hubutton">
+                                <i class="fa fa-pencil" aria-hidden="true"></i><br />
+                                EDIT USER
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="overdueButton" type="button" class="hubutton">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i><br />
+                                OVERDUE
+                            </button>
+                        </td>
+                        <td>
+                            <button id="inventoryButton" type="button" class="hubutton">
+                                <i class="fa fa-list-alt" aria-hidden="true"></i><br />
+                                INVENTORY
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="checkOutButton" type="button" class="hubutton">
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i><br />
+                                CHECK OUT
+                            </button>
+                        </td>
+                        <td>
+                            <button id="returnButton" type="button" class="hubutton">
+                                <!--<i class="fa fa-inbox" aria-hidden="true"></i><br/>-->
+                                <i class="fa fa-undo" aria-hidden="true"></i><br />
+                                RETURN
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </section>
 

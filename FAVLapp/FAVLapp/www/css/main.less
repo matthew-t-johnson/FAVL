@@ -16,43 +16,69 @@ section {
     height: 100%;
 }
 
-.hubtable {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 90px;
-    text-align: center;
+/*wrapper {
+    height: 100%;
+}*/
 
-    td {
-        width: 50%;
+#hub {
+    background-image: url('../images/success_background_2.jpg');
+    background-size: contain;
+
+    .hubWrapper {
+        height: 100%;
+        background-color: rgba(30, 54, 58, 0.9);
+
+        #headerLogoWrapper {
+            height: 7%;
+            background-color: rgba(255, 255, 255, 0.9);
+
+            #scanLogoHeader {
+                height: 40px;
+                position: absolute;
+                left: 5px;
+                top: 5px;
+                display: block;
+            }
+        }
+
+        .hubtable {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-top: 16.25%;
+            text-align: center;
+
+            td {
+                width: 50%;
+            }
+        }
+
+        button.hubutton {
+            font-size: 16px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            color: #1E363A;
+            margin-left: auto;
+            margin-right: auto;
+            border: none;
+            height: 200px;
+            /*margin-top: 20px;*/
+            /*border-radius: 15px;*/
+            /*border: 1px solid #0B697F;*/
+            color: #1E363A;
+
+            &:focus {
+                outline: none !important;
+            }
+
+            i {
+                font-size: 40pt;
+                color: #0B697F;
+                margin-bottom: 20px;
+            }
+        }
     }
 }
-
-button.hubutton {
-    font-size: 16px;
-    /*width: 90%;*/
-    background-color: white;
-    color: #1E363A;
-    margin-left: auto;
-    margin-right: auto;
-    border: none;
-    height: 200px;
-    /*margin-top: 20px;*/
-    /*border-radius: 15px;*/
-    /*border: 1px solid #0B697F;*/
-    color: #1E363A;
-
-    &:focus {
-        outline: none !important;
-    }
-
-    i {
-        font-size: 30pt;
-        color: #0B697F;
-        margin-bottom: 10px;
-    }
-}
-
 
 #signInButton {
     font-size: 16px;
