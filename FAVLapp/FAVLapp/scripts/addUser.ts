@@ -56,23 +56,19 @@ function showInventory(): void {
         li.appendChild(span);
 
         li.setAttribute("data-book-id", b.Id.toString());
-        
+
         ul.appendChild(li);
     });
 
 }
 
 function showCheckOut(): void {
-    view.hide("#checkOutError");
+    checkOutReader = null;
+    checkOutBook = null;
     view.hide("#checkOutReader");
     view.hide("#checkOutBook");
+    view.hide("#checkOutError");
 }
-
-//function showCheckOutSuccess(): void {
-//    var message = document.getElementById("checkOutSucessMessage");
-//    message.textContent = "The Right Stuff");
-//    main.viewSection("checkOutSuccess");
-//}
 
 var checkOutReader: Reader;
 
@@ -82,8 +78,7 @@ function scanReader(): void {
         checkOutReader = getData(`/api/reader/barcode/${result.text} (${result.format})`) as Reader;
 
         if (checkOutReader) {
-            document.getElementById("checkOutReader").textContent =
-                checkOutReader.FirstName + " " + checkOutReader.LastName;
+            document.getElementById("checkOutReader").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
             view.show("#checkOutReader");
 
             if (checkOutBook && checkOutReader) {

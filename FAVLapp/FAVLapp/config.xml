@@ -107,4 +107,5 @@
     <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used to scan barcodes" />
   </plugin>
   <plugin name="cordova-plugin-compat" spec="~1.1.0" />
+  <plugin name="cordova-plugin-statusbar" spec="~2.2.2" />
 </widget>

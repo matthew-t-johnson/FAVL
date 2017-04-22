@@ -17,6 +17,7 @@ define(["require", "exports", "./main"], function (require, exports, Main) {
         var receivedElement = parentElement.querySelector('.received');
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
+        StatusBar.hide();
         Main.mainInit();
     }
     function onPause() {

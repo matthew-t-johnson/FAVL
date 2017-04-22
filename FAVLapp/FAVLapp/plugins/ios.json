@@ -13,6 +13,9 @@
         "phonegap-plugin-barcodescanner": {
             "CAMERA_USAGE_DESCRIPTION": "barcodes",
             "PACKAGE_NAME": "io.cordova.myapp55e5c5"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "io.cordova.myapp55e5c5"
         }
     },
     "dependent_plugins": {

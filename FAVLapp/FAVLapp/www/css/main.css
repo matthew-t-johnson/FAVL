@@ -25,7 +25,7 @@ section {
 }
 #hub .hubWrapper #headerLogoWrapper {
   height: 7%;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: white;
 }
 #hub .hubWrapper #headerLogoWrapper #scanLogoHeader {
   height: 40px;
@@ -63,7 +63,7 @@ section {
 #hub .hubWrapper button.hubutton i {
   font-size: 40pt;
   color: #0B697F;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 #signInButton {
   font-size: 16px;

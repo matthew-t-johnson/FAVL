@@ -36,9 +36,9 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
         document.getElementById("checkOutButton").addEventListener("click", function () {
             viewSection("checkOut");
         });
-        document.getElementById("overdueButton").addEventListener("click", function () {
-            viewSection("checkOutSuccess");
-        });
+        //document.getElementById("overdueButton").addEventListener("click", () => {
+        //    viewSection("checkOutSuccess");
+        //});
         document.getElementById("againButton").addEventListener("click", function () {
             viewSection("checkOut");
         });

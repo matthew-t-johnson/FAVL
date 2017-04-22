@@ -6,6 +6,8 @@
 
 import Main = require('./main');
 
+declare var StatusBar: any;
+
 export function initialize(): void {
     document.addEventListener('deviceready', onDeviceReady, false);
 }
@@ -20,6 +22,8 @@ function onDeviceReady(): void {
     var receivedElement = parentElement.querySelector('.received');
     listeningElement.setAttribute('style', 'display:none;');
     receivedElement.setAttribute('style', 'display:block;');
+
+    StatusBar.hide();
 
     Main.mainInit();
 }

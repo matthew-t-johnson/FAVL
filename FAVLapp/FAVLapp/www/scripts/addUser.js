@@ -43,23 +43,19 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         });
     }
     function showCheckOut() {
-        view.hide("#checkOutError");
+        checkOutReader = null;
+        checkOutBook = null;
         view.hide("#checkOutReader");
         view.hide("#checkOutBook");
+        view.hide("#checkOutError");
     }
-    //function showCheckOutSuccess(): void {
-    //    var message = document.getElementById("checkOutSucessMessage");
-    //    message.textContent = "The Right Stuff");
-    //    main.viewSection("checkOutSuccess");
-    //}
     var checkOutReader;
     function scanReader() {
         view.hide("#checkOutError");
         scanBarcode(function (result) {
             checkOutReader = getData("/api/reader/barcode/" + result.text + " (" + result.format + ")");
             if (checkOutReader) {
-                document.getElementById("checkOutReader").textContent =
-                    checkOutReader.FirstName + " " + checkOutReader.LastName;
+                document.getElementById("checkOutReader").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
                 view.show("#checkOutReader");
                 if (checkOutBook && checkOutReader) {
                     checkOutTheBook(checkOutReader, checkOutBook);
