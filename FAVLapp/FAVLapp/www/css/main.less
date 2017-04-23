@@ -14,11 +14,66 @@ html {
 
 section {
     height: 100%;
-}
 
-/*wrapper {
-    height: 100%;
-}*/
+    .wrapper {
+        height: 100%;
+
+        #headerLogoWrapper {
+            height: 7%;
+            /*background-color: white;*/
+            background-color: rgba(130, 176, 177, 0.66);
+
+            #scanLogoHeader {
+                height: 5.5%;
+                position: absolute;
+                left: 1%;
+                top: .7%;
+                display: block;
+            }
+
+            i {
+                position: absolute;
+                right: 2%;
+                top: 0.90%;
+                font-size: 325%;
+            }
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        .listList {
+            list-style: none;
+            padding: 0 10px;
+
+
+            li {
+                padding: 3px 10px 5px;
+                margin: 10px;
+                color: #0B697F;
+                background-color: #eee;
+                margin-bottom: 5px;
+                text-align: left;
+                border-radius: 7px;
+                text-transform: none;
+
+                .title, .name {
+                    font-weight: 600;
+                    font-size: 12pt;
+                    display: block;
+                }
+
+                .author, .barcode {
+                    font-weight: normal;
+                    font-size: 10pt;
+                    display: block;
+                    padding-left: .5em;
+                }
+            }
+        }
+    }
+}
 
 #hub {
     background-image: url('../images/success_background_2.jpg');
@@ -30,14 +85,22 @@ section {
 
         #headerLogoWrapper {
             height: 7%;
-            background-color: white;
+            /*background-color: white;*/
+            background-color: rgba(130, 176, 177, 0.66);
 
             #scanLogoHeader {
-                height: 40px;
+                height: 5.5%;
                 position: absolute;
-                left: 5px;
-                top: 5px;
+                left: 1%;
+                top: .7%;
                 display: block;
+            }
+
+            i {
+                position: absolute;
+                right: 2%;
+                top: 0.90%;
+                font-size: 325%;
             }
         }
 
@@ -292,35 +355,48 @@ section {
     }
 }
 
-#inventoryList, #readersList {
+/*.list {
     list-style: none;
-    padding: 0 10px;
     margin: 0;
 
-    li {
-        padding: 3px 10px 5px;
-        margin: 10px;
-        color: #0B697F;
-        background-color: #eee;
-        margin-bottom: 5px;
-        text-align: left;
-        border-radius: 7px;
-        text-transform: none;
+    .wrapper {
+        height: 100%;
 
-        .title, .name {
-            font-weight: 600;
-            font-size: 12pt;
-            display: block;
+        h2 {
+            margin: 0;
         }
 
-        .author, .barcode {
-            font-weight: normal;
-            font-size: 10pt;
-            display: block;
-            padding-left: .5em;
+        .listList {
+            list-style: none;
+            padding: 0 10px;
+
+
+            li {
+                padding: 3px 10px 5px;
+                margin: 10px;
+                color: #0B697F;
+                background-color: #eee;
+                margin-bottom: 5px;
+                text-align: left;
+                border-radius: 7px;
+                text-transform: none;
+
+                .title, .name {
+                    font-weight: 600;
+                    font-size: 12pt;
+                    display: block;
+                }
+
+                .author, .barcode {
+                    font-weight: normal;
+                    font-size: 10pt;
+                    display: block;
+                    padding-left: .5em;
+                }
+            }
         }
     }
-}
+}*/
 
 #checkOut .scanReader, #checkOut .scanBook {
     margin-top: 300PX;
@@ -416,7 +492,7 @@ section {
             display: inline-block;
             padding: 0;
             border-left: 4px solid rgba(30, 54, 58, 0.79);
-            
+
             img {
                 width: 70%;
             }
@@ -429,4 +505,3 @@ section {
         }
     }
 }
-

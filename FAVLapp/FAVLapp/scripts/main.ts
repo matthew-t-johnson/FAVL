@@ -9,7 +9,7 @@ export function mainInit(): void {
 export function viewSection(id: string): void {
     view(`#${id}`);
 
-    if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess" && id !== "returnSuccess" && id !== "hub") // maybe take out the hub check later
+    if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess" && id !== "returnSuccess"/* && id !== "hub" && id !== "inventory" && id !== "overDue" && id !== "readers"*/) // maybe take out the hub check later
         view.show("#headerLogoWrapper");
 }
 

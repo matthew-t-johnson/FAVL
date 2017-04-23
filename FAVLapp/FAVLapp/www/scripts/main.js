@@ -7,7 +7,7 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
     exports.mainInit = mainInit;
     function viewSection(id) {
         view("#" + id);
-        if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess" && id !== "returnSuccess" && id !== "hub")
+        if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess" && id !== "returnSuccess" /* && id !== "hub" && id !== "inventory" && id !== "overDue" && id !== "readers"*/)
             view.show("#headerLogoWrapper");
     }
     exports.viewSection = viewSection;
