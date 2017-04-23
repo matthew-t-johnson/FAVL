@@ -29,4 +29,5 @@
 
     <script src="../Scripts/quagga.min.js"></script>
     <script src="../js/scan-barcode.js"></script>
+    <script src="../js/createTestData.js"></script>
 </asp:Content>

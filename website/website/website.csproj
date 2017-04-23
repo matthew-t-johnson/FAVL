@@ -204,6 +204,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="admin\addBook.aspx.cs">
       <DependentUpon>addBook.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -348,6 +351,9 @@
     <Compile Include="Book.cs">
       <DependentUpon>favlDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="CheckOut.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\APIController.cs" />
     <Compile Include="favlDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -401,6 +407,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="js\createTestData.ts" />
     <TypeScriptCompile Include="js\scan-barcode.ts" />
   </ItemGroup>
   <PropertyGroup>

@@ -46,9 +46,9 @@ function initClick(): void {
         viewSection("checkOut");
     });
 
-    //document.getElementById("overdueButton").addEventListener("click", () => {
-    //    viewSection("checkOutSuccess");
-    //});
+    document.getElementById("overdueButton").addEventListener("click", () => {
+        viewSection("overDue");
+    });
 
     document.getElementById("againButton").addEventListener("click", () => {
         viewSection("checkOut");

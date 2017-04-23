@@ -13,6 +13,8 @@
         <AssociationConnector Association="favlModel.FK_Books_Readers" ManuallyRouted="false" />
         <AssociationConnector Association="favlModel.FK_Librarians_Libraries" />
         <AssociationConnector Association="favlModel.FK_Readers_Libraries" />
+        <EntityTypeShape EntityType="favlModel.Admin" Width="1.5" PointX="3.375" PointY="5.75" />
+        <EntityTypeShape EntityType="favlModel.CheckOut" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -63,14 +64,14 @@ namespace website.Controllers
             {
                 var readers = db.Readers.ToList();
                 return readers.Select(reader => new Reader
-                    {
-                        Id = reader.Id,
-                        FirstName = reader.FirstName,
-                        MiddleName = reader.MiddleName,
-                        LastName = reader.LastName,
-                        Barcode = reader.Barcode,
-                        TotalCheckouts = reader.TotalCheckouts
-                    })
+                {
+                    Id = reader.Id,
+                    FirstName = reader.FirstName,
+                    MiddleName = reader.MiddleName,
+                    LastName = reader.LastName,
+                    Barcode = reader.Barcode,
+                    TotalCheckouts = reader.TotalCheckouts
+                })
                     .ToList();
             }
         }
@@ -83,14 +84,14 @@ namespace website.Controllers
             {
                 var readers = db.Readers.Where(r => r.LibraryID == libraryID).ToList();
                 return readers.Select(reader => new Reader
-                    {
-                        Id = reader.Id,
-                        FirstName = reader.FirstName,
-                        MiddleName = reader.MiddleName,
-                        LastName = reader.LastName,
-                        Barcode = reader.Barcode,
-                        TotalCheckouts = reader.TotalCheckouts
-                    })
+                {
+                    Id = reader.Id,
+                    FirstName = reader.FirstName,
+                    MiddleName = reader.MiddleName,
+                    LastName = reader.LastName,
+                    Barcode = reader.Barcode,
+                    TotalCheckouts = reader.TotalCheckouts
+                })
                     .ToList();
             }
         }
@@ -145,12 +146,12 @@ namespace website.Controllers
                 var libraries = db.Libraries.ToList();
 
                 return libraries.Select(library => new Library
-                    {
-                        Id = library.Id,
-                        Name = library.Name,
-                        Village = library.Village,
-                        Country = library.Country
-                    })
+                {
+                    Id = library.Id,
+                    Name = library.Name,
+                    Village = library.Village,
+                    Country = library.Country
+                })
                     .ToList();
             }
         }
@@ -209,14 +210,14 @@ namespace website.Controllers
                 var books = db.Books.ToList();
 
                 return books.Select(book => new Book
-                    {
-                        Id = book.Id,
-                        Title = book.Title,
-                        AuthorFirst = book.AuthorFirst,
-                        AuthorMiddle = book.AuthorMiddle,
-                        AuthorLast = book.AuthorLast,
-                        Barcode = book.Barcode
-                    })
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    AuthorFirst = book.AuthorFirst,
+                    AuthorMiddle = book.AuthorMiddle,
+                    AuthorLast = book.AuthorLast,
+                    Barcode = book.Barcode
+                })
                     .ToList();
             }
         }
@@ -230,14 +231,14 @@ namespace website.Controllers
                 var books = db.Books.Where(b => b.LibraryID == libraryID).ToList();
 
                 return books.Select(book => new Book
-                    {
-                        Id = book.Id,
-                        Title = book.Title,
-                        AuthorFirst = book.AuthorFirst,
-                        AuthorMiddle = book.AuthorMiddle,
-                        AuthorLast = book.AuthorLast,
-                        Barcode = book.Barcode
-                    })
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    AuthorFirst = book.AuthorFirst,
+                    AuthorMiddle = book.AuthorMiddle,
+                    AuthorLast = book.AuthorLast,
+                    Barcode = book.Barcode
+                })
                     .ToList();
             }
         }
@@ -265,6 +266,32 @@ namespace website.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/book/add")]
+        public Book AddBook([FromBody] Book book)
+        {
+            using (var db = new favlEntities())
+            {
+                if (string.IsNullOrEmpty(book.Barcode))
+                    book.Barcode = string.Empty;
+
+                var addedBook = db.Books.Add(book);
+
+                db.SaveChanges();
+
+                return new Book
+                {
+                    Id = addedBook.Id,
+                    AuthorFirst = addedBook.AuthorFirst,
+                    AuthorMiddle = addedBook.AuthorMiddle,
+                    AuthorLast = addedBook.AuthorLast,
+                    Barcode = addedBook.Barcode,
+                    LibraryID = addedBook.LibraryID,                    
+                };
+            }
+        }
+
+
         [HttpGet]
         [Route("api/books/checkout/{bookID}/{readerID}")]
         public string CheckOutBook(int bookID, int readerID)
@@ -272,11 +299,25 @@ namespace website.Controllers
             using (var db = new favlEntities())
             {
                 var book = db.Books.Find(bookID);
-
                 if (book == null)
                     return "Book not found";
 
+                var reader = db.Readers.Find(readerID);
+                if (reader == null)
+                    return "Reader not found";
+
                 book.CheckedOutTo = readerID;
+                book.CheckedOutDate = DateTime.UtcNow;
+                book.TotalCheckouts += 1;
+                reader.TotalCheckouts += 1;
+
+                db.CheckOuts.Add(new CheckOut()
+                {
+                    BookID = bookID,
+                    ReaderID = readerID,
+                    LibraryID = book.LibraryID,
+                    CheckOutDate = DateTime.UtcNow
+                });
 
                 db.SaveChanges();
 
@@ -303,6 +344,48 @@ namespace website.Controllers
             }
         }
 
+        public class OverDueBook: Book
+        {
+            public string ReaderFirst;
+            public string ReaderMiddle;
+            public string ReaderLast;
+            public DateTime DueDate;
+        }
+
+        [HttpGet]
+        [Route("api/books/overdue/{libraryID}")]
+        public List<OverDueBook> GetOverDueBooks(int libraryID)
+        {
+            var overDueIfCheckedOutBefore = DateTime.UtcNow.AddDays(-7);
+
+            using (var db = new favlEntities())
+            {
+                var list = db.Books.Where(b => b.LibraryID == libraryID && b.CheckedOutDate != null &&
+                                    b.CheckedOutDate < overDueIfCheckedOutBefore).Select(book => new OverDueBook
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    AuthorFirst = book.AuthorFirst,
+                    AuthorMiddle = book.AuthorMiddle,
+                    AuthorLast = book.AuthorLast,
+                    Barcode = book.Barcode,
+                    ReaderFirst = book.Reader.FirstName,
+                    ReaderMiddle = book.Reader.MiddleName,
+                    ReaderLast = book.Reader.LastName,
+                    CheckedOutDate = book.CheckedOutDate
+                }).ToList();
+
+                foreach (var item in list)
+                {
+                    if (item.CheckedOutDate.HasValue)
+                        item.DueDate = item.CheckedOutDate.Value.AddDays(7);
+                }
+
+                return list;
+            }
+        }
+
+
         [HttpGet]
         [Route("api/isbndb/{barcode}")]
         public BookInfo GetBookInfoFromISBNDB(string barcode)
@@ -314,7 +397,7 @@ namespace website.Controllers
                 var isbnDbBook = JsonConvert.DeserializeObject<IsbnDbBook>(json);
 
                 if (!string.IsNullOrEmpty(isbnDbBook.error))
-                    return new BookInfo {error = isbnDbBook.error};
+                    return new BookInfo { error = isbnDbBook.error };
 
                 if (isbnDbBook.data == null || isbnDbBook.data.Length == 0)
                     return new BookInfo { error = "ISBNDB API succeeded but no data returned" };
@@ -330,7 +413,7 @@ namespace website.Controllers
 
                 if (isbnDbBook.data[0].author_data.Length == 0)
                     return book;
-                
+
                 var authorName = isbnDbBook.data[0].author_data[0].name.Trim();
 
                 //  convert single string author name into our three parts

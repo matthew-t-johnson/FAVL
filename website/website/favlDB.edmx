@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="favlModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="Books">
           <Key>
             <PropertyRef Name="Id" />
@@ -14,10 +23,21 @@
           <Property Name="AuthorFirst" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="AuthorMiddle" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="AuthorLast" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="LibraryID" Type="int" />
-          <Property Name="Barcode" Type="varchar" MaxLength="50" />
+          <Property Name="LibraryID" Type="int" Nullable="false" />
+          <Property Name="Barcode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CheckedOutTo" Type="int" />
           <Property Name="TotalCheckouts" Type="int" Nullable="false" />
+          <Property Name="CheckedOutDate" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="CheckOuts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="ReaderID" Type="int" Nullable="false" />
+          <Property Name="LibraryID" Type="int" Nullable="false" />
+          <Property Name="CheckOutDate" Type="datetime2" Precision="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Librarians">
           <Key>
@@ -55,7 +75,7 @@
           <Property Name="LibraryID" Type="int" />
         </EntityType>
         <Association Name="FK_Books_Libraries">
-          <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
+          <End Role="Libraries" Type="Self.Libraries" Multiplicity="1" />
           <End Role="Books" Type="Self.Books" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Libraries">
@@ -103,7 +123,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="favlModelStoreContainer">
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CheckOuts" EntityType="Self.CheckOuts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Librarians" EntityType="Self.Librarians" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libraries" EntityType="Self.Libraries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Readers" EntityType="Self.Readers" Schema="dbo" store:Type="Tables" />
@@ -137,12 +159,13 @@
           <Property Name="AuthorFirst" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AuthorMiddle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AuthorLast" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LibraryID" Type="Int32" />
-          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LibraryID" Type="Int32" Nullable="false" />
+          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CheckedOutTo" Type="Int32" />
           <Property Name="TotalCheckouts" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Library" Relationship="Self.FK_Books_Libraries" FromRole="Books" ToRole="Libraries" />
           <NavigationProperty Name="Reader" Relationship="Self.FK_Books_Readers" FromRole="Books" ToRole="Readers" />
+          <Property Name="CheckedOutDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Librarian">
           <Key>
@@ -186,7 +209,7 @@
           <NavigationProperty Name="Library" Relationship="favlModel.FK_Readers_Libraries" FromRole="Reader" ToRole="Library" />
         </EntityType>
         <Association Name="FK_Books_Libraries">
-          <End Role="Libraries" Type="Self.Library" Multiplicity="0..1" />
+          <End Role="Libraries" Type="Self.Library" Multiplicity="1" />
           <End Role="Books" Type="Self.Book" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Libraries">
@@ -230,6 +253,8 @@
             <End Role="Library" EntitySet="Libraries" />
             <End Role="Reader" EntitySet="Readers" />
           </AssociationSet>
+          <EntitySet Name="Admins" EntityType="favlModel.Admin" />
+          <EntitySet Name="CheckOuts" EntityType="favlModel.CheckOut" />
         </EntityContainer>
         <Association Name="FK_Librarians_Libraries">
           <End Type="favlModel.Library" Role="Library" Multiplicity="0..1" />
@@ -255,6 +280,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CheckOut">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="ReaderID" Type="Int32" Nullable="false" />
+          <Property Name="LibraryID" Type="Int32" Nullable="false" />
+          <Property Name="CheckOutDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -264,6 +308,7 @@
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="favlModel.Book">
               <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="CheckedOutDate" ColumnName="CheckedOutDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="AuthorFirst" ColumnName="AuthorFirst" />
@@ -311,6 +356,27 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="TotalCheckouts" ColumnName="TotalCheckouts" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="favlModel.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckOuts">
+            <EntityTypeMapping TypeName="favlModel.CheckOut">
+              <MappingFragment StoreEntitySet="CheckOuts">
+                <ScalarProperty Name="CheckOutDate" ColumnName="CheckOutDate" />
+                <ScalarProperty Name="LibraryID" ColumnName="LibraryID" />
+                <ScalarProperty Name="ReaderID" ColumnName="ReaderID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

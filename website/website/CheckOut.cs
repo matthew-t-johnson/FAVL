@@ -12,20 +12,12 @@ namespace website
     using System;
     using System.Collections.Generic;
     
-    public partial class Book
+    public partial class CheckOut
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string AuthorFirst { get; set; }
-        public string AuthorMiddle { get; set; }
-        public string AuthorLast { get; set; }
+        public int BookID { get; set; }
+        public int ReaderID { get; set; }
         public int LibraryID { get; set; }
-        public string Barcode { get; set; }
-        public Nullable<int> CheckedOutTo { get; set; }
-        public int TotalCheckouts { get; set; }
-        public Nullable<System.DateTime> CheckedOutDate { get; set; }
-    
-        public virtual Library Library { get; set; }
-        public virtual Reader Reader { get; set; }
+        public System.DateTime CheckOutDate { get; set; }
     }
 }

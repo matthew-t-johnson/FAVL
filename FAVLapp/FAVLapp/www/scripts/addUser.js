@@ -9,11 +9,11 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
         document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
         document.getElementById("inventory").addEventListener("view:show", showInventory);
+        document.getElementById("overDue").addEventListener("view:show", showOverDue);
         document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
         document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
         document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
         document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
-        //document.getElementById("overdueButton").addEventListener("view:show", showCheckOutSuccess);
     }
     exports.addUserInit = addUserInit;
     function showEditUser() {
@@ -37,6 +37,32 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             span = document.createElement("span");
             span.className = "author";
             span.textContent = b.AuthorFirst + " " + b.AuthorMiddle + " " + b.AuthorLast;
+            li.appendChild(span);
+            li.setAttribute("data-book-id", b.Id.toString());
+            ul.appendChild(li);
+        });
+    }
+    function showOverDue() {
+        var ul = document.getElementById("overDueList");
+        ul.textContent = "";
+        var books = getData("/api/books/overdue/" + currentLibrary.Id);
+        books.forEach(function (b) {
+            var li = document.createElement("li");
+            var span = document.createElement("span");
+            span.className = "title";
+            span.textContent = b.Title;
+            li.appendChild(span);
+            span = document.createElement("span");
+            span.className = "author";
+            span.textContent = b.AuthorFirst + " " + b.AuthorMiddle + " " + b.AuthorLast;
+            li.appendChild(span);
+            span = document.createElement("span");
+            span.className = "date";
+            span.textContent = "" + new Date(b.DueDate).toLocaleDateString();
+            li.appendChild(span);
+            span = document.createElement("span");
+            span.className = "reader";
+            span.textContent = b.ReaderFirst + " " + b.ReaderMiddle + " " + b.ReaderLast;
             li.appendChild(span);
             li.setAttribute("data-book-id", b.Id.toString());
             ul.appendChild(li);

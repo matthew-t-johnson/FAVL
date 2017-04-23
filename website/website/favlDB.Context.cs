@@ -29,5 +29,7 @@ namespace website
         public virtual DbSet<Librarian> Librarians { get; set; }
         public virtual DbSet<Library> Libraries { get; set; }
         public virtual DbSet<Reader> Readers { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<CheckOut> CheckOuts { get; set; }
     }
 }

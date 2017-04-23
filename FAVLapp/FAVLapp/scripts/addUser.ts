@@ -10,12 +10,11 @@ export function addUserInit(): void {
     document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
     document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
     document.getElementById("inventory").addEventListener("view:show", showInventory);
+    document.getElementById("overDue").addEventListener("view:show", showOverDue);
     document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
     document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
     document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
     document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
-    //document.getElementById("overdueButton").addEventListener("view:show", showCheckOutSuccess);
-
 }
 
 interface Book {
@@ -25,6 +24,11 @@ interface Book {
     AuthorMiddle: string;
     AuthorLast: string;
     Barcode: string;
+    CheckedOutDate: string;
+    DueDate: string;
+    ReaderFirst: string;
+    ReaderMiddle: string;
+    ReaderLast: string;
 }
 
 function showEditUser(): void {
@@ -61,6 +65,44 @@ function showInventory(): void {
     });
 
 }
+
+function showOverDue(): void {
+    const ul = document.getElementById("overDueList");
+    ul.textContent = "";
+
+    const books = getData(`/api/books/overdue/${currentLibrary.Id}`) as Array<Book>;
+
+    books.forEach(b => {
+        const li = document.createElement("li");
+
+        var span = document.createElement("span");
+        span.className = "title";
+        span.textContent = b.Title;
+        li.appendChild(span);
+
+        span = document.createElement("span");
+        span.className = "author";
+        span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
+        li.appendChild(span);
+
+        span = document.createElement("span");
+        span.className = "date";
+        span.textContent = `${new Date(b.DueDate).toLocaleDateString()}`;
+        li.appendChild(span);
+
+        span = document.createElement("span");
+        span.className = "reader";
+        span.textContent = `${b.ReaderFirst} ${b.ReaderMiddle} ${b.ReaderLast}`;
+        li.appendChild(span);
+
+
+        li.setAttribute("data-book-id", b.Id.toString());
+
+        ul.appendChild(li);
+    });
+
+}
+
 
 function showCheckOut(): void {
     checkOutReader = null;
