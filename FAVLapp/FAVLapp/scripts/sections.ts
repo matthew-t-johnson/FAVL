@@ -1,17 +1,21 @@
 ﻿import main = require("./main");
 import view = require("../lib/view");
 
-export function addUserInit(): void {
-    document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
-    document.getElementById("signInForm").addEventListener("submit", signInSubmit);
+export function init(): void {
     document.getElementById("readers").addEventListener("view:show", initReaders);
     document.getElementById("editUser").addEventListener("view:show", showEditUser);
-    document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
-    document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
     document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
     document.getElementById("inventory").addEventListener("view:show", showInventory);
     document.getElementById("overDue").addEventListener("view:show", showOverDue);
     document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
+
+
+    document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
+    document.getElementById("signInForm").addEventListener("submit", signInSubmit);
+
+
+    document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
+    document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
     document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
     document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
     document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
@@ -209,7 +213,7 @@ function addUserSubmit(ev: Event): boolean {
             field.value = "";
         }
 
-        view.hide("#barcodeString");
+        view.hide("#addBarcodeString");
     }
 
     return false;
@@ -266,6 +270,7 @@ function signInSubmit(ev: Event): boolean {
     currentLibrary = postData("/api/signin", data) as Library;
 
     if (currentLibrary) {
+        document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
         main.viewSection("hub");
     }
 
@@ -363,7 +368,7 @@ const scannerSetUp = {
 
 function onAddUserGetBarcode(): void {
     scanBarcode(result => {
-        var el = document.getElementById("barcodeString") as HTMLInputElement;
+        var el = document.getElementById("addBarcodeString") as HTMLInputElement;
         el.value = result.text + " (" + result.format + ")";
         view.show(el);
     });

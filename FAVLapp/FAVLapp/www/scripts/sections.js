@@ -1,21 +1,21 @@
 define(["require", "exports", "./main", "../lib/view"], function (require, exports, main, view) {
     "use strict";
-    function addUserInit() {
-        document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
-        document.getElementById("signInForm").addEventListener("submit", signInSubmit);
+    function init() {
         document.getElementById("readers").addEventListener("view:show", initReaders);
         document.getElementById("editUser").addEventListener("view:show", showEditUser);
-        document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
-        document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
         document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
         document.getElementById("inventory").addEventListener("view:show", showInventory);
         document.getElementById("overDue").addEventListener("view:show", showOverDue);
         document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
+        document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
+        document.getElementById("signInForm").addEventListener("submit", signInSubmit);
+        document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
+        document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
         document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
         document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
         document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
     }
-    exports.addUserInit = addUserInit;
+    exports.init = init;
     function showEditUser() {
         document.querySelector("#editUser input[name='FirstName']").value = currentEditUser.FirstName;
         document.querySelector("#editUser input[name='MiddleName']").value =
@@ -156,7 +156,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 var field = inputs[i];
                 field.value = "";
             }
-            view.hide("#barcodeString");
+            view.hide("#addBarcodeString");
         }
         return false;
     }
@@ -187,6 +187,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         }
         currentLibrary = postData("/api/signin", data);
         if (currentLibrary) {
+            document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
             main.viewSection("hub");
         }
         return false;
@@ -256,7 +257,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     };
     function onAddUserGetBarcode() {
         scanBarcode(function (result) {
-            var el = document.getElementById("barcodeString");
+            var el = document.getElementById("addBarcodeString");
             el.value = result.text + " (" + result.format + ")";
             view.show(el);
         });
@@ -276,4 +277,4 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         }, function (error) { return alert("Scanning failed: " + error); }, scannerSetUp);
     }
 });
-//# sourceMappingURL=addUser.js.map
+//# sourceMappingURL=sections.js.map

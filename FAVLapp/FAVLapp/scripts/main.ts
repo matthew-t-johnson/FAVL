@@ -1,16 +1,13 @@
-﻿import AddUser = require("./addUser");
+﻿import Sections = require("./sections");
 import view = require("../lib/view");
 
 export function mainInit(): void {
     initClick();
-    AddUser.addUserInit();
+    Sections.init();
 }
 
 export function viewSection(id: string): void {
     view(`#${id}`);
-
-    if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess" && id !== "returnSuccess"/* && id !== "hub" && id !== "inventory" && id !== "overDue" && id !== "readers"*/) // maybe take out the hub check later
-        view.show("#headerLogoWrapper");
 }
 
 function initClick(): void {
@@ -18,9 +15,10 @@ function initClick(): void {
         viewSection("signIn");
     });
 
-    document.getElementById("scanLogoHeader").addEventListener("click", () => {
-        viewSection("hub");
-    });
+    const imgs = document.querySelectorAll(".headerLogoWrapper img, .successButton");
+    for (let i = 0; i < imgs.length; i++) {
+        imgs[i].addEventListener("click", () => { viewSection("hub"); });
+    }
 
     document.getElementById("addUserButton").addEventListener("click", () => {
         viewSection("addUser");
@@ -32,10 +30,6 @@ function initClick(): void {
 
     document.getElementById("returnButton").addEventListener("click", () => {
         viewSection("returnBook");
-    });
-
-    document.getElementById("goToHubButton").addEventListener("click", () => {
-        viewSection("hub");
     });
 
     document.getElementById("inventoryButton").addEventListener("click", () => {
@@ -50,12 +44,16 @@ function initClick(): void {
         viewSection("overDue");
     });
 
-    document.getElementById("againButton").addEventListener("click", () => {
+    document.getElementById("checkOutAgainButton").addEventListener("click", () => {
         viewSection("checkOut");
     });
 
-    document.getElementById("successButton").addEventListener("click", () => {
-        viewSection("hub");
+    document.getElementById("addUserAgainButton").addEventListener("click", () => {
+        viewSection("addUser");
+    });
+
+    document.getElementById("returnAgainButton").addEventListener("click", () => {
+        viewSection("returnBook");
     });
 
 }

@@ -1,23 +1,22 @@
-define(["require", "exports", "./addUser", "../lib/view"], function (require, exports, AddUser, view) {
+define(["require", "exports", "./sections", "../lib/view"], function (require, exports, Sections, view) {
     "use strict";
     function mainInit() {
         initClick();
-        AddUser.addUserInit();
+        Sections.init();
     }
     exports.mainInit = mainInit;
     function viewSection(id) {
         view("#" + id);
-        if (id !== "index" && id !== "signIn" && id !== "checkOutSuccess" && id !== "returnSuccess" /* && id !== "hub" && id !== "inventory" && id !== "overDue" && id !== "readers"*/)
-            view.show("#headerLogoWrapper");
     }
     exports.viewSection = viewSection;
     function initClick() {
         document.getElementById("signInButton").addEventListener("click", function () {
             viewSection("signIn");
         });
-        document.getElementById("scanLogoHeader").addEventListener("click", function () {
-            viewSection("hub");
-        });
+        var imgs = document.querySelectorAll(".headerLogoWrapper img, .successButton");
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].addEventListener("click", function () { viewSection("hub"); });
+        }
         document.getElementById("addUserButton").addEventListener("click", function () {
             viewSection("addUser");
         });
@@ -26,9 +25,6 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
         });
         document.getElementById("returnButton").addEventListener("click", function () {
             viewSection("returnBook");
-        });
-        document.getElementById("goToHubButton").addEventListener("click", function () {
-            viewSection("hub");
         });
         document.getElementById("inventoryButton").addEventListener("click", function () {
             viewSection("inventory");
@@ -39,11 +35,14 @@ define(["require", "exports", "./addUser", "../lib/view"], function (require, ex
         document.getElementById("overdueButton").addEventListener("click", function () {
             viewSection("overDue");
         });
-        document.getElementById("againButton").addEventListener("click", function () {
+        document.getElementById("checkOutAgainButton").addEventListener("click", function () {
             viewSection("checkOut");
         });
-        document.getElementById("successButton").addEventListener("click", function () {
-            viewSection("hub");
+        document.getElementById("addUserAgainButton").addEventListener("click", function () {
+            viewSection("addUser");
+        });
+        document.getElementById("returnAgainButton").addEventListener("click", function () {
+            viewSection("returnBook");
         });
     }
 });

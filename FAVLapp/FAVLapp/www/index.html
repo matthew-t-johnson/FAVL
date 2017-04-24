@@ -25,40 +25,35 @@
         </div>
     </div>
 
-    <!--HEADER LOGO WRAPPER-->
-    <!--<div id="headerLogoWrapper" hidden>
-        <img id="scanLogoHeader" src="images/scan_lightish_BG.svg" />
-        <i class="fa fa-user-circle" aria-hidden="true"></i>
-    </div>-->
-
     <!--LANDING SIGN-IN-->
     <section id="index">
-        <div>
+        <div class="wrapper">
             <img id="scanLogoIndex" src="images/scan_logo.svg" />
-            <h3><button class="hubutton" id="signInButton" type="button">SIGN IN</button></h3>
+            <button class="hubutton" id="signInButton" type="button">Sign In</button>
         </div>
     </section>
 
     <!--HUB-->
     <section id="hub" hidden>
-        <div class="hubWrapper">
-            <div id="headerLogoWrapper">
-                <img id="scanLogoHeader" src="images/scan_lightish_BG.svg" />
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg" />
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
             <div>
+                <h1 class="libraryName"></h1>
                 <table class="hubtable">
                     <tr>
                         <td>
                             <button id="addUserButton" type="button" class="hubutton">
                                 <i class="fa fa-user-plus" aria-hidden="true"></i><br />
-                                ADD USER
+                                Add User
                             </button>
                         </td>
                         <td>
                             <button id="editUserButton" type="button" class="hubutton">
                                 <i class="fa fa-pencil" aria-hidden="true"></i><br />
-                                EDIT USER
+                                Edit User
                             </button>
                         </td>
                     </tr>
@@ -66,13 +61,13 @@
                         <td>
                             <button id="overdueButton" type="button" class="hubutton">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i><br />
-                                OVERDUE
+                                Overdue
                             </button>
                         </td>
                         <td>
                             <button id="inventoryButton" type="button" class="hubutton">
                                 <i class="fa fa-list-alt" aria-hidden="true"></i><br />
-                                INVENTORY
+                                Inventory
                             </button>
                         </td>
                     </tr>
@@ -80,14 +75,13 @@
                         <td>
                             <button id="checkOutButton" type="button" class="hubutton">
                                 <i class="fa fa-cart-plus" aria-hidden="true"></i><br />
-                                CHECK OUT
+                                Check Out
                             </button>
                         </td>
                         <td>
                             <button id="returnButton" type="button" class="hubutton">
-                                <!--<i class="fa fa-inbox" aria-hidden="true"></i><br/>-->
                                 <i class="fa fa-undo" aria-hidden="true"></i><br />
-                                RETURN
+                                Return
                             </button>
                         </td>
                     </tr>
@@ -115,171 +109,133 @@
                     </form>
                 </div>
             </div>
+            <div class="bottomButtonWrapper">
+                <button type="button" class="BarcodeButton" id="signInBarcode">
+                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                    <h1>
+                        Scan<br />Barcode
+                    </h1>
+                </button>
+            </div>
         </div>
-        <button type="button" class="BarcodeButton" id="signInBarcode">
-            <i class="fa fa-barcode" aria-hidden="true"></i>
-            <h1>
-                Scan<br />Barcode
-            </h1>
-        </button>
-
-        <!--<div class="checkOutSuccessWrapper">
-            <h2>Successful Checkout!</h2>
-            <i class="fa fa-check" aria-hidden="true"></i>
-            <p class="message checkOutSuccessMessage">The Right Stuff has been checked out to Scucci Mane</p>
-        </div>
-        <button class="checkOutSuccessButton">
-            <i class="fa fa-home" aria-hidden="true"></i>
-            <h2>Go Home</h2>
-        </button>-->
-
     </section>
 
     <!--ADD USER-->
     <section id="addUser" hidden>
-        <h2>Add User</h2>
-        <div>
-            <form class="userForm" id="addUserForm">
-                <fieldset>
-                    <legend>User Information</legend>
-                    <table class="formTable">
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg" />
+                <h2>Add User</h2>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </div>
+            <div>
+                <form class="userForm" id="addUserForm">
+                    <fieldset>
+                        <legend>User Information</legend>
+                        <table class="formTable">
+                            <tr>
+                                <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required /></td>
+                            </tr>
+                            <tr>
+                                <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name" /></td>
+                            </tr>
+                            <tr>
+                                <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="BarcodeButton" id="addBarcodeButton">
+                                        <i class="fa fa-barcode" aria-hidden="true"></i>
+                                        <h1>
+                                            Add<br />Barcode
+                                        </h1>
+                                    </button>
+                                    <input type="text" id="addBarcodeString" name="Barcode" hidden readonly /><br />
+                                </td>
 
-                        <!--
-                        public string FirstName { get; set; }
-                        public string MiddleName { get; set; }
-                        public string LastName { get; set; }
-                        public string Barcode { get; set; }
-                            -->
+                            </tr>
+                            <tr class="formButtons">
+                                <td>
+                                    <button type="submit" class="formSubmit">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <h1>Create</h1>
+                                    </button>
+                                    <button type="button" class="formCancel">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        <h1>Cancel</h1>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </form>
 
-                        <tr>
-                            <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required /></td>
-                        </tr>
-                        <tr>
-                            <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name" /></td>
-                        </tr>
-                        <tr>
-                            <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required /></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="button" class="BarcodeButton" id="addBarcodeButton">
-                                    <i class="fa fa-barcode" aria-hidden="true"></i>
-                                    <h1>
-                                        Add<br />Barcode
-                                    </h1>
-                                </button>
-                                <input type="text" id="barcodeString" name="Barcode" hidden readonly /><br />
-                            </td>
-
-                        </tr>
-                        <tr class="formButtons">
-                            <td>
-                                <button type="submit" class="formSubmit">
-                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                    <h1>Create</h1>
-                                </button>
-                                <button type="button" class="formCancel">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                    <h1>Cancel</h1>
-                                </button>
-                                <!--<input class="formSubmit" type="submit" value="Submit"/><input class="formCancel" type="button" value="Cancel"/>-->
-                            </td>
-                        </tr>
-                    </table>
-                </fieldset>
-            </form>
-
+            </div>
         </div>
     </section>
 
     <!--EDIT USER-->
     <section id="editUser" hidden>
-        <h2>Edit User</h2>
-        <div>
-            <form class="userForm" id="editUserForm">
-                <fieldset>
-                    <legend>User Information</legend>
-                    <table class="formTable">
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg" />
+                <h2>Edit User</h2>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </div>
+            <div>
+                <form class="userForm" id="editUserForm">
+                    <fieldset>
+                        <legend>User Information</legend>
+                        <table class="formTable">
+                            <tr>
+                                <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required /></td>
+                            </tr>
+                            <tr>
+                                <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name" /></td>
+                            </tr>
+                            <tr>
+                                <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required /></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="updateBarcodeString" name="Barcode" />
+                                    <button type="button" class="addBarcodeButton BarcodeButton">
+                                        <i class="fa fa-barcode" aria-hidden="true"></i>
+                                        <h1>
+                                            Update<br />Barcode
+                                        </h1>
+                                    </button>
+                                </td>
 
-                        <!--
-                        public string FirstName { get; set; }
-                        public string MiddleName { get; set; }
-                        public string LastName { get; set; }
-                        public string Barcode { get; set; }
-                        -->
+                            </tr>
+                            <tr class="formButtons">
+                                <td>
+                                    <button type="submit" class="formSubmit">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <h1>Update</h1>
+                                    </button>
+                                    <button type="button" class="formCancel">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        <h1>Cancel</h1>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </form>
 
-                        <tr>
-                            <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required /></td>
-                        </tr>
-                        <tr>
-                            <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name" /></td>
-                        </tr>
-                        <tr>
-                            <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required /></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="hidden" id="barcodeString" name="Barcode" />
-                                <button type="button" class="addBarcodeButton BarcodeButton">
-                                    <i class="fa fa-barcode" aria-hidden="true"></i>
-                                    <h1>
-                                        Update<br />Barcode
-                                    </h1>
-                                </button>
-                            </td>
-
-                        </tr>
-                        <tr class="formButtons">
-                            <td>
-                                <button type="submit" class="formSubmit">
-                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                    <h1>Update</h1>
-                                </button>
-                                <button type="button" class="formCancel">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                    <h1>Cancel</h1>
-                                </button>
-                                <!--<input class="formSubmit" type="submit" value="Submit"/><input class="formCancel" type="button" value="Cancel"/>-->
-                            </td>
-                        </tr>
-                    </table>
-                </fieldset>
-            </form>
-
+            </div>
         </div>
     </section>
 
-    <!--<div class="screen">
-        <div class="screenWrapper">
-            <div id="headerLogoWrapper" hidden>
-                <img id="scanLogoHeader" src="images/scan_lightish_BG.svg" />
-                <i class="fa fa-user-circle" aria-hidden="true"></i>
-            </div>
-
-            READERS
-            <section id="readers" class="list" hidden>
-                <div class="wrapper">
-                    <div id="headerLogoWrapper" hidden>
-                        <img id="scanLogoHeader" src="images/scan_lightish_BG.svg" />
-                        <i class="fa fa-user-circle" aria-hidden="true"></i>
-                    </div>
-                    <h2>Readers</h2>
-                    <div>
-                        <ul class="listList" id="readersList"></ul>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-    </div>-->
     <!--READERS-->
-    <section id="readers" class="list" hidden>
+    <section id="readers" hidden>
         <div class="wrapper">
-            <div id="headerLogoWrapper" hidden>
-                <img id="scanLogoHeader" src="images/scan_lightish_BG.svg" />
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg" />
+                <h2>Readers</h2>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <h2>Readers</h2>
             <div>
                 <ul class="listList" id="readersList"></ul>
             </div>
@@ -288,19 +244,34 @@
 
     <!--ADD USER SUCCESS-->
     <section id="addUserSuccess" hidden>
-        <h2>Success!</h2>
-        <div id="userInfo"></div>
-        <button class="goToHubButton" id="goToHubButton">Go to Hub</button>
+        <div class="wrapper">
+            <div class="addUserSuccessWrapper">
+                <h2>Success!</h2>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <p class="message addUserSuccessMessage"></p>
+            </div>
+            <div class="successButtonWrapper">
+                <button id="addUserAgainButton">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                    <h2>
+                        New<br />Reader
+                    </h2>
+                </button>
+                <button class="successButton addUserSuccessButton">
+                    <img src="images/scan_logo.svg" />
+                </button>
+            </div>
+        </div>
     </section>
 
     <!--OVERDUE BOOKS-->
-    <section id="overDue" class="list" hidden>
+    <section id="overDue" hidden>
         <div class="wrapper">
-            <div id="headerLogoWrapper" hidden>
-                <img id="scanLogoHeader" src="images/scan_lightish_BG.svg" />
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg" />
+                <h2>Overdue</h2>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <h2>Overdue Books</h2>
             <div>
                 <ul class="listList" id="overDueList"></ul>
             </div>
@@ -309,13 +280,13 @@
 
 
     <!--INVENTORY-->
-    <section id="inventory" class="list" hidden>
+    <section id="inventory" hidden>
         <div class="wrapper">
-            <div id="headerLogoWrapper" hidden>
-                <img id="scanLogoHeader" src="images/scan_lightish_BG.svg" />
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg" />
+                <h2>Inventory</h2>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <h2>Inventory</h2>
             <div>
                 <ul class="listList" id="inventoryList"></ul>
             </div>
@@ -324,63 +295,87 @@
 
     <!--CHECKOUT SCAN OPTION-->
     <section id="checkOut" hidden>
-        <div>
-            <button type="button" class="scanReader">
-                <i class="fa fa-user" aria-hidden="true"></i>
-                <h1>Scan Reader</h1>
-            </button>
-            <button type="button" class="scanBook">
-                <i class="fa fa-book" aria-hidden="true"></i>
-                <h1>Scan Book</h1>
-            </button>
-            <h3 id="checkOutReader"></h3>
-            <h3 id="checkOutBook"></h3>
-            <h3 id="checkOutError" hidden></h3>
-            <!--<button type="button" class="selectUser">
-                <i class="fa fa-check" aria-hidden="true"></i>
-                <h1>Select Reader</h1>
-            </button>
-            <button type="button" class="selectBook">
-                <i class="fa fa-times" aria-hidden="true"></i>
-                <h1>Select Book</h1>
-            </button>-->
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg" />
+                <h2>Checkout</h2>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </div>
+            <div>
+                <button type="button" class="scanReader">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <h1>Scan Reader</h1>
+                </button>
+                <button type="button" class="scanBook">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <h1>Scan Book</h1>
+                </button>
+                <h3 id="checkOutReader"></h3>
+                <h3 id="checkOutBook"></h3>
+                <h3 id="checkOutError" hidden></h3>
+            </div>
         </div>
     </section>
 
+    <!--CHECKOUT SUCCESS-->
     <section id="checkOutSuccess" class="checkOutSuccess" hidden>
-        <div class="checkOutSuccessWrapper">
-            <h2>Successful Checkout!</h2>
-            <i class="fa fa-check" aria-hidden="true"></i>
-            <p class="message checkOutSuccessMessage"></p>
-        </div>
-        <div class="successButtonWrapper">
-            <button id="againButton" class="returnCheckOutButton">
-                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                <h2>New<br />Check Out</h2>
-            </button>
-            <button id="successButton" class="checkOutSuccessButton">
-                <img src="images/scan_logo.svg" />
-            </button>
+        <div class="wrapper">
+            <div class="checkOutSuccessWrapper">
+                <h2>Successful Checkout!</h2>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <p class="message checkOutSuccessMessage"></p>
+            </div>
+            <div class="successButtonWrapper">
+                <button id="checkOutAgainButton">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                    <h2>
+                        New<br />Check Out
+                    </h2>
+                </button>
+                <button class="successButton checkOutSuccessButton">
+                    <img src="images/scan_logo.svg" />
+                </button>
+            </div>
         </div>
     </section>
 
+    <!--RETURN BOOK-->
     <section id="returnBook" hidden>
-        <button type="button" class="scanBook">
-            <i class="fa fa-book" aria-hidden="true"></i>
-            <h1>Scan Book</h1>
-        </button>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg" />
+                <h2>Return</h2>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </div>
+            <div class="bottomButtonWrapper">
+                <button type="button" class="scanBook">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <h1>Scan Book</h1>
+                </button>
+            </div>
+        </div>
     </section>
 
+    <!--RETURN BOOK SUCCESS-->
     <section id="returnBookSuccess" class="checkOutSuccess" hidden>
-        <div class="checkOutSuccessWrapper">
-            <h2>Successful Checkout!</h2>
-            <i class="fa fa-check" aria-hidden="true"></i>
-            <p class="message checkOutSuccessMessage"></p>
+        <div class="wrapper">
+            <div class="checkOutSuccessWrapper">
+                <h2>Successful Return!</h2>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <p class="message checkOutSuccessMessage"></p>
+            </div>
+            <div class="successButtonWrapper">
+                <button id="returnAgainButton">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                    <h2>
+                        New<br />Return
+                    </h2>
+                </button>
+                <button class="successButton checkOutSuccessButton">
+                    <img src="images/scan_logo.svg" />
+                </button>
+            </div>
         </div>
-        <button class="checkOutSuccessButton">
-            <i class="fa fa-home" aria-hidden="true"></i>
-            <h2>Go Home</h2>
-        </button>
     </section>
 
 
