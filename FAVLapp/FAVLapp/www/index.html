@@ -40,7 +40,7 @@
                 <img src="images/scan_lightish_BG.svg" />
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <div>
+            <div class="mainBodyWrapper">
                 <h1 class="libraryName"></h1>
                 <table class="hubtable">
                     <tr>
@@ -128,29 +128,89 @@
                 <h2>Add User</h2>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <div>
+            <div class="mainBodyWrapper">
                 <form class="userForm" id="addUserForm">
+                    <div class="formTable">
+                        <div class="formInputs">
+                            <div class="inputsOuterWrapper">
+                                <div class="inputsInnerWrapper">
+                                    <h1 class="formTitle">User Information</h1>
+                                    <div class="inputTD">
+                                        <input type="text" name="FirstName" placeholder="First Name" required />
+                                    </div>
+                                    <div class="inputTD">
+                                        <input type="text" name="MiddleName" placeholder="Middle Name" />
+                                    </div>
+                                    <div class="inputTD lastNameTD">
+                                        <input type="text" name="LastName" placeholder="Last Name" required />
+                                    </div>
+                                    <div class="inputTD libraryNameTD">
+                                        <h3 class="libraryName"></h3>
+                                    </div>
+                                    <div class="inputBarcode">
+                                        <button type="button" class="BarcodeButton" id="addBarcodeButton">
+                                            <i class="fa fa-barcode" aria-hidden="true"></i>
+                                            <h1>
+                                                Add<br />Barcode
+                                            </h1>
+                                        </button>
+                                        <div id="barCodeStringContainer" class="barcodeString" hidden>
+                                            <table id="addBarcodeStringTable">
+                                                <tr>
+                                                    <td class="labelCell">
+                                                        <h3 class="barcodeStringLabel">Barcode Number</h3>
+                                                    </td>
+                                                    <td class="inputCell">
+                                                        <input type="text" id="addBarcodeString" name="Barcode" readonly/>
+                                                    </td>
+                                                    <td class="iconCell">
+                                                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="formButtons">
+                            <div>
+                                <button type="submit" class="formSubmit">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <h1>Create</h1>
+                                </button>
+                                <button type="button" class="formCancel">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <h1>Cancel</h1>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!--<form class="userForm" id="addUserForm">
                     <fieldset>
-                        <legend>User Information</legend>
                         <table class="formTable">
                             <tr>
-                                <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required /></td>
+                                <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required/></td>
                             </tr>
                             <tr>
-                                <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name" /></td>
+                                <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name"/></td>
                             </tr>
                             <tr>
-                                <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required /></td>
+                                <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required/></td>
                             </tr>
                             <tr>
                                 <td>
                                     <button type="button" class="BarcodeButton" id="addBarcodeButton">
                                         <i class="fa fa-barcode" aria-hidden="true"></i>
                                         <h1>
-                                            Add<br />Barcode
+                                            Add<br/>Barcode
                                         </h1>
                                     </button>
-                                    <input type="text" id="addBarcodeString" name="Barcode" hidden readonly /><br />
+                                    <input type="text" id="addBarcodeString" name="Barcode" hidden readonly/><br/>
                                 </td>
 
                             </tr>
@@ -168,7 +228,7 @@
                             </tr>
                         </table>
                     </fieldset>
-                </form>
+                </form>-->
 
             </div>
         </div>
@@ -182,10 +242,9 @@
                 <h2>Edit User</h2>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <div>
+            <div class="mainBodyWrapper">
                 <form class="userForm" id="editUserForm">
                     <fieldset>
-                        <legend>User Information</legend>
                         <table class="formTable">
                             <tr>
                                 <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required /></td>
@@ -236,7 +295,7 @@
                 <h2>Readers</h2>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <div>
+            <div class="mainBodyWrapper">
                 <ul class="listList" id="readersList"></ul>
             </div>
         </div>
@@ -272,7 +331,7 @@
                 <h2>Overdue</h2>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <div>
+            <div class="mainBodyWrapper">
                 <ul class="listList" id="overDueList"></ul>
             </div>
         </div>
@@ -287,7 +346,7 @@
                 <h2>Inventory</h2>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
             </div>
-            <div>
+            <div class="mainBodyWrapper">
                 <ul class="listList" id="inventoryList"></ul>
             </div>
         </div>

@@ -271,6 +271,8 @@ function signInSubmit(ev: Event): boolean {
 
     if (currentLibrary) {
         document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
+        document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
+        //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
         main.viewSection("hub");
     }
 
@@ -368,9 +370,10 @@ const scannerSetUp = {
 
 function onAddUserGetBarcode(): void {
     scanBarcode(result => {
+        var table = document.getElementById("barcodeStringContainer") as HTMLElement;
         var el = document.getElementById("addBarcodeString") as HTMLInputElement;
         el.value = result.text + " (" + result.format + ")";
-        view.show(el);
+        view.show(table);
     });
 }
 

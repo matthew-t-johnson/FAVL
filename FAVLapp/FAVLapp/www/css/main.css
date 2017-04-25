@@ -11,20 +11,28 @@ html {
 }
 section {
   height: 100%;
+  background-image: url('../images/success_background_2.jpg');
+  background-size: contain;
+  background-attachment: scroll;
 }
 section .wrapper {
   height: 100%;
+  background-color: rgba(30, 54, 58, 0.9);
 }
 section .wrapper .headerLogoWrapper {
   height: 7%;
   /*background-color: white;*/
   background-color: rgba(130, 176, 177, 0.66);
+  /*position: fixed;*/
+  left: 0;
+  top: 0;
+  right: 0;
 }
 section .wrapper .headerLogoWrapper img {
-  height: 5.5%;
-  position: absolute;
+  height: 75%;
+  position: relative;
   left: 1%;
-  top: .7%;
+  top: 12%;
   display: block;
 }
 section .wrapper .headerLogoWrapper i {
@@ -39,7 +47,9 @@ section .wrapper h2 {
 }
 section .wrapper .listList {
   list-style: none;
-  padding: 0 10px;
+  padding: 12% 2.5% 2%;
+  /*overflow-y: scroll;*/
+  margin: 0;
 }
 section .wrapper .listList li {
   padding: 3px 10px 5px;
@@ -71,40 +81,53 @@ section .wrapper .listList li .barcode {
 #hub .wrapper {
   background-color: rgba(30, 54, 58, 0.9);
 }
-#hub .wrapper .libraryName {
+#hub .wrapper .mainBodyWrapper {
+  height: 93%;
+  /*padding-top: 12%;*/
+}
+#hub .wrapper .mainBodyWrapper .libraryName {
   text-align: right;
   color: white;
   padding-right: 3%;
   padding-top: 1%;
+  height: 5%;
 }
-#hub .wrapper .hubtable {
+#hub .wrapper .mainBodyWrapper .hubtable {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 7.25%;
+  /*padding-top: 7.25%;*/
   text-align: center;
+  height: 86%;
+  position: absolute;
+  bottom: 0;
 }
-#hub .wrapper .hubtable td {
+#hub .wrapper .mainBodyWrapper .hubtable tr {
+  height: 30%;
+}
+#hub .wrapper .mainBodyWrapper .hubtable tr td {
   width: 50%;
+  padding: 0;
 }
-#hub .wrapper button.hubutton {
+#hub .wrapper .mainBodyWrapper button.hubutton {
   font-size: 16px;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.85);
   margin-left: auto;
   margin-right: auto;
   border: none;
-  height: 200px;
+  /*height: 200px;*/
   /*margin-top: 20px;*/
   /*border-radius: 15px;*/
   /*border: 1px solid #0B697F;*/
   color: #1E363A;
   padding: 0;
+  height: 100%;
 }
-#hub .wrapper button.hubutton:focus {
+#hub .wrapper .mainBodyWrapper button.hubutton:focus {
   outline: none !important;
 }
-#hub .wrapper button.hubutton i {
+#hub .wrapper .mainBodyWrapper button.hubutton i {
   font-size: 40pt;
   color: #0B697F;
   padding-bottom: 20px;
@@ -188,6 +211,28 @@ section .wrapper .listList li .barcode {
   padding-left: 20px;
   display: inline-block;
 }
+section#inventory,
+section#readers,
+section#overDue {
+  background-image: none;
+}
+section#inventory .wrapper,
+section#readers .wrapper,
+section#overDue .wrapper {
+  /*background-color: rgb(30, 54, 58);*/
+  background-color: #263c40;
+}
+section#inventory .wrapper .headerLogoWrapper,
+section#readers .wrapper .headerLogoWrapper,
+section#overDue .wrapper .headerLogoWrapper {
+  position: fixed;
+}
+section#inventory .wrapper .mainBodyWrapper,
+section#readers .wrapper .mainBodyWrapper,
+section#overDue .wrapper .mainBodyWrapper {
+  /*background-color: rgb(30, 54, 58);*/
+  background-color: #263c40;
+}
 .BarcodeButton:not(#signInBarcode) {
   height: 100px;
   color: white;
@@ -204,77 +249,180 @@ section .wrapper .listList li .barcode {
   padding-left: 20px;
   display: inline-block;
 }
-.userForm {
-  padding: 0;
+section#addUser .wrapper .mainBodyWrapper,
+section#editUser .wrapper .mainBodyWrapper {
+  height: 93%;
+  /*padding-top: 12%;*/
 }
-.userForm fieldset {
-  /*border-style: solid;
-        border-color: #1E363A;
-        border-radius: 10px;*/
-  border: none;
+section#addUser .wrapper .mainBodyWrapper .userForm,
+section#editUser .wrapper .mainBodyWrapper .userForm {
   padding: 0;
-  margin: 0;
+  height: 100%;
+  /*fieldset {
+                border: none;
+                padding: 0;
+                margin: 0;                    
+                }*/
 }
-.userForm .formTable {
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable {
   margin-left: 0;
   margin-right: 0;
   width: 100%;
-  height: 550px;
+  height: 100%;
+  /*padding-top: 17%;*/
 }
-.userForm .formTable td {
-  padding: 0;
-  /*.addBarcodeButton {
-                height: 100px;
-                color: white;
-                background-color: rgba(30, 54, 58, 0.78);
-                border: none;
-                border-radius: 10px;
-                width: 100%;
-
-                i {
-                    font-size: 50pt;
-                }
-
-                h1 {
-                    font-size: 20pt;
-                    padding-left: 20px;
-                    display: inline-block;
-                }
-            }*/
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs {
+  height: 86%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
-.userForm .formTable td.inputTD {
-  padding: 10px 5px;
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper {
+  padding-top: 20%;
 }
-.userForm .formTable td .formSubmit {
-  height: 90px;
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .formTitle,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .formTitle {
+  font-size: 10pt;
+  padding-bottom: 4%;
+  padding-top: 1%;
+  padding-right: 3%;
+  text-transform: capitalize;
+  text-align: right;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 7%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD:first-child,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD:first-child {
+  padding-top: 5%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD.lastNameTD,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD.lastNameTD {
+  padding-bottom: 4%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD.libraryNameTD,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD.libraryNameTD {
+  padding-bottom: 8%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD input,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD input {
+  width: 99%;
+  height: 25px;
+  font-size: 14pt;
+  border-radius: 2px;
+  padding: 1% 0 1% 1%;
+  border: 0;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD h3,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputTD h3 {
+  margin: 0;
+  font-size: 14pt;
+  text-align: left;
+  padding-left: 1%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 2%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString {
+  padding-top: 0;
+  /*height: 53px;*/
+  /*padding-bottom: 2%;*/
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .labelCell,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .labelCell {
+  width: 45%;
+  text-align: right;
+  padding-right: 1%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .labelCell h3,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .labelCell h3 {
+  display: inline-block;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .inputCell,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .inputCell {
+  width: 50%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .inputCell input,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .inputCell input {
+  border: 0;
+  border-radius: 2px;
+  /*width: 55%;*/
+  height: 15px;
+  font-size: 12pt;
+  /*padding: 1% 0 1% 1%;*/
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.22);
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .iconCell,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .barcodeString table tr .iconCell {
+  width: 5%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .BarcodeButton,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode .BarcodeButton {
+  background-color: #0b697f;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons {
+  height: 14%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div {
+  height: 100%;
+}
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formSubmit,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formSubmit {
+  height: 100%;
   width: 50%;
   border: none;
   color: #005200;
-  background-color: rgba(74, 232, 108, 0.76);
+  background-color: #4adc69;
   float: left;
   padding: 0;
 }
-.userForm .formTable td .formSubmit i {
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formSubmit i,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formSubmit i {
   font-size: 40pt;
 }
-.userForm .formTable td .formSubmit h1 {
-  font-size: 18pt;
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formSubmit h1,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formSubmit h1 {
+  font-size: 14pt;
 }
-.userForm .formTable td .formCancel {
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formCancel,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formCancel {
   width: 50%;
-  background-color: rgba(232, 74, 74, 0.76);
+  background-color: #e25959;
   color: #520000;
   border: none;
-  height: 90px;
+  height: 100%;
   padding: 0;
 }
-.userForm .formTable td .formCancel i {
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formCancel i,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formCancel i {
   font-size: 40pt;
 }
-.userForm .formTable td .formCancel h1 {
-  font-size: 18pt;
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formCancel h1,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formButtons div .formCancel h1 {
+  font-size: 14pt;
 }
-.userForm .formTable td input {
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable input,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable input {
   width: 100%;
   height: 25px;
   font-size: 14pt;
@@ -282,52 +430,11 @@ section .wrapper .listList li .barcode {
   border-radius: 5px;
   padding: 3px 0;
 }
-.userForm .formTable td input:focus {
+section#addUser .wrapper .mainBodyWrapper .userForm .formTable input:focus,
+section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   outline: none !important;
   border: 1px solid #0B697F;
 }
-/*.list {
-    list-style: none;
-    margin: 0;
-
-    .wrapper {
-        height: 100%;
-
-        h2 {
-            margin: 0;
-        }
-
-        .listList {
-            list-style: none;
-            padding: 0 10px;
-
-
-            li {
-                padding: 3px 10px 5px;
-                margin: 10px;
-                color: #0B697F;
-                background-color: #eee;
-                margin-bottom: 5px;
-                text-align: left;
-                border-radius: 7px;
-                text-transform: none;
-
-                .title, .name {
-                    font-weight: 600;
-                    font-size: 12pt;
-                    display: block;
-                }
-
-                .author, .barcode {
-                    font-weight: normal;
-                    font-size: 10pt;
-                    display: block;
-                    padding-left: .5em;
-                }
-            }
-        }
-    }
-}*/
 #checkOut .scanReader,
 #checkOut .scanBook {
   margin-top: 300PX;

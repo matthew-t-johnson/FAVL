@@ -14,20 +14,29 @@ html {
 
 section {
     height: 100%;
+    background-image: url('../images/success_background_2.jpg');
+    background-size: contain;
+    background-attachment: scroll;
 
     .wrapper {
         height: 100%;
+        background-color: rgba(30, 54, 58, 0.9);
+
 
         .headerLogoWrapper {
             height: 7%;
             /*background-color: white;*/
             background-color: rgba(130, 176, 177, 0.66);
+            /*position: fixed;*/
+            left: 0;
+            top: 0;
+            right: 0;
 
             img {
-                height: 5.5%;
-                position: absolute;
+                height: 75%;
+                position: relative;
                 left: 1%;
-                top: .7%;
+                top: 12%;
                 display: block;
             }
 
@@ -46,7 +55,9 @@ section {
 
         .listList {
             list-style: none;
-            padding: 0 10px;
+            padding: 12% 2.5% 2%;
+            /*overflow-y: scroll;*/
+            margin: 0;
 
 
             li {
@@ -83,48 +94,64 @@ section {
     .wrapper {
         background-color: rgba(30, 54, 58, 0.9);
 
-        .libraryName {
-            text-align: right;
-            color: white;
-            padding-right: 3%;
-            padding-top: 1%;
-        }
+        .mainBodyWrapper {
+            height: 93%;
+            /*padding-top: 12%;*/
 
-        .hubtable {
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            padding-top: 7.25%;
-            text-align: center;
 
-            td {
-                width: 50%;
-            }
-        }
-
-        button.hubutton {
-            font-size: 16px;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.85);
-            color: #1E363A;
-            margin-left: auto;
-            margin-right: auto;
-            border: none;
-            height: 200px;
-            /*margin-top: 20px;*/
-            /*border-radius: 15px;*/
-            /*border: 1px solid #0B697F;*/
-            color: #1E363A;
-            padding: 0;
-
-            &:focus {
-                outline: none !important;
+            .libraryName {
+                text-align: right;
+                color: white;
+                padding-right: 3%;
+                padding-top: 1%;
+                height: 5%
             }
 
-            i {
-                font-size: 40pt;
-                color: #0B697F;
-                padding-bottom: 20px;
+            .hubtable {
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                /*padding-top: 7.25%;*/
+                text-align: center;
+                height: 86%;
+                position: absolute;
+                bottom: 0;
+
+                tr {
+                    height: 30%;
+
+                    td {
+                        width: 50%;
+                        padding: 0;
+                    }
+                }
+            }
+
+            button.hubutton {
+                font-size: 16px;
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0.85);
+                color: #1E363A;
+                margin-left: auto;
+                margin-right: auto;
+                border: none;
+                /*height: 200px;*/
+                /*margin-top: 20px;*/
+                /*border-radius: 15px;*/
+                /*border: 1px solid #0B697F;*/
+                color: #1E363A;
+                padding: 0;
+                height: 100%;
+
+                &:focus {
+                    outline: none !important;
+                }
+
+                i {
+                    font-size: 40pt;
+                    color: #0B697F;
+                    padding-bottom: 20px;
+                }
             }
         }
     }
@@ -227,6 +254,24 @@ section {
     }
 }
 
+section#inventory, section#readers, section#overDue {
+    background-image: none;
+
+    .wrapper {
+        /*background-color: rgb(30, 54, 58);*/
+        background-color: #263c40;
+
+        .headerLogoWrapper {
+            position: fixed;
+        }
+
+        .mainBodyWrapper {
+            /*background-color: rgb(30, 54, 58);*/
+            background-color: #263c40;
+        }
+    }
+}
+
 .BarcodeButton:not(#signInBarcode) {
     height: 100px;
     color: white;
@@ -246,143 +291,200 @@ section {
     }
 }
 
+section#addUser, section#editUser {
 
-.userForm {
-    padding: 0;
+    .wrapper {
 
-    fieldset {
-        /*border-style: solid;
-        border-color: #1E363A;
-        border-radius: 10px;*/
-        border: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .formTable {
-        margin-left: 0;
-        margin-right: 0;
-        width: 100%;
-        height: 550px;
-
-        td {
-            padding: 0;
-
-            &.inputTD {
-                padding: 10px 5px;
-            }
-            /*.addBarcodeButton {
-                height: 100px;
-                color: white;
-                background-color: rgba(30, 54, 58, 0.78);
-                border: none;
-                border-radius: 10px;
-                width: 100%;
-
-                i {
-                    font-size: 50pt;
-                }
-
-                h1 {
-                    font-size: 20pt;
-                    padding-left: 20px;
-                    display: inline-block;
-                }
-            }*/
-            .formSubmit {
-                height: 90px;
-                width: 50%;
-                border: none;
-                color: #005200;
-                background-color: rgba(74, 232, 108, 0.76);
-                float: left;
+        .mainBodyWrapper {
+            height: 93%;
+            /*padding-top: 12%;*/
+            .userForm {
                 padding: 0;
-
-                i {
-                    font-size: 40pt;
-                }
-
-                h1 {
-                    font-size: 18pt;
-                }
-            }
-
-            .formCancel {
-                width: 50%;
-                background-color: rgba(232, 74, 74, 0.76);
-                color: #520000;
+                height: 100%;
+                /*fieldset {
                 border: none;
-                height: 90px;
                 padding: 0;
+                margin: 0;                    
+                }*/
+                .formTable {
+                    margin-left: 0;
+                    margin-right: 0;
+                    width: 100%;
+                    height: 100%;
+                    /*padding-top: 17%;*/
+                    .formInputs {
+                        height: 86%;
+                        width: 90%;
+                        margin-left: auto;
+                        margin-right: auto;
 
-                i {
-                    font-size: 40pt;
-                }
+                        .inputsOuterWrapper {
+                            padding-top: 20%;
 
-                h1 {
-                    font-size: 18pt;
-                }
-            }
+                            .inputsInnerWrapper {
+                                background-color: rgba(255, 255, 255, 0.5);
+                                border-radius: 10px;
 
-            input {
-                width: 100%;
-                height: 25px;
-                font-size: 14pt;
-                border: 1px solid #1E363A;
-                border-radius: 5px;
-                padding: 3px 0;
+                                .formTitle {
+                                    font-size: 10pt;
+                                    padding-bottom: 4%;
+                                    padding-top: 1%;
+                                    padding-right: 3%;
+                                    text-transform: capitalize;
+                                    text-align: right;
+                                }
 
-                &:focus {
-                    outline: none !important;
-                    border: 1px solid #0B697F;
+                                .inputTD {
+                                    width: 95%;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                    padding-bottom: 7%;
+
+                                    &:first-child {
+                                        padding-top: 5%;
+                                    }
+
+                                    &.lastNameTD {
+                                        padding-bottom: 4%;
+                                    }
+
+                                    &.libraryNameTD {
+                                        padding-bottom: 8%;
+                                    }
+
+                                    input {
+                                        width: 99%;
+                                        height: 25px;
+                                        font-size: 14pt;
+                                        border-radius: 2px;
+                                        padding: 1% 0 1% 1%;
+                                        border: 0;
+                                    }
+
+                                    h3 {
+                                        margin: 0;
+                                        font-size: 14pt;
+                                        text-align: left;
+                                        padding-left: 1%;
+                                    }
+                                }
+
+                                .inputBarcode {
+                                    width: 95%;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                    padding-bottom: 2%;
+
+                                    .barcodeString {
+                                        padding-top: 0;
+                                        /*height: 53px;*/
+                                        /*padding-bottom: 2%;*/
+                                        table {
+                                            tr {
+
+                                                .labelCell {
+                                                    width: 45%;
+                                                    text-align: right;
+                                                    padding-right: 1%;
+
+                                                    h3 {
+                                                        display: inline-block;
+                                                    }
+                                                }
+
+                                                .inputCell {
+                                                    width: 50%;
+
+                                                    input {
+                                                        border: 0;
+                                                        border-radius: 2px;
+                                                        /*width: 55%;*/
+                                                        height: 15px;
+                                                        font-size: 12pt;
+                                                        /*padding: 1% 0 1% 1%;*/
+                                                        display: inline-block;
+                                                        background-color: rgba(255, 255, 255, 0.22);
+                                                    }
+                                                }
+
+                                                .iconCell {
+                                                    width: 5%;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .BarcodeButton {
+                                        background-color: rgb(11, 105, 127);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .formButtons {
+                        height: 14%;
+
+                        div {
+                            height: 100%;
+
+                            .formSubmit {
+                                height: 100%;
+                                width: 50%;
+                                border: none;
+                                color: #005200;
+                                background-color: rgb(74, 220, 105);
+                                float: left;
+                                padding: 0;
+
+                                i {
+                                    font-size: 40pt;
+                                }
+
+                                h1 {
+                                    font-size: 14pt;
+                                }
+                            }
+
+                            .formCancel {
+                                width: 50%;
+                                background-color: rgb(226, 89, 89);
+                                color: #520000;
+                                border: none;
+                                height: 100%;
+                                padding: 0;
+
+                                i {
+                                    font-size: 40pt;
+                                }
+
+                                h1 {
+                                    font-size: 14pt;
+                                }
+                            }
+                        }
+                    }
+
+                    input {
+                        width: 100%;
+                        height: 25px;
+                        font-size: 14pt;
+                        border: 1px solid #1E363A;
+                        border-radius: 5px;
+                        padding: 3px 0;
+
+                        &:focus {
+                            outline: none !important;
+                            border: 1px solid #0B697F;
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-/*.list {
-    list-style: none;
-    margin: 0;
 
-    .wrapper {
-        height: 100%;
-
-        h2 {
-            margin: 0;
-        }
-
-        .listList {
-            list-style: none;
-            padding: 0 10px;
-
-
-            li {
-                padding: 3px 10px 5px;
-                margin: 10px;
-                color: #0B697F;
-                background-color: #eee;
-                margin-bottom: 5px;
-                text-align: left;
-                border-radius: 7px;
-                text-transform: none;
-
-                .title, .name {
-                    font-weight: 600;
-                    font-size: 12pt;
-                    display: block;
-                }
-
-                .author, .barcode {
-                    font-weight: normal;
-                    font-size: 10pt;
-                    display: block;
-                    padding-left: .5em;
-                }
-            }
-        }
-    }
-}*/
 
 #checkOut .scanReader, #checkOut .scanBook {
     margin-top: 300PX;
