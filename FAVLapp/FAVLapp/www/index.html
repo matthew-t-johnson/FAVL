@@ -189,103 +189,131 @@
                         </div>
                     </div>
                 </form>
-
-                <!--<form class="userForm" id="addUserForm">
-                    <fieldset>
-                        <table class="formTable">
-                            <tr>
-                                <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required/></td>
-                            </tr>
-                            <tr>
-                                <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name"/></td>
-                            </tr>
-                            <tr>
-                                <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required/></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button type="button" class="BarcodeButton" id="addBarcodeButton">
-                                        <i class="fa fa-barcode" aria-hidden="true"></i>
-                                        <h1>
-                                            Add<br/>Barcode
-                                        </h1>
-                                    </button>
-                                    <input type="text" id="addBarcodeString" name="Barcode" hidden readonly/><br/>
-                                </td>
-
-                            </tr>
-                            <tr class="formButtons">
-                                <td>
-                                    <button type="submit" class="formSubmit">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        <h1>Create</h1>
-                                    </button>
-                                    <button type="button" class="formCancel">
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                        <h1>Cancel</h1>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                </form>-->
-
             </div>
         </div>
     </section>
 
     <!--EDIT USER-->
-    <section id="editUser" hidden>
-        <div class="wrapper">
-            <div class="headerLogoWrapper">
-                <img src="images/scan_lightish_BG.svg" />
-                <h2>Edit User</h2>
-                <i class="fa fa-user-circle" aria-hidden="true"></i>
-            </div>
-            <div class="mainBodyWrapper">
-                <form class="userForm" id="editUserForm">
-                    <fieldset>
-                        <table class="formTable">
-                            <tr>
-                                <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required /></td>
-                            </tr>
-                            <tr>
-                                <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name" /></td>
-                            </tr>
-                            <tr>
-                                <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required /></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="hidden" id="updateBarcodeString" name="Barcode" />
-                                    <button type="button" class="addBarcodeButton BarcodeButton">
+<section id="editUser" hidden>
+    <div class="wrapper">
+        <div class="headerLogoWrapper">
+            <img src="images/scan_lightish_BG.svg" />
+            <h2>Edit User</h2>
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+        <div class="mainBodyWrapper">
+            <form class="userForm" id="editUserForm">
+                <div class="formTable">
+                    <div class="formInputs">
+                        <div class="inputsOuterWrapper">
+                            <div class="inputsInnerWrapper">
+                                <h1 class="formTitle">User Information</h1>
+                                <div class="inputTD">
+                                    <input type="text" name="FirstName" placeholder="First Name" required />
+                                </div>
+                                <div class="inputTD">
+                                    <input type="text" name="MiddleName" placeholder="Middle Name" />
+                                </div>
+                                <div class="inputTD lastNameTD">
+                                    <input type="text" name="LastName" placeholder="Last Name" required />
+                                </div>
+                                <div class="inputTD libraryNameTD">
+                                    <h3 class="libraryName"></h3>
+                                </div>
+                                <div class="inputBarcode">
+                                    <button type="button" class="BarcodeButton" id="addBarcodeButton">
                                         <i class="fa fa-barcode" aria-hidden="true"></i>
                                         <h1>
                                             Update<br />Barcode
                                         </h1>
                                     </button>
-                                </td>
+                                    <div id="barCodeStringContainer" class="barcodeString" hidden>
+                                        <table id="addBarcodeStringTable">
+                                            <tr>
+                                                <td class="labelCell">
+                                                    <h3 class="barcodeStringLabel">Barcode Number</h3>
+                                                </td>
+                                                <td class="inputCell">
+                                                    <input type="text" id="addBarcodeString" name="Barcode" readonly />
+                                                </td>
+                                                <td class="iconCell">
+                                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
 
-                            </tr>
-                            <tr class="formButtons">
-                                <td>
-                                    <button type="submit" class="formSubmit">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        <h1>Update</h1>
-                                    </button>
-                                    <button type="button" class="formCancel">
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                        <h1>Cancel</h1>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            </div>
+                    <div class="formButtons">
+                        <div>
+                            <button type="submit" class="formSubmit">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <h1>Create</h1>
+                            </button>
+                            <button type="button" class="formCancel">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                                <h1>Cancel</h1>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
+    <!--<div class="wrapper">
+        <div class="headerLogoWrapper">
+            <img src="images/scan_lightish_BG.svg"/>
+            <h2>Edit User</h2>
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+        </div>
+        <div class="mainBodyWrapper">
+            <form class="userForm" id="editUserForm">
+                <fieldset>
+                    <table class="formTable">
+                        <tr>
+                            <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required/></td>
+                        </tr>
+                        <tr>
+                            <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name"/></td>
+                        </tr>
+                        <tr>
+                            <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required/></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden" id="updateBarcodeString" name="Barcode"/>
+                                <button type="button" class="addBarcodeButton BarcodeButton">
+                                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                                    <h1>
+                                        Update<br/>Barcode
+                                    </h1>
+                                </button>
+                            </td>
+
+                        </tr>
+                        <tr class="formButtons">
+                            <td>
+                                <button type="submit" class="formSubmit">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <h1>Update</h1>
+                                </button>
+                                <button type="button" class="formCancel">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <h1>Cancel</h1>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>-->
+</section>
 
     <!--READERS-->
     <section id="readers" hidden>

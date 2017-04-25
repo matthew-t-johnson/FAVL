@@ -189,6 +189,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         if (currentLibrary) {
             document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
             document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
+            document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
             //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
             main.viewSection("hub");
         }
