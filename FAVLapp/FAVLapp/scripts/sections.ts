@@ -395,7 +395,7 @@ const scannerSetUp = {
 
 function onAddUserGetBarcode(): void {
     scanBarcode(result => {
-        var table = document.getElementById("addBarcodeStringContainer") as HTMLElement;
+        var table = document.getElementById("addBarcodeStringTable") as HTMLElement;
         var el = document.getElementById("addBarcodeString") as HTMLInputElement;
         el.value = result.text + " (" + result.format + ")";
         view.show(table);
@@ -413,6 +413,10 @@ function onSignInGetBarcode(): void {
         currentLibrary = getData(`/api/signin/${result.text} (${result.format})`) as Library;
 
         if (currentLibrary) {
+            document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
+            document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
+            document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+
             main.viewSection("hub");
         }
     });
