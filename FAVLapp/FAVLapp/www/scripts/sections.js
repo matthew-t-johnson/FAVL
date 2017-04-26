@@ -276,7 +276,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     };
     function onAddUserGetBarcode() {
         scanBarcode(function (result) {
-            var table = document.getElementById("addBarcodeStringContainer");
+            var table = document.getElementById("addBarcodeStringTable");
             var el = document.getElementById("addBarcodeString");
             el.value = result.text + " (" + result.format + ")";
             view.show(table);
@@ -286,6 +286,9 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         scanBarcode(function (result) {
             currentLibrary = getData("/api/signin/" + result.text + " (" + result.format + ")");
             if (currentLibrary) {
+                document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
+                document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
+                document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
                 main.viewSection("hub");
             }
         });
