@@ -15,7 +15,7 @@ function initClick(): void {
         viewSection("signIn");
     });
 
-    const imgs = document.querySelectorAll(".headerLogoWrapper img, .successButton");
+    const imgs = document.querySelectorAll(".headerLogoWrapper .logoIcon, .successButton");
     for (let i = 0; i < imgs.length; i++) {
         imgs[i].addEventListener("click", () => { viewSection("hub"); });
     }

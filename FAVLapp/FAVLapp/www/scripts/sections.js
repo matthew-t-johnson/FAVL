@@ -42,28 +42,44 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             ul.appendChild(li);
         });
     }
+    var MonthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     function showOverDue() {
         var ul = document.getElementById("overDueList");
         ul.textContent = "";
         var books = getData("/api/books/overdue/" + currentLibrary.Id);
         books.forEach(function (b) {
             var li = document.createElement("li");
+            var bookInfo = document.createElement("div");
+            bookInfo.className = "bookInfo";
+            li.appendChild(bookInfo);
             var span = document.createElement("span");
             span.className = "title";
             span.textContent = b.Title;
-            li.appendChild(span);
+            bookInfo.appendChild(span);
             span = document.createElement("span");
             span.className = "author";
             span.textContent = b.AuthorFirst + " " + b.AuthorMiddle + " " + b.AuthorLast;
-            li.appendChild(span);
-            span = document.createElement("span");
-            span.className = "date";
-            span.textContent = "" + new Date(b.DueDate).toLocaleDateString();
-            li.appendChild(span);
+            bookInfo.appendChild(span);
             span = document.createElement("span");
             span.className = "reader";
             span.textContent = b.ReaderFirst + " " + b.ReaderMiddle + " " + b.ReaderLast;
-            li.appendChild(span);
+            bookInfo.appendChild(span);
+            var dueDate = new Date(b.DueDate);
+            var dueDateDiv = document.createElement("div");
+            dueDateDiv.className = "dueDateDiv";
+            li.appendChild(dueDateDiv);
+            span = document.createElement("span");
+            span.className = "month";
+            span.textContent = "" + MonthNames[dueDate.getMonth()];
+            dueDateDiv.appendChild(span);
+            span = document.createElement("span");
+            span.className = "date";
+            span.textContent = "" + dueDate.getDate();
+            dueDateDiv.appendChild(span);
+            span = document.createElement("span");
+            span.className = "year";
+            span.textContent = "" + dueDate.getFullYear();
+            dueDateDiv.appendChild(span);
             li.setAttribute("data-book-id", b.Id.toString());
             ul.appendChild(li);
         });
@@ -156,7 +172,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 var field = inputs[i];
                 field.value = "";
             }
-            view.hide("#addBarcodeString");
+            view.hide("#addBarcodeStringContainer");
         }
         return false;
     }
@@ -260,7 +276,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     };
     function onAddUserGetBarcode() {
         scanBarcode(function (result) {
-            var table = document.getElementById("barcodeStringContainer");
+            var table = document.getElementById("addBarcodeStringContainer");
             var el = document.getElementById("addBarcodeString");
             el.value = result.text + " (" + result.format + ")";
             view.show(table);

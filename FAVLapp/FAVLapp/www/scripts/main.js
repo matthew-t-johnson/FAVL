@@ -13,7 +13,7 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
         document.getElementById("signInButton").addEventListener("click", function () {
             viewSection("signIn");
         });
-        var imgs = document.querySelectorAll(".headerLogoWrapper img, .successButton");
+        var imgs = document.querySelectorAll(".headerLogoWrapper .logoIcon, .successButton");
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].addEventListener("click", function () { viewSection("hub"); });
         }

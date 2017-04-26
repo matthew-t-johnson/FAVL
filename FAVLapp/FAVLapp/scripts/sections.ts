@@ -70,6 +70,8 @@ function showInventory(): void {
 
 }
 
+const MonthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 function showOverDue(): void {
     const ul = document.getElementById("overDueList");
     ul.textContent = "";
@@ -79,25 +81,46 @@ function showOverDue(): void {
     books.forEach(b => {
         const li = document.createElement("li");
 
+        const bookInfo = document.createElement("div");
+        bookInfo.className = "bookInfo";
+        li.appendChild(bookInfo);
+
         var span = document.createElement("span");
         span.className = "title";
         span.textContent = b.Title;
-        li.appendChild(span);
+        bookInfo.appendChild(span);
 
         span = document.createElement("span");
         span.className = "author";
         span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
-        li.appendChild(span);
-
-        span = document.createElement("span");
-        span.className = "date";
-        span.textContent = `${new Date(b.DueDate).toLocaleDateString()}`;
-        li.appendChild(span);
+        bookInfo.appendChild(span);
 
         span = document.createElement("span");
         span.className = "reader";
         span.textContent = `${b.ReaderFirst} ${b.ReaderMiddle} ${b.ReaderLast}`;
-        li.appendChild(span);
+        bookInfo.appendChild(span);
+
+
+        const dueDate = new Date(b.DueDate);
+
+        var dueDateDiv = document.createElement("div");
+        dueDateDiv.className = "dueDateDiv";
+        li.appendChild(dueDateDiv);
+
+        span = document.createElement("span");
+        span.className = "month";
+        span.textContent = `${MonthNames[dueDate.getMonth()]}`;
+        dueDateDiv.appendChild(span);
+
+        span = document.createElement("span");
+        span.className = "date";
+        span.textContent = `${dueDate.getDate()}`;
+        dueDateDiv.appendChild(span);
+
+        span = document.createElement("span");
+        span.className = "year";
+        span.textContent = `${dueDate.getFullYear()}`;
+        dueDateDiv.appendChild(span);
 
 
         li.setAttribute("data-book-id", b.Id.toString());
@@ -213,7 +236,7 @@ function addUserSubmit(ev: Event): boolean {
             field.value = "";
         }
 
-        view.hide("#addBarcodeString");
+        view.hide("#addBarcodeStringContainer");
     }
 
     return false;
@@ -372,7 +395,7 @@ const scannerSetUp = {
 
 function onAddUserGetBarcode(): void {
     scanBarcode(result => {
-        var table = document.getElementById("barcodeStringContainer") as HTMLElement;
+        var table = document.getElementById("addBarcodeStringContainer") as HTMLElement;
         var el = document.getElementById("addBarcodeString") as HTMLInputElement;
         el.value = result.text + " (" + result.format + ")";
         view.show(table);
