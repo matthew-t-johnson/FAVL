@@ -51,9 +51,13 @@ section .wrapper .headerLogoWrapper table.headerTable tr td.userIcon {
   padding-right: 2%;
   font-size: 24pt;
 }
+section .wrapper .mainBodyWrapper {
+  height: 93%;
+}
 section .wrapper h2 {
   margin: 0;
   padding-top: 3%;
+  font-weight: 400;
 }
 section .wrapper .listList {
   list-style: none;
@@ -88,6 +92,12 @@ section .wrapper .listList li .bookInfo {
   display: inline-block;
   width: 80%;
 }
+section .wrapper .listList li .bookInfo .title {
+  font-weight: 500;
+}
+section .wrapper .listList li .bookInfo .reader {
+  font-weight: 700;
+}
 section .wrapper .listList li .dueDateDiv {
   display: inline-block;
   width: 20%;
@@ -104,7 +114,8 @@ section .wrapper .listList li .dueDateDiv span.month {
 section .wrapper .listList li .dueDateDiv span.date {
   font-size: 24pt;
   line-height: .6;
-  padding-bottom: 3px;
+  padding-bottom: 2px;
+  padding-top: 1px;
 }
 section .wrapper .listList li .dueDateDiv span.year {
   font-size: 10pt;
@@ -127,6 +138,7 @@ section .wrapper .listList li .dueDateDiv span.year {
   padding-right: 3%;
   padding-top: 2%;
   height: 5%;
+  font-weight: 300;
 }
 #hub .wrapper .mainBodyWrapper .hubtable {
   width: 100%;
@@ -276,6 +288,7 @@ section#readers .wrapper .mainBodyWrapper,
 section#overDue .wrapper .mainBodyWrapper {
   /*background-color: rgb(30, 54, 58);*/
   background-color: #263c40;
+  height: unset;
 }
 .BarcodeButton:not(#signInBarcode) {
   height: 100px;
@@ -375,6 +388,7 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inp
   font-size: 14pt;
   text-align: left;
   padding-left: 1%;
+  font-weight: 400;
 }
 section#addUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode,
 section#editUser .wrapper .mainBodyWrapper .userForm .formTable .formInputs .inputsOuterWrapper .inputsInnerWrapper .inputBarcode {
@@ -497,20 +511,44 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   border-style: none;
   width: 45%;
   min-height: 200px;
+  background-color: rgba(255, 255, 255, 0.85);
 }
 #checkOut .scanReader i,
 #checkOut .scanBook i {
   font-size: 60px;
+  color: #0B697F;
+  padding-bottom: 20px;
 }
 #checkOut .scanReader h1,
 #checkOut .scanBook h1 {
-  margin-top: 10px;
+  color: #1E363A;
+  font-size: 16px;
 }
-.scanReader {
+#checkOut .scanReader {
   margin-right: 5px;
 }
-.scanBook {
+#checkOut .scanBook {
   margin-left: 5px;
+}
+#returnBook .bottomButtonWrapper {
+  height: 100%;
+}
+#returnBook .bottomButtonWrapper .scanBook {
+  width: 60%;
+  height: 30%;
+  margin-left: 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  margin-top: 75%;
+  border: none;
+}
+#returnBook .bottomButtonWrapper .scanBook i {
+  font-size: 60px;
+  color: #0B697F;
+  padding-bottom: 20px;
+}
+#returnBook .bottomButtonWrapper .scanBook h1 {
+  color: #1E363A;
+  font-size: 16px;
 }
 .checkOutSuccess {
   color: white;

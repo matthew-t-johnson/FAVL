@@ -64,9 +64,14 @@ section {
             }
         }
 
+        .mainBodyWrapper {
+            height: 93%;
+        }
+
         h2 {
             margin: 0;
             padding-top: 3%;
+            font-weight: 400;
         }
 
         .listList {
@@ -104,6 +109,17 @@ section {
                     width: 80%;
                 }
 
+                .bookInfo {
+
+                    .title {
+                        font-weight: 500;
+                    }
+
+                    .reader {
+                        font-weight: 700;
+                    }
+                }
+
                 .dueDateDiv {
                     display: inline-block;
                     width: 20%;
@@ -121,7 +137,8 @@ section {
                         &.date {
                             font-size: 24pt;
                             line-height: .6;
-                            padding-bottom: 3px;
+                            padding-bottom: 2px;
+                            padding-top: 1px;
                         }
 
                         &.year {
@@ -150,7 +167,8 @@ section {
                 color: white;
                 padding-right: 3%;
                 padding-top: 2%;
-                height: 5%
+                height: 5%;
+                font-weight: 300;
             }
 
             .hubtable {
@@ -321,6 +339,7 @@ section#inventory, section#readers, section#overDue {
         .mainBodyWrapper {
             /*background-color: rgb(30, 54, 58);*/
             background-color: #263c40;
+            height: unset;
         }
     }
 }
@@ -419,6 +438,7 @@ section#addUser, section#editUser {
                                         font-size: 14pt;
                                         text-align: left;
                                         padding-left: 1%;
+                                        font-weight:400;
                                     }
                                 }
 
@@ -554,22 +574,55 @@ section#addUser, section#editUser {
     border-style: none;
     width: 45%;
     min-height: 200px;
+    background-color: rgba(255, 255, 255, 0.85);
+
 
     i {
         font-size: 60px;
+        color: #0B697F;
+        padding-bottom: 20px;
     }
 
     h1 {
-        margin-top: 10px;
+        color: #1E363A;
+        font-size: 16px;
     }
 }
 
-.scanReader {
+#checkOut .scanReader {
     margin-right: 5px;
 }
 
-.scanBook {
+#checkOut .scanBook {
     margin-left: 5px;
+}
+
+#returnBook {
+
+    .bottomButtonWrapper {
+        height: 100%;
+
+        .scanBook {
+            width: 60%;
+            height: 30%;
+            margin-left: 0;
+            margin-top: 75%;
+            background-color: rgba(255, 255, 255, 0.85);
+            margin-top: 75%;
+            border: none;
+
+            i {
+                font-size: 60px;
+                color: #0B697F;
+                padding-bottom: 20px;
+            }
+
+            h1 {
+                color: #1E363A;
+                font-size: 16px;
+            }
+        }
+    }
 }
 
 .checkOutSuccess {
