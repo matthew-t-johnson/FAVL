@@ -187,8 +187,8 @@ function checkOutTheBook(reader: Reader, book: Book) {
 
     if (ok === "ok") {
         main.viewSection("checkOutSuccess");
-        document.querySelector("#checkOutSuccess .message .bookRow .bookMessage").textContent = `${checkOutBook.Title}`;
-        document.querySelector("#checkOutSuccess .message .readerRow .readerMessage").textContent = `${checkOutReader.FirstName} ${checkOutReader.LastName}`;
+        document.querySelector("#checkOutSuccess .message .topRow .bookMessage").textContent = checkOutBook.Title;
+        document.querySelector("#checkOutSuccess .message .bottomRow .readerMessage").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
 
         document.getElementById("checkOutBook").textContent = "";
         checkOutBook = null;
@@ -206,8 +206,11 @@ function scanReturn(): void {
             const ok = getData(`/api/books/return/${returnBook.Id}`) as string;
 
             if (ok === "ok") {
-                document.querySelector("#returnBookSuccess .message").textContent =
-                    returnBook.Title + " has been returned to inventory!";
+                document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
+                    returnBook.Title;
+                //document.querySelector("#returnBookSuccess .message .bottomRow .readerInfo").textContent =
+                //    checkOutReader.FirstName + " " + checkOutReader.LastName;
+
                 main.viewSection("returnBookSuccess");
             }
         }

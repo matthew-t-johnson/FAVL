@@ -132,8 +132,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         var ok = getData("/api/books/checkout/" + book.Id + "/" + reader.Id);
         if (ok === "ok") {
             main.viewSection("checkOutSuccess");
-            document.querySelector("#checkOutSuccess .message .bookRow .bookMessage").textContent = "" + checkOutBook.Title;
-            document.querySelector("#checkOutSuccess .message .readerRow .readerMessage").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
+            document.querySelector("#checkOutSuccess .message .topRow .bookMessage").textContent = checkOutBook.Title;
+            document.querySelector("#checkOutSuccess .message .bottomRow .readerMessage").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
             document.getElementById("checkOutBook").textContent = "";
             checkOutBook = null;
         }
@@ -148,8 +148,10 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             if (returnBook) {
                 var ok = getData("/api/books/return/" + returnBook.Id);
                 if (ok === "ok") {
-                    document.querySelector("#returnBookSuccess .message").textContent =
-                        returnBook.Title + " has been returned to inventory!";
+                    document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
+                        returnBook.Title;
+                    //document.querySelector("#returnBookSuccess .message .bottomRow .readerInfo").textContent =
+                    //    checkOutReader.FirstName + " " + checkOutReader.LastName;
                     main.viewSection("returnBookSuccess");
                 }
             }
