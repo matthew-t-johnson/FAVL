@@ -33,7 +33,7 @@ function initClick(): void {
     });
 
     document.getElementById("inventoryButton").addEventListener("click", () => {
-        viewSection("returnBookSuccess");
+        viewSection("checkOutSuccess");
     });
 
     document.getElementById("checkOutButton").addEventListener("click", () => {

@@ -608,11 +608,11 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   border-radius: 10px;
   text-align: left;
 }
-.success .successWrapper .message .bookRow {
+.success .successWrapper .message .topRow {
   padding-top: 5%;
   padding-left: 3%;
 }
-.success .successWrapper .message .readerRow {
+.success .successWrapper .message .bottomRow {
   padding-bottom: 5%;
   padding-left: 3%;
 }

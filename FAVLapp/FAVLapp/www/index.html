@@ -368,15 +368,15 @@
             <div class="successWrapper">
                 <h2>User Added!</h2>
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <div class="message addUserSuccessMessage">
-                    <div class="bookRow">
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                        <p class="bookMessage">The Right Stuff</p>
-                    </div>
-                    <p class="messageDescription">Has been checked out to</p>
-                    <div class="readerRow">
+                <div class="message" id="addUserSuccessMessage">
+                    <div class="topRow">
                         <i class="fa fa-user" aria-hidden="true"></i>
-                        <p class="readerMessage">Matthew Johnson</p>
+                        <p class="userName"></p>
+                    </div>
+                    <div class="readerRow">
+                        <p class="userLibrary"></p>
+                        <p class="userBarcode"></p>
+                        <p class="totalCheckOuts"></p>
                     </div>
                 </div>
 
@@ -501,14 +501,14 @@
                 <h2>Successful Checkout!</h2>
                 <i class="fa fa-check" aria-hidden="true"></i>
                 <div class="message checkOutSuccessMessage">
-                    <div class="bookRow">
+                    <div class="topRow">
                         <i class="fa fa-book" aria-hidden="true"></i>
-                        <p class="bookMessage">The Right Stuff</p>
+                        <p class="bookMessage"></p>
                     </div>
                     <p class="messageDescription">Has been checked out to</p>
-                    <div class="readerRow">
+                    <div class="bottomRow">
                         <i class="fa fa-user" aria-hidden="true"></i>
-                        <p class="readerMessage">Matthew Johnson</p>
+                        <p class="readerMessage"></p>
                     </div>
                 </div>
             </div>
@@ -559,13 +559,13 @@
             <div class="successWrapper">
                 <h2>Successful Return!</h2>
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <div class="message checkOutSuccessMessage">
-                    <div class="bookRow">
+                <div class="message returnSuccessMessage">
+                    <div class="topRow">
                         <i class="fa fa-book" aria-hidden="true"></i>
                         <p class="bookMessage">The Right Stuff</p>
                     </div>
                     <p class="messageDescription">Has been returned by</p>
-                    <div class="readerRow">
+                    <div class="bottomRow">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <p class="readerMessage">Matthew Johnson</p>
                     </div>
