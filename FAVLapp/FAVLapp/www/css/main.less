@@ -84,7 +84,7 @@ section {
             li {
                 padding: 3px 10px 5px;
                 margin: 10px;
-                color: #0B697F;
+                color: #263c40;
                 background-color: #eee;
                 margin-bottom: 5px;
                 text-align: left;
@@ -95,6 +95,7 @@ section {
                     font-weight: 600;
                     font-size: 12pt;
                     display: block;
+                    /*color: #1E363A;*/
                 }
 
                 .author, .barcode {
@@ -117,6 +118,13 @@ section {
 
                     .reader {
                         font-weight: 700;
+                        color: #0B697F;
+                        padding-left: .5em;
+
+                        &::before {
+                            content: "Checked out to: ";
+                            font-weight: 400;
+                        }
                     }
                 }
 
@@ -137,8 +145,8 @@ section {
                         &.date {
                             font-size: 24pt;
                             line-height: .6;
-                            padding-bottom: 2px;
-                            padding-top: 1px;
+                            padding-bottom: 1px;
+                            padding-top: 4px;
                         }
 
                         &.year {
@@ -192,7 +200,7 @@ section {
             }
 
             button.hubutton {
-                font-size: 16px;
+                font-size: 14px;
                 width: 100%;
                 background-color: rgba(255, 255, 255, 0.85);
                 color: #1E363A;
@@ -206,6 +214,7 @@ section {
                 color: #1E363A;
                 padding: 0;
                 height: 100%;
+                text-transform: uppercase;
 
                 &:focus {
                     outline: none !important;
@@ -284,12 +293,25 @@ section {
                         padding: 3px;
                         width: 250px;
                         margin-bottom: 15px;
-                        border-radius: 7px;
+                        border-radius: 2px;
                         border-style: none;
-                        border: 1px solid #1E363A;
                     }
 
-                    button[type=submit] {
+                    button {
+                        width: 41%;
+                        height: 35px;
+                        border: none;
+                        border-radius: 5px;
+
+                        &.signInSubmitButton {
+                            background-color: rgba(74, 220, 105, 0.9);
+                            color: #005200;
+                        }
+
+                        &.signInCancelButton {
+                            background-color: rgba(226, 89, 89, 0.9);
+                            color: #520000;
+                        }
                     }
                 }
             }
@@ -585,7 +607,8 @@ section#addUser, section#editUser {
 
     h1 {
         color: #1E363A;
-        font-size: 16px;
+        font-size: 14px;
+        text-transform: uppercase;
     }
 }
 
@@ -625,16 +648,16 @@ section#addUser, section#editUser {
     }
 }
 
-.checkOutSuccess {
+.success {
     color: white;
     background-image: url('../images/success_background_2.jpg');
     background-size: contain;
 
-    .checkOutSuccessWrapper {
+    .successWrapper {
         /*background-color: rgba(116, 212, 136, 0.46);*/
         /*background-color: rgba(162, 214, 226, 0.67);*/
         /*background-color: rgba(30, 54, 58, 0.87);*/
-        background-color: rgba(30, 54, 58, 0.9);
+        /*background-color: rgba(30, 54, 58, 0.9);*/
         height: 88%;
 
         h2 {
@@ -647,25 +670,67 @@ section#addUser, section#editUser {
 
         i {
             font-size: 100pt;
-            padding-top: 25%;
+            padding-top: 15%;
+            padding-bottom: 15%;
             color: rgb(116, 212, 136);
         }
 
-        p {
+        .message {
             font-size: 14pt;
-            margin: 15% auto 0;
+            margin: 0 auto 0;
             width: 80%;
             /*padding-top: 10%;*/
-            background-color: rgba(255, 255, 255, 0.4);
-            height: 200px;
+            /*background-color: rgba(255, 255, 255, 0.4);*/
+            background-color: rgba(116, 212, 136, 0.5);
+            /*height: 200px;*/
             border-radius: 10px;
+            text-align: left;
+
+            .bookRow {
+                padding-top: 5%;
+                padding-left: 3%;
+            }
+
+            .readerRow {
+                padding-bottom: 5%;
+                padding-left: 3%;
+            }
+
+            i {
+                font-size: 1.5em;
+                display: inline-block;
+                padding: 0;
+                color: rgb(30, 54, 58);
+            }
+
+            p {
+                display: inline-block;
+                margin: 0;
+                font-size: 16pt;
+                font-weight: 100;
+                vertical-align: top;
+                padding-left: 3%;
+                text-transform: capitalize;
+
+                &.messageDescription {
+                    font-size: 10pt;
+                    padding: 10% 0;
+                    font-weight: 400;
+                    vertical-align: unset;
+                    padding-left: 5%;
+                    text-transform: uppercase;
+                    /*color: #6dea87;*/
+                    color: #1e363a;
+                    
+                }
+            }
         }
     }
 
     .successButtonWrapper {
         height: 12%;
 
-        .returnCheckOutButton {
+        .againButton {
             height: 100%;
             width: 60%;
             border: none;
@@ -687,7 +752,7 @@ section#addUser, section#editUser {
             }
         }
 
-        .checkOutSuccessButton {
+        .successButton {
             height: 100%;
             width: 40%;
             border: none;

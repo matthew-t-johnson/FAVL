@@ -68,7 +68,7 @@ section .wrapper .listList {
 section .wrapper .listList li {
   padding: 3px 10px 5px;
   margin: 10px;
-  color: #0B697F;
+  color: #263c40;
   background-color: #eee;
   margin-bottom: 5px;
   text-align: left;
@@ -80,6 +80,7 @@ section .wrapper .listList li .name {
   font-weight: 600;
   font-size: 12pt;
   display: block;
+  /*color: #1E363A;*/
 }
 section .wrapper .listList li .author,
 section .wrapper .listList li .barcode {
@@ -97,6 +98,12 @@ section .wrapper .listList li .bookInfo .title {
 }
 section .wrapper .listList li .bookInfo .reader {
   font-weight: 700;
+  color: #0B697F;
+  padding-left: .5em;
+}
+section .wrapper .listList li .bookInfo .reader::before {
+  content: "Checked out to: ";
+  font-weight: 400;
 }
 section .wrapper .listList li .dueDateDiv {
   display: inline-block;
@@ -114,8 +121,8 @@ section .wrapper .listList li .dueDateDiv span.month {
 section .wrapper .listList li .dueDateDiv span.date {
   font-size: 24pt;
   line-height: .6;
-  padding-bottom: 2px;
-  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-top: 4px;
 }
 section .wrapper .listList li .dueDateDiv span.year {
   font-size: 10pt;
@@ -158,7 +165,7 @@ section .wrapper .listList li .dueDateDiv span.year {
   padding: 0;
 }
 #hub .wrapper .mainBodyWrapper button.hubutton {
-  font-size: 16px;
+  font-size: 14px;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.85);
   margin-left: auto;
@@ -171,6 +178,7 @@ section .wrapper .listList li .dueDateDiv span.year {
   color: #1E363A;
   padding: 0;
   height: 100%;
+  text-transform: uppercase;
 }
 #hub .wrapper .mainBodyWrapper button.hubutton:focus {
   outline: none !important;
@@ -237,9 +245,22 @@ section .wrapper .listList li .dueDateDiv span.year {
   padding: 3px;
   width: 250px;
   margin-bottom: 15px;
-  border-radius: 7px;
+  border-radius: 2px;
   border-style: none;
-  border: 1px solid #1E363A;
+}
+#signIn .wrapper .wrapperWrapper .signInFormWrapper #signInForm button {
+  width: 41%;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+}
+#signIn .wrapper .wrapperWrapper .signInFormWrapper #signInForm button.signInSubmitButton {
+  background-color: rgba(74, 220, 105, 0.9);
+  color: #005200;
+}
+#signIn .wrapper .wrapperWrapper .signInFormWrapper #signInForm button.signInCancelButton {
+  background-color: rgba(226, 89, 89, 0.9);
+  color: #520000;
 }
 #signIn #signInBarcode {
   height: 12%;
@@ -522,7 +543,8 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
 #checkOut .scanReader h1,
 #checkOut .scanBook h1 {
   color: #1E363A;
-  font-size: 16px;
+  font-size: 14px;
+  text-transform: uppercase;
 }
 #checkOut .scanReader {
   margin-right: 5px;
@@ -550,43 +572,79 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   color: #1E363A;
   font-size: 16px;
 }
-.checkOutSuccess {
+.success {
   color: white;
   background-image: url('../images/success_background_2.jpg');
   background-size: contain;
 }
-.checkOutSuccess .checkOutSuccessWrapper {
+.success .successWrapper {
   /*background-color: rgba(116, 212, 136, 0.46);*/
   /*background-color: rgba(162, 214, 226, 0.67);*/
   /*background-color: rgba(30, 54, 58, 0.87);*/
-  background-color: rgba(30, 54, 58, 0.9);
+  /*background-color: rgba(30, 54, 58, 0.9);*/
   height: 88%;
 }
-.checkOutSuccess .checkOutSuccessWrapper h2 {
+.success .successWrapper h2 {
   font-size: 24pt;
   margin: 0;
   padding-top: 15%;
   font-weight: 400;
   color: #74d488;
 }
-.checkOutSuccess .checkOutSuccessWrapper i {
+.success .successWrapper i {
   font-size: 100pt;
-  padding-top: 25%;
+  padding-top: 15%;
+  padding-bottom: 15%;
   color: #74d488;
 }
-.checkOutSuccess .checkOutSuccessWrapper p {
+.success .successWrapper .message {
   font-size: 14pt;
-  margin: 15% auto 0;
+  margin: 0 auto 0;
   width: 80%;
   /*padding-top: 10%;*/
-  background-color: rgba(255, 255, 255, 0.4);
-  height: 200px;
+  /*background-color: rgba(255, 255, 255, 0.4);*/
+  background-color: rgba(116, 212, 136, 0.5);
+  /*height: 200px;*/
   border-radius: 10px;
+  text-align: left;
 }
-.checkOutSuccess .successButtonWrapper {
+.success .successWrapper .message .bookRow {
+  padding-top: 5%;
+  padding-left: 3%;
+}
+.success .successWrapper .message .readerRow {
+  padding-bottom: 5%;
+  padding-left: 3%;
+}
+.success .successWrapper .message i {
+  font-size: 1.5em;
+  display: inline-block;
+  padding: 0;
+  color: #1e363a;
+}
+.success .successWrapper .message p {
+  display: inline-block;
+  margin: 0;
+  font-size: 16pt;
+  font-weight: 100;
+  vertical-align: top;
+  padding-left: 3%;
+  text-transform: capitalize;
+}
+.success .successWrapper .message p.messageDescription {
+  font-size: 10pt;
+  padding: 10% 0;
+  font-weight: 400;
+  vertical-align: unset;
+  padding-left: 5%;
+  text-transform: uppercase;
+  /*color: #6dea87;*/
+  color: #1e363a;
+}
+.success .successButtonWrapper {
   height: 12%;
 }
-.checkOutSuccess .successButtonWrapper .returnCheckOutButton {
+.success .successButtonWrapper .againButton {
   height: 100%;
   width: 60%;
   border: none;
@@ -596,16 +654,16 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   padding: 0;
   float: left;
 }
-.checkOutSuccess .successButtonWrapper .returnCheckOutButton i {
+.success .successButtonWrapper .againButton i {
   display: inline-block;
   font-size: 40pt;
 }
-.checkOutSuccess .successButtonWrapper .returnCheckOutButton h2 {
+.success .successButtonWrapper .againButton h2 {
   display: inline-block;
   margin: 0;
   padding-left: 15px;
 }
-.checkOutSuccess .successButtonWrapper .checkOutSuccessButton {
+.success .successButtonWrapper .successButton {
   height: 100%;
   width: 40%;
   border: none;
@@ -615,10 +673,10 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   padding: 0;
   border-left: 4px solid rgba(30, 54, 58, 0.79);
 }
-.checkOutSuccess .successButtonWrapper .checkOutSuccessButton img {
+.success .successButtonWrapper .successButton img {
   width: 70%;
 }
-.checkOutSuccess .successButtonWrapper .checkOutSuccessButton h2 {
+.success .successButtonWrapper .successButton h2 {
   display: inline-block;
   margin: 0;
   padding-left: 25px;

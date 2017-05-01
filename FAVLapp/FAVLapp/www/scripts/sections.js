@@ -132,8 +132,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         var ok = getData("/api/books/checkout/" + book.Id + "/" + reader.Id);
         if (ok === "ok") {
             main.viewSection("checkOutSuccess");
-            document.querySelector("#checkOutSuccess .message").textContent =
-                checkOutBook.Title + " has been checked out to " + checkOutReader.FirstName + " " + checkOutReader.LastName;
+            document.querySelector("#checkOutSuccess .message .bookRow .bookMessage").textContent = "" + checkOutBook.Title;
+            document.querySelector("#checkOutSuccess .message .readerRow .readerMessage").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
             document.getElementById("checkOutBook").textContent = "";
             checkOutBook = null;
         }

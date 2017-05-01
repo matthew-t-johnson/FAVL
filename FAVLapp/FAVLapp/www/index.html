@@ -83,7 +83,7 @@
                     <tr>
                         <td>
                             <button id="checkOutButton" type="button" class="hubutton">
-                                <i class="fa fa-cart-plus" aria-hidden="true"></i><br />
+                                <i class="fa fa-shopping-bag" aria-hidden="true"></i><br />
                                 Check Out
                             </button>
                         </td>
@@ -112,8 +112,8 @@
                             <input type="password" name="password" placeholder="Password" required />
                         </div>
                         <div>
-                            <button type="submit">Sign In</button>
-                            <button type="button">Cancel</button>
+                            <button class="signInSubmitButton" type="submit">Sign In</button>
+                            <button class="signInCancelButton" type="button">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -363,21 +363,54 @@
     </section>
 
     <!--ADD USER SUCCESS-->
-    <section id="addUserSuccess" hidden>
+    <section id="addUserSuccess" class="success" hidden>
         <div class="wrapper">
-            <div class="addUserSuccessWrapper">
-                <h2>Success!</h2>
+            <div class="successWrapper">
+                <h2>User Added!</h2>
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <p class="message addUserSuccessMessage"></p>
+                <div class="message addUserSuccessMessage">
+                    <div class="bookRow">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <p class="bookMessage">The Right Stuff</p>
+                    </div>
+                    <p class="messageDescription">Has been checked out to</p>
+                    <div class="readerRow">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p class="readerMessage">Matthew Johnson</p>
+                    </div>
+                </div>
+
             </div>
             <div class="successButtonWrapper">
-                <button id="addUserAgainButton">
+                <button id="addUserAgainButton" class="againButton">
                     <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                     <h2>
                         New<br />Reader
                     </h2>
                 </button>
-                <button class="successButton addUserSuccessButton">
+                <button id="addUserSuccessButton" class="successButton">
+                    <img src="images/scan_logo.svg" />
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!--EDIT USER SUCCESS-->
+    <section id="editUserSuccess" class="success" hidden>
+        <div class="wrapper">
+            <div class="successWrapper">
+                <h2>User Edited!</h2>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <p class="message addUserSuccessMessage"></p>
+            </div>
+            <div class="successButtonWrapper">
+                <button id="editUserAgainButton" class="againButton">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                    <h2>
+                        New<br />Edit
+                    </h2>
+                </button>
+                <button id="editUserSuccessButton" class="successButton">
                     <img src="images/scan_logo.svg" />
                 </button>
             </div>
@@ -462,21 +495,31 @@
     </section>
 
     <!--CHECKOUT SUCCESS-->
-    <section id="checkOutSuccess" class="checkOutSuccess" hidden>
+    <section id="checkOutSuccess" class="success" hidden>
         <div class="wrapper">
-            <div class="checkOutSuccessWrapper">
+            <div class="successWrapper">
                 <h2>Successful Checkout!</h2>
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <p class="message checkOutSuccessMessage"></p>
+                <div class="message checkOutSuccessMessage">
+                    <div class="bookRow">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <p class="bookMessage">The Right Stuff</p>
+                    </div>
+                    <p class="messageDescription">Has been checked out to</p>
+                    <div class="readerRow">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p class="readerMessage">Matthew Johnson</p>
+                    </div>
+                </div>
             </div>
             <div class="successButtonWrapper">
-                <button id="checkOutAgainButton">
+                <button id="checkOutAgainButton" class="againButton">
                     <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                     <h2>
                         New<br />Check Out
                     </h2>
                 </button>
-                <button class="successButton checkOutSuccessButton">
+                <button id="checkOutSuccessButton" class="successButton">
                     <img src="images/scan_logo.svg" />
                 </button>
             </div>
@@ -511,25 +554,36 @@
     </section>
 
     <!--RETURN BOOK SUCCESS-->
-    <section id="returnBookSuccess" class="checkOutSuccess" hidden>
+    <section id="returnBookSuccess" class="success" hidden>
         <div class="wrapper">
-            <div class="checkOutSuccessWrapper">
+            <div class="successWrapper">
                 <h2>Successful Return!</h2>
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <p class="message checkOutSuccessMessage"></p>
+                <div class="message checkOutSuccessMessage">
+                    <div class="bookRow">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <p class="bookMessage">The Right Stuff</p>
+                    </div>
+                    <p class="messageDescription">Has been returned by</p>
+                    <div class="readerRow">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p class="readerMessage">Matthew Johnson</p>
+                    </div>
+                </div>
             </div>
             <div class="successButtonWrapper">
-                <button id="returnAgainButton">
-                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                <button id="returnAgainButton" class="againButton">
+                    <i class="fa fa-undo" aria-hidden="true"></i>
                     <h2>
                         New<br />Return
                     </h2>
                 </button>
-                <button class="successButton checkOutSuccessButton">
+                <button id="returnSuccessButton" class="successButton">
                     <img src="images/scan_logo.svg" />
                 </button>
             </div>
         </div>
+
     </section>
 
 
