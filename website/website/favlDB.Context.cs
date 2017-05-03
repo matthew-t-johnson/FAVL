@@ -12,6 +12,8 @@ namespace website
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class favlEntities : DbContext
     {
@@ -31,5 +33,15 @@ namespace website
         public virtual DbSet<Reader> Readers { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<CheckOut> CheckOuts { get; set; }
+        public virtual DbSet<CheckOutsByDay> CheckOutsByDays { get; set; }
+    
+        public virtual int UpdateCheckOutsByDay(Nullable<System.DateTime> dayEnd)
+        {
+            var dayEndParameter = dayEnd.HasValue ?
+                new ObjectParameter("dayEnd", dayEnd) :
+                new ObjectParameter("dayEnd", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateCheckOutsByDay", dayEndParameter);
+        }
     }
 }

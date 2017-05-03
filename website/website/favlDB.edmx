@@ -39,6 +39,15 @@
           <Property Name="LibraryID" Type="int" Nullable="false" />
           <Property Name="CheckOutDate" Type="datetime2" Precision="0" Nullable="false" />
         </EntityType>
+        <EntityType Name="CheckOutsByDay">
+          <Key>
+            <PropertyRef Name="Day" />
+            <PropertyRef Name="LibraryID" />
+          </Key>
+          <Property Name="Day" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="LibraryID" Type="int" Nullable="false" />
+          <Property Name="CheckOuts" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Librarians">
           <Key>
             <PropertyRef Name="Id" />
@@ -122,10 +131,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="UpdateCheckOutsByDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dayEnd" Type="datetime2" Mode="In" />
+        </Function>
         <EntityContainer Name="favlModelStoreContainer">
           <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CheckOuts" EntityType="Self.CheckOuts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CheckOutsByDay" EntityType="Self.CheckOutsByDay" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Librarians" EntityType="Self.Librarians" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libraries" EntityType="Self.Libraries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Readers" EntityType="Self.Readers" Schema="dbo" store:Type="Tables" />
@@ -255,6 +268,10 @@
           </AssociationSet>
           <EntitySet Name="Admins" EntityType="favlModel.Admin" />
           <EntitySet Name="CheckOuts" EntityType="favlModel.CheckOut" />
+          <EntitySet Name="CheckOutsByDays" EntityType="favlModel.CheckOutsByDay" />
+          <FunctionImport Name="UpdateCheckOutsByDay">
+            <Parameter Name="dayEnd" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <Association Name="FK_Librarians_Libraries">
           <End Type="favlModel.Library" Role="Library" Multiplicity="0..1" />
@@ -298,6 +315,15 @@
           <Property Name="ReaderID" Type="Int32" Nullable="false" />
           <Property Name="LibraryID" Type="Int32" Nullable="false" />
           <Property Name="CheckOutDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="CheckOutsByDay">
+          <Key>
+            <PropertyRef Name="Day" />
+            <PropertyRef Name="LibraryID" />
+          </Key>
+          <Property Name="Day" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LibraryID" Type="Int32" Nullable="false" />
+          <Property Name="CheckOuts" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -380,6 +406,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CheckOutsByDays">
+            <EntityTypeMapping TypeName="favlModel.CheckOutsByDay">
+              <MappingFragment StoreEntitySet="CheckOutsByDay">
+                <ScalarProperty Name="CheckOuts" ColumnName="CheckOuts" />
+                <ScalarProperty Name="LibraryID" ColumnName="LibraryID" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateCheckOutsByDay" FunctionName="favlModel.Store.UpdateCheckOutsByDay" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

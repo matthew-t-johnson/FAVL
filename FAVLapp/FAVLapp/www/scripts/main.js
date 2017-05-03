@@ -27,7 +27,7 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
             viewSection("returnBook");
         });
         document.getElementById("inventoryButton").addEventListener("click", function () {
-            viewSection("checkOutSuccess");
+            viewSection("addUserSuccess");
         });
         document.getElementById("checkOutButton").addEventListener("click", function () {
             viewSection("checkOut");

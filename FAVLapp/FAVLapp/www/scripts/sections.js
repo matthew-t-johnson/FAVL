@@ -169,6 +169,10 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         data["LibraryID"] = currentLibrary.Id;
         currentReader = postData("/api/reader/add", data);
         if (currentReader) {
+            document.querySelector("#addUserSuccess .message .userName").textContent =
+                currentReader.FirstName + " " + currentReader.LastName;
+            document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+            document.querySelector("#addUserSuccess .message .userBarcode").textContent = currentReader.Barcode;
             main.viewSection("addUserSuccess");
             for (var i = 0; i < inputs.length; i++) {
                 var field = inputs[i];

@@ -233,6 +233,10 @@ function addUserSubmit(ev: Event): boolean {
     currentReader = postData("/api/reader/add", data) as Reader;
 
     if (currentReader) {
+        document.querySelector("#addUserSuccess .message .userName").textContent =
+            currentReader.FirstName + " " + currentReader.LastName;
+        document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+        document.querySelector("#addUserSuccess .message .userBarcode").textContent = currentReader.Barcode;
         main.viewSection("addUserSuccess");
 
         for (let i = 0; i < inputs.length; i++) {
