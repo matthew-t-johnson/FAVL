@@ -26,8 +26,20 @@ namespace website.admin
 
                 svg.Attributes.Add("width", "800");
                 svg.Attributes.Add("height", "600");
+                //svg.Attributes.Add("background", "eee");
 
                 var libraryIDs = checkOuts.Select(c => c.LibraryID).Distinct().ToList();
+
+                var colorArray = new string[]
+                {
+                    "blue",
+                    "darkcyan",
+                    "chocolate",
+                    "orange",
+                    "red"
+                };
+
+
 
                 foreach (var libraryID in libraryIDs)
                 {
@@ -45,8 +57,10 @@ namespace website.admin
 
                     var polyline = new HtmlGenericControl("polyline");
 
+                    var color = colorArray[(libraryID - 1) % colorArray.Length];
+
                     polyline.Attributes.Add("points", string.Join(" ", points));
-                    polyline.Attributes.Add("stroke", "black");
+                    polyline.Attributes.Add("stroke", color);
                     polyline.Attributes.Add("stroke-width", "2");
                     polyline.Attributes.Add("fill", "none");
 
