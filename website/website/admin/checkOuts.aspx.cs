@@ -48,6 +48,7 @@ namespace website.admin
                     polyline.Attributes.Add("points", string.Join(" ", points));
                     polyline.Attributes.Add("stroke", "black");
                     polyline.Attributes.Add("stroke-width", "2");
+                    polyline.Attributes.Add("fill", "none");
 
                     svg.Controls.Add(polyline);
                 }
