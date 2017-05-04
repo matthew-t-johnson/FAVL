@@ -13,6 +13,9 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
         document.getElementById("signInButton").addEventListener("click", function () {
             viewSection("signIn");
         });
+        document.getElementById("signInCancelButton").addEventListener("click", function () {
+            viewSection("index");
+        });
         var imgs = document.querySelectorAll(".headerLogoWrapper .logoIcon, .successButton");
         for (var i = 0; i < imgs.length; i++) {
             imgs[i].addEventListener("click", function () { viewSection("hub"); });
@@ -27,7 +30,7 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
             viewSection("returnBook");
         });
         document.getElementById("inventoryButton").addEventListener("click", function () {
-            viewSection("addUserSuccess");
+            viewSection("inventory");
         });
         document.getElementById("checkOutButton").addEventListener("click", function () {
             viewSection("checkOut");

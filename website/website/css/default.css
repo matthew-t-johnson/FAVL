@@ -318,7 +318,6 @@ footer {
     height: 70px;
     left: 0;
     right: 0;
-    position: absolute;
     bottom: 0;
 }
 
@@ -365,9 +364,10 @@ footer {
 }
 
 .contentWrapper {
-    margin: 0 20px;
+    margin: 0 50px 100px;
     position: relative;
     top: 60px;
+    min-height: 850px;
 }
 
     .contentWrapper h1 {

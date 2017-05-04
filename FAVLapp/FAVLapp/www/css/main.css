@@ -9,6 +9,9 @@ html {
   text-align: center;
   height: 100%;
 }
+button:focus {
+  outline: none !important;
+}
 section {
   height: 100%;
   background-image: url('../images/success_background_2.jpg');
@@ -168,20 +171,23 @@ section .wrapper .listList li .dueDateDiv span.year {
   font-size: 14px;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.85);
+  color: #1E363A;
   margin-left: auto;
   margin-right: auto;
   border: none;
-  /*height: 200px;*/
-  /*margin-top: 20px;*/
-  /*border-radius: 15px;*/
-  /*border: 1px solid #0B697F;*/
-  color: #1E363A;
   padding: 0;
   height: 100%;
   text-transform: uppercase;
 }
 #hub .wrapper .mainBodyWrapper button.hubutton:focus {
   outline: none !important;
+}
+#hub .wrapper .mainBodyWrapper button.hubutton:active {
+  background-color: rgba(11, 105, 127, 0.7);
+  color: white;
+}
+#hub .wrapper .mainBodyWrapper button.hubutton:active i {
+  color: white;
 }
 #hub .wrapper .mainBodyWrapper button.hubutton i {
   font-size: 40pt;
@@ -549,8 +555,28 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
 #checkOut .scanReader {
   margin-right: 5px;
 }
+#checkOut .scanReader:active {
+  background-color: rgba(11, 105, 127, 0.7);
+  color: white;
+}
+#checkOut .scanReader:active i {
+  color: white;
+}
+#checkOut .scanReader:active h1 {
+  color: white;
+}
 #checkOut .scanBook {
   margin-left: 5px;
+}
+#checkOut .scanBook:active {
+  background-color: rgba(11, 105, 127, 0.7);
+  color: white;
+}
+#checkOut .scanBook:active i {
+  color: white;
+}
+#checkOut .scanBook:active h1 {
+  color: white;
 }
 #returnBook .bottomButtonWrapper {
   height: 100%;
@@ -562,6 +588,7 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   background-color: rgba(255, 255, 255, 0.85);
   margin-top: 75%;
   border: none;
+  text-transform: uppercase;
 }
 #returnBook .bottomButtonWrapper .scanBook i {
   font-size: 60px;
@@ -570,7 +597,17 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
 }
 #returnBook .bottomButtonWrapper .scanBook h1 {
   color: #1E363A;
-  font-size: 16px;
+  font-size: 14px;
+}
+#returnBook .bottomButtonWrapper .scanBook:active {
+  background-color: rgba(11, 105, 127, 0.7);
+  color: white;
+}
+#returnBook .bottomButtonWrapper .scanBook:active i {
+  color: white;
+}
+#returnBook .bottomButtonWrapper .scanBook:active h1 {
+  color: white;
 }
 .success {
   color: white;

@@ -15,6 +15,11 @@ function initClick(): void {
         viewSection("signIn");
     });
 
+    document.getElementById("signInCancelButton").addEventListener("click", () => {
+        viewSection("index");
+    });
+
+
     const imgs = document.querySelectorAll(".headerLogoWrapper .logoIcon, .successButton");
     for (let i = 0; i < imgs.length; i++) {
         imgs[i].addEventListener("click", () => { viewSection("hub"); });
@@ -33,7 +38,7 @@ function initClick(): void {
     });
 
     document.getElementById("inventoryButton").addEventListener("click", () => {
-        viewSection("addUserSuccess");
+        viewSection("inventory");
     });
 
     document.getElementById("checkOutButton").addEventListener("click", () => {
