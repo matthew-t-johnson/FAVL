@@ -18,12 +18,24 @@ body {
     color: #1d363a;
     background-color: white;
     padding-bottom: 0;
-    font-family: sans-serif;
+    font-family: Segoe UI, sans-serif;
     position: relative;
 }
 
+h1 {
+    font-family: Segoe UI, sans-serif;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    background-color: rgb(209, 227, 231);
+}
+
+.dropdown-menu .divider {
+    background-color: #177186;
+}
+
 #navbar-wrapper {
-    background-color: #eee;
+    background-color: rgba(11, 105, 127, 0.2);
     opacity: .95;
 }
 
@@ -374,6 +386,7 @@ footer {
     .contentWrapper h1 {
         margin-top: 0;
         margin-bottom: 10px;
+        font-weight: 100;
     }
 
 .dbForm {
@@ -432,35 +445,35 @@ svg.svgChart {
     margin-bottom: 100px;
 }
 
-    .svgChart line {
-        stroke: lightgrey;
-        stroke-width: 1px;
-        fill: none;
-    }
+.svgChart line {
+    stroke: lightgrey;
+    stroke-width: 1px;
+    fill: none;
+}
 
-    .svgChart text {
-        font-size: 10pt;
-        fill: #1d363a;
-        font-family: "Segoe UI Semilight", sans-serif;
-    }
+.svgChart text {
+    font-size: 10pt;
+    fill: #1d363a;
+    font-family: "Segoe UI Semilight", sans-serif;
+}
 
 .keyTable {
     margin-left: 30px;
 }
 
-.keyTable span {
+    .keyTable span {
         width: 20px;
         height: 20px;
         display: inline-block;
-}
+    }
 
-.keyTable td:first-child {
-    padding-right: 10px;
-}
+    .keyTable td:first-child {
+        padding-right: 10px;
+    }
 
-.keyTable td:last-child {
-    padding-bottom: 4px;
-}
+    .keyTable td:last-child {
+        padding-bottom: 4px;
+    }
 
 .libraryKey {
     margin-left: 28px;
@@ -469,7 +482,7 @@ svg.svgChart {
 }
 
 .popularBooksTable td {
-    padding: 5px 10px 5px 0;
+    padding: 3px 10px 4px 10px;
 }
 
 .popularBooksTable tr:nth-child(even) td {
@@ -478,12 +491,68 @@ svg.svgChart {
 
 .popularBooksTable thead {
     border-bottom: 1px solid black;
+    font-weight: 400;
 }
 
+.popularBooksTable tbody {
+    font-weight: 100;
+}
+
+.popularBooksTable th {
+    padding: 3px 10px 4px 10px;
+    font-size: 12pt;
+}
+
+    .popularBooksTable th:last-child {
+        padding-right: 5px;
+    }
+
 .popularBooksTable td:first-child {
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .popularBooksTable td:last-child {
     text-align: right;
+    padding-right: 5px;
+    color: #0B697F;
+    font-weight: 700;
+
+}
+
+.activeReadersTable td {
+    padding: 3px 10px 4px 10px;
+}
+
+.activeReadersTable tr:nth-child(even) td {
+    background-color: #eee;
+}
+
+.activeReadersTable thead {
+    border-bottom: 1px solid black;
+    font-weight: 500;
+}
+
+.activeReadersTable tbody {
+    font-weight: 100;
+}
+
+
+.activeReadersTable th {
+    padding: 3px 10px 4px 10px;
+    font-size: 12pt;
+}
+
+    .activeReadersTable th:last-child {
+        padding-right: 5px;
+    }
+
+.activeReadersTable td:first-child {
+    font-weight: 400;
+}
+
+.activeReadersTable td:last-child {
+    text-align: right;
+    padding-right: 5px;
+    color: #0B697F;
+    font-weight: 700;
 }

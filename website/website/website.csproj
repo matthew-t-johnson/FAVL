@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\activeReaders.aspx" />
     <Content Include="admin\addBook.aspx" />
     <Content Include="admin\addLibrarian.aspx" />
     <Content Include="admin\addLibrary.aspx" />
@@ -154,6 +155,8 @@
     <Content Include="images\logos\footer_pages_smaller.png" />
     <Content Include="images\logos\footer_pages_smaller.svg" />
     <Content Include="images\logos\scan_favicon.png" />
+    <Content Include="images\logos\scan_lightish_BG.svg" />
+    <Content Include="images\logos\scan_logo_light2.svg" />
     <Content Include="images\thumbnail\adult_praying_small.jpg" />
     <Content Include="images\logos\scan_header_logo.svg" />
     <Content Include="images\thumbnail\boys_reading_outside_small.jpg" />
@@ -209,6 +212,13 @@
   <ItemGroup>
     <Compile Include="Admin.cs">
       <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="admin\activeReaders.aspx.cs">
+      <DependentUpon>activeReaders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\activeReaders.aspx.designer.cs">
+      <DependentUpon>activeReaders.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\addBook.aspx.cs">
       <DependentUpon>addBook.aspx</DependentUpon>

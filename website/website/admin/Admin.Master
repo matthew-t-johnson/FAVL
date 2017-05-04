@@ -22,7 +22,7 @@
 <nav class="navbar navbar-default navbar-fixed-top col-xl-12" role="navigation" id="navbar-wrapper">
     <div class="navbar-header nav-header">
         <a class="navbar-brand" href="/">
-            <img src="/images/logos/scan_header_logo.svg" style="height: 40px;"/>
+            <img src="/images/logos/scan_logo_light2.svg" style="height: 40px;"/>
         </a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
             <span class="sr-only">Toggle Navigation</span>
@@ -64,7 +64,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="#">Active Readers</a>
+                        <a href="activeReaders.aspx">Active Readers</a>
                     </li>
                 </ul>
 

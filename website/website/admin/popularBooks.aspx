@@ -11,7 +11,7 @@
                     <th>Title</th>
                     <th>Author</th>
                     <th>Library</th>
-                    <th>Total Checkouts</th>
+                    <th class="lastTH">Total Checkouts</th>
                 </tr>
             </thead>
             <tbody id="popularBooksBody" runat="server">
