@@ -10,24 +10,15 @@
 namespace website.admin {
     
     
-    public partial class checkOuts {
+    public partial class popularBooks {
         
         /// <summary>
-        /// insertCheckOutChart control.
+        /// popularBooksBody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl insertCheckOutChart;
-        
-        /// <summary>
-        /// insertKey control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl insertKey;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl popularBooksBody;
     }
 }

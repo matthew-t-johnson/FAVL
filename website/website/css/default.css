@@ -56,9 +56,9 @@ body {
         text-align: left;
     }
 
-    #navbar-list .search {
-        float: right;
-    }
+        #navbar-list .search {
+            float: right;
+        }
 }
 
 .search {
@@ -262,6 +262,7 @@ body {
     .thumbnail-container .thumbnail {
         background-color: white;
     }
+
         .thumbnail-container .thumbnail img {
             max-height: 194px;
         }
@@ -379,9 +380,9 @@ footer {
     margin-left: 20px;
 }
 
-.dbForm input[type=text], .dbForm input[type=password] {
-    width: 500px;
-}
+    .dbForm input[type=text], .dbForm input[type=password] {
+        width: 500px;
+    }
 
 .listAsTable {
     list-style: none;
@@ -411,10 +412,10 @@ footer {
             border-bottom: 1px solid black;
         }
 
-        .listAsTable li:first-child span {
-            padding-bottom: 0;
-            padding-bottom: 2px;
-        }
+            .listAsTable li:first-child span {
+                padding-bottom: 0;
+                padding-bottom: 2px;
+            }
 
 
     .listAsTable span {
@@ -424,8 +425,65 @@ footer {
         vertical-align: baseline;
     }
 
-        .listAsTable span:first-child {
-        }
+svg.svgChart {
+    background-color: #eee;
+    overflow: visible;
+    margin-left: 30px;
+    margin-bottom: 100px;
+}
 
-        .listAsTable span:last-child {
-        }
+    .svgChart line {
+        stroke: lightgrey;
+        stroke-width: 1px;
+        fill: none;
+    }
+
+    .svgChart text {
+        font-size: 10pt;
+        fill: #1d363a;
+        font-family: "Segoe UI Semilight", sans-serif;
+    }
+
+.keyTable {
+    margin-left: 30px;
+}
+
+.keyTable span {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+}
+
+.keyTable td:first-child {
+    padding-right: 10px;
+}
+
+.keyTable td:last-child {
+    padding-bottom: 4px;
+}
+
+.libraryKey {
+    margin-left: 28px;
+    margin-top: 0;
+    font-size: 20pt;
+}
+
+.popularBooksTable td {
+    padding: 5px 10px 5px 0;
+}
+
+.popularBooksTable tr:nth-child(even) td {
+    background-color: #eee;
+}
+
+.popularBooksTable thead {
+    border-bottom: 1px solid black;
+}
+
+.popularBooksTable td:first-child {
+    font-weight: bold;
+}
+
+.popularBooksTable td:last-child {
+    text-align: right;
+}
