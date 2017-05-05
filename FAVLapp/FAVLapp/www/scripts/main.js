@@ -66,6 +66,12 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
         document.getElementById("editUserAgainButton").addEventListener("click", function () {
             viewSection("readers");
         });
+        document.getElementById("addUserCancelButton").addEventListener("click", function () {
+            viewSection("hub");
+        });
+        document.getElementById("editUserCancelButton").addEventListener("click", function () {
+            viewSection("hub");
+        });
     }
 });
 //# sourceMappingURL=main.js.map

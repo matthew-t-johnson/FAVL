@@ -85,4 +85,13 @@ function initClick(): void {
     document.getElementById("editUserAgainButton").addEventListener("click", () => {
         viewSection("readers");
     });
+
+    document.getElementById("addUserCancelButton").addEventListener("click", () => {
+        viewSection("hub");
+    });
+
+    document.getElementById("editUserCancelButton").addEventListener("click", () => {
+        viewSection("hub");
+    });
+
 }
