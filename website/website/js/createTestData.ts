@@ -5,13 +5,13 @@
         return;
     }
 
-    for (var i = 0; i < libraries.length; i++) {
-        console.log("Starting checkouts for " + libraries[i].Name);
-        checkOutBooks(libraries[i].Id);     
-    }
+    //for (var i = 0; i < libraries.length; i++) {
+    //    console.log("Starting checkouts for " + libraries[i].Name);
+    //    checkOutBooks(libraries[i].Id);     
+    //}
 
     //addBooks(libraries[3].Id);
-    //addReaders(libraries[2].Id);
+    addReaders(libraries[0].Id);
     //checkOutBooks(libraries[0].Id);
 
 }

@@ -21,6 +21,11 @@ section {
     background-image: url('../images/success_background_2.jpg');
     background-size: contain;
     background-attachment: scroll;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
 
     .wrapper {
         height: 100%;
@@ -100,6 +105,9 @@ section {
                     font-size: 12pt;
                     display: block;
                     /*color: #1E363A;*/
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
 
                 .author, .barcode {
@@ -512,10 +520,10 @@ section#addUser, section#editUser {
                                                         border-radius: 2px;
                                                         width: 95%;
                                                         height: 15px;
-                                                        font-size: 12pt;
+                                                        font-size: 11pt;
                                                         /*padding: 1% 0 1% 1%;*/
                                                         display: inline-block;
-                                                        background-color: rgba(255, 255, 255, 0.22);
+                                                        background-color: rgba(255, 255, 255, 0);
                                                     }
                                                 }
 
@@ -855,3 +863,38 @@ section#addUser, section#editUser {
         padding-bottom: 5%;
     }
 }
+
+section.incoming {
+    transform: translateX(100%);
+    transition: transform 200ms linear;
+    display: block;
+}
+
+section.outgoing {
+    transform: translateX(-100%);
+    transition: transform 200ms linear;
+}
+
+section.current {
+    transform: translateX(0);
+    transition: transform 200ms linear;
+    display: block;
+}
+
+section.incominghub {
+    transform: translateX(-100%);
+    transition: transform 200ms linear;
+    display: block;
+}
+
+section.outgoinghub {
+    transform: translateX(100%);
+    transition: transform 200ms linear;
+}
+
+section.currenthub {
+    transform: translateX(0);
+    transition: transform 200ms linear;
+    display: block;
+}
+

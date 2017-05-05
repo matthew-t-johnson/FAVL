@@ -7,7 +7,28 @@ export function mainInit(): void {
 }
 
 export function viewSection(id: string): void {
-    view(`#${id}`);
+    var newPanel = document.querySelector(`#${id}`) as HTMLElement;
+    var currentPanel = document.querySelector("section:not([hidden])") as HTMLElement;
+
+    var suffix = "";
+
+    if (newPanel.id === "hub") {
+        suffix = "hub";
+    }
+
+    newPanel.classList.add(`incoming${suffix}`);
+
+    setTimeout(() => {
+        newPanel.classList.remove(`incoming${suffix}`);
+        newPanel.classList.add(`current${suffix}`);
+        currentPanel.classList.add(`outgoing${suffix}`);
+
+        setTimeout(() => {
+            view(`#${id}`);
+            newPanel.classList.remove(`current${suffix}`);
+            currentPanel.classList.remove(`outgoing${suffix}`);
+        }, 200);
+    }, 0);
 }
 
 function initClick(): void {

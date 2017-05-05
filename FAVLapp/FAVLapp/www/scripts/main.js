@@ -6,7 +6,23 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
     }
     exports.mainInit = mainInit;
     function viewSection(id) {
-        view("#" + id);
+        var newPanel = document.querySelector("#" + id);
+        var currentPanel = document.querySelector("section:not([hidden])");
+        var suffix = "";
+        if (newPanel.id === "hub") {
+            suffix = "hub";
+        }
+        newPanel.classList.add("incoming" + suffix);
+        setTimeout(function () {
+            newPanel.classList.remove("incoming" + suffix);
+            newPanel.classList.add("current" + suffix);
+            currentPanel.classList.add("outgoing" + suffix);
+            setTimeout(function () {
+                view("#" + id);
+                newPanel.classList.remove("current" + suffix);
+                currentPanel.classList.remove("outgoing" + suffix);
+            }, 200);
+        }, 0);
     }
     exports.viewSection = viewSection;
     function initClick() {
