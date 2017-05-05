@@ -11,10 +11,14 @@ export function init(): void {
 
 
     document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
+    document.getElementById("editUserForm").addEventListener("submit", editUserSubmit);
+
     document.getElementById("signInForm").addEventListener("submit", signInSubmit);
 
 
     document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
+    document.getElementById("editBarcodeButton").addEventListener("click", onEditUserGetBarcode);
+
     document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
     document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
     document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
@@ -250,6 +254,38 @@ function addUserSubmit(ev: Event): boolean {
     return false;
 }
 
+function editUserSubmit(ev: Event): boolean {
+    ev.preventDefault();
+
+    const form = ev.target as HTMLFormElement;
+    const inputs = form.querySelectorAll("input[type=text], input[type=hidden]");
+    const data = {};
+
+    for (let i = 0; i < inputs.length; i++) {
+        const field = inputs[i] as HTMLInputElement;
+        data[field.name] = prepField(field.value);
+    }
+    data["LibraryID"] = currentLibrary.Id;
+
+    currentEditUser = postData(`/api/reader/${currentEditUser.Id}`, data) as Reader;
+
+    if (currentEditUser) {
+        document.querySelector("#editUserSuccess .message .userName").textContent =
+            currentEditUser.FirstName + " " + currentEditUser.LastName;
+        document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+        document.querySelector("#editUserSuccess .message .userBarcode").textContent = currentEditUser.Barcode;
+        main.viewSection("editUserSuccess");
+
+        for (let i = 0; i < inputs.length; i++) {
+            const field = inputs[i] as HTMLInputElement;
+            field.value = "";
+        }
+    }
+
+    return false;
+}
+
+
 var currentReader: Reader;
 
 function encodeHTML(str: string): string {
@@ -409,6 +445,14 @@ function onAddUserGetBarcode(): void {
         view.show(table);
     });
 }
+
+function onEditUserGetBarcode(): void {
+    scanBarcode(result => {
+        var el = document.getElementById("editBarcodeString") as HTMLInputElement;
+        el.value = result.text + " (" + result.format + ")";
+    });
+}
+
 
 interface Librarian {
     FirstName: string;

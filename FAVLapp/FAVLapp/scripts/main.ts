@@ -61,4 +61,7 @@ function initClick(): void {
         viewSection("returnBook");
     });
 
+    document.getElementById("editUserAgainButton").addEventListener("click", () => {
+        viewSection("readers");
+    });
 }

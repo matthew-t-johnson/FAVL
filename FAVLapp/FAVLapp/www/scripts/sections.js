@@ -8,8 +8,10 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.getElementById("overDue").addEventListener("view:show", showOverDue);
         document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
         document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
+        document.getElementById("editUserForm").addEventListener("submit", editUserSubmit);
         document.getElementById("signInForm").addEventListener("submit", signInSubmit);
         document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
+        document.getElementById("editBarcodeButton").addEventListener("click", onEditUserGetBarcode);
         document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
         document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
         document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
@@ -182,6 +184,30 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         }
         return false;
     }
+    function editUserSubmit(ev) {
+        ev.preventDefault();
+        var form = ev.target;
+        var inputs = form.querySelectorAll("input[type=text], input[type=hidden]");
+        var data = {};
+        for (var i = 0; i < inputs.length; i++) {
+            var field = inputs[i];
+            data[field.name] = prepField(field.value);
+        }
+        data["LibraryID"] = currentLibrary.Id;
+        currentEditUser = postData("/api/reader/" + currentEditUser.Id, data);
+        if (currentEditUser) {
+            document.querySelector("#editUserSuccess .message .userName").textContent =
+                currentEditUser.FirstName + " " + currentEditUser.LastName;
+            document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+            document.querySelector("#editUserSuccess .message .userBarcode").textContent = currentEditUser.Barcode;
+            main.viewSection("editUserSuccess");
+            for (var i = 0; i < inputs.length; i++) {
+                var field = inputs[i];
+                field.value = "";
+            }
+        }
+        return false;
+    }
     var currentReader;
     function encodeHTML(str) {
         if (!str)
@@ -286,6 +312,12 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             var el = document.getElementById("addBarcodeString");
             el.value = result.text + " (" + result.format + ")";
             view.show(table);
+        });
+    }
+    function onEditUserGetBarcode() {
+        scanBarcode(function (result) {
+            var el = document.getElementById("editBarcodeString");
+            el.value = result.text + " (" + result.format + ")";
         });
     }
     function onSignInGetBarcode() {

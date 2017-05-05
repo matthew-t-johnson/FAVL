@@ -47,6 +47,9 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
         document.getElementById("returnAgainButton").addEventListener("click", function () {
             viewSection("returnBook");
         });
+        document.getElementById("editUserAgainButton").addEventListener("click", function () {
+            viewSection("readers");
+        });
     }
 });
 //# sourceMappingURL=main.js.map

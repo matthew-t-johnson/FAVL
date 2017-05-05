@@ -103,7 +103,15 @@ namespace website.Controllers
             using (var db = new favlEntities())
             {
                 if (string.IsNullOrEmpty(reader.Barcode))
+                {
                     reader.Barcode = null;
+                }
+                else
+                {
+                    // throw error if another reader has same barcode
+                    if(db.Readers.FirstOrDefault(r => r.Barcode == reader.Barcode) != null)
+                        throw new HttpResponseException(HttpStatusCode.Conflict);
+                }
 
                 var addedReader = db.Readers.Add(reader);
 
@@ -120,6 +128,46 @@ namespace website.Controllers
                 };
             }
         }
+
+        [HttpPost]
+        [Route("api/reader/{userID}")]
+        public Reader EditReader(int userID, [FromBody] Reader reader)
+        {
+            using (var db = new favlEntities())
+            {
+                var existingReader = db.Readers.Find(userID);
+
+                if (existingReader == null)
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+
+                // check if new barcode is different from existing barcode
+                if (existingReader.Barcode != reader.Barcode && !string.IsNullOrEmpty(reader.Barcode))
+                {
+                    // throw error if another reader has same barcode
+                    if (db.Readers.FirstOrDefault(r => r.Barcode == reader.Barcode) != null)
+                        throw new HttpResponseException(HttpStatusCode.Conflict);
+                }
+
+                existingReader.FirstName = reader.FirstName;
+                existingReader.MiddleName = reader.MiddleName;
+                existingReader.LastName = reader.LastName;
+                existingReader.Barcode = string.IsNullOrEmpty(reader.Barcode) ? null : reader.Barcode;
+                existingReader.LibraryID = reader.LibraryID;
+
+                db.SaveChanges();
+
+                return new Reader
+                {
+                    Id = existingReader.Id,
+                    FirstName = existingReader.FirstName,
+                    MiddleName = existingReader.MiddleName,
+                    LastName = existingReader.LastName,
+                    Barcode = existingReader.Barcode,
+                    TotalCheckouts = existingReader.TotalCheckouts
+                };
+            }
+        }
+
 
         [HttpDelete]
         [Route("api/reader/{userID}")]

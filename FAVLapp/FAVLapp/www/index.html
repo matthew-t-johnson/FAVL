@@ -252,7 +252,7 @@
                                                 Update<br />Barcode
                                             </h1>
                                         </button>
-                                        <div id="editBarCodeStringContainer" class="barcodeString" hidden>
+                                        <div id="editBarCodeStringContainer" class="barcodeString">
                                             <table id="editBarcodeStringTable">
                                                 <tr>
                                                     <td class="labelCell">
@@ -277,7 +277,7 @@
                             <div>
                                 <button type="submit" class="formSubmit">
                                     <i class="fa fa-check" aria-hidden="true"></i>
-                                    <h1>Create</h1>
+                                    <h1>Update</h1>
                                 </button>
                                 <button type="button" class="formCancel">
                                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -368,7 +368,7 @@
             <div class="successWrapper">
                 <h2>User Added!</h2>
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <div class="message" id="addUserSuccessMessage">
+                <div class="message">
                     <div class="topRow">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <p class="userName">Adrian Govela</p>
@@ -393,14 +393,23 @@
             </div>
         </div>
     </section>
-    
+
     <!--EDIT USER SUCCESS-->
     <section id="editUserSuccess" class="success" hidden>
         <div class="wrapper">
             <div class="successWrapper">
-                <h2>User Edited!</h2>
+                <h2>User Updated!</h2>
                 <i class="fa fa-check" aria-hidden="true"></i>
-                <p class="message addUserSuccessMessage"></p>
+                <div class="message">
+                    <div class="topRow">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p class="userName">Adrian Govela</p>
+                    </div>
+                    <div class="readerRow">
+                        <p class="userLibrary">Bereba</p>
+                        <p class="userBarcode">6594958</p>
+                    </div>
+                </div>
             </div>
             <div class="successButtonWrapper">
                 <button id="editUserAgainButton" class="againButton">

@@ -719,19 +719,25 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   padding-left: 25px;
 }
 #addUserSuccess .message .userLibrary,
-#addUserSuccess .message .userBarcode {
+#editUserSuccess .message .userLibrary,
+#addUserSuccess .message .userBarcode,
+#editUserSuccess .message .userBarcode {
   display: block;
-  padding-left: 5%;
+  padding-left: 14%;
   padding-bottom: 2%;
+  font-size: 14pt;
 }
-#addUserSuccess .message .userBarcode {
+#addUserSuccess .message .userBarcode,
+#editUserSuccess .message .userBarcode {
   padding-bottom: 5%;
 }
-#addUserSuccess .message .userLibrary::before {
+#addUserSuccess .message .userLibrary::before,
+#editUserSuccess .message .userLibrary::before {
   content: "Library: ";
   font-size: 12pt;
 }
-#addUserSuccess .message .userBarcode::before {
+#addUserSuccess .message .userBarcode::before,
+#editUserSuccess .message .userBarcode::before {
   content: "Barcode: ";
   font-size: 12pt;
 }
