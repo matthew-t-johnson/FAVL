@@ -374,6 +374,42 @@ namespace website.Controllers
         }
 
         [HttpGet]
+        [Route("api/books/testCheckout/{bookID}/{readerID}")]
+        public string TestCheckOutBook(int bookID, int readerID)
+        {
+            using (var db = new favlEntities())
+            {
+                var book = db.Books.Find(bookID);
+                if (book == null)
+                    return "Book not found";
+
+                var reader = db.Readers.Find(readerID);
+                if (reader == null)
+                    return "Reader not found";
+
+                book.CheckedOutTo = readerID;
+                var random = new Random();
+                var bookCheckedOutDate = DateTime.UtcNow.AddMinutes(-Math.Floor(random.NextDouble() * 21600));
+                book.CheckedOutDate = bookCheckedOutDate;
+                book.TotalCheckouts += 1;
+                reader.TotalCheckouts += 1;
+
+                db.CheckOuts.Add(new CheckOut()
+                {
+                    BookID = bookID,
+                    ReaderID = readerID,
+                    LibraryID = book.LibraryID,
+                    CheckOutDate = bookCheckedOutDate
+                });
+
+                db.SaveChanges();
+
+                return "ok";
+            }
+        }
+
+
+        [HttpGet]
         [Route("api/books/return/{bookID}")]
         public string ReturnBook(int bookID)
         {

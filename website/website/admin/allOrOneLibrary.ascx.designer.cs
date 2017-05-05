@@ -10,24 +10,15 @@
 namespace website.admin {
     
     
-    public partial class readers {
+    public partial class allOrOneLibrary {
         
         /// <summary>
-        /// allOrOneLibrary control.
+        /// librarySelect control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::website.admin.allOrOneLibrary allOrOneLibrary;
-        
-        /// <summary>
-        /// insertList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl insertList;
+        protected global::website.admin.librarySelect librarySelect;
     }
 }

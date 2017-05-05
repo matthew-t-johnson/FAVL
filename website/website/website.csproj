@@ -96,6 +96,7 @@
     <Content Include="admin\addLibrarian.aspx" />
     <Content Include="admin\addLibrary.aspx" />
     <Content Include="admin\addReader.aspx" />
+    <Content Include="admin\allOrOneLibrary.ascx" />
     <Content Include="admin\books.aspx" />
     <Content Include="admin\checkOuts.aspx" />
     <Content Include="admin\default.aspx" />
@@ -254,6 +255,13 @@
     </Compile>
     <Compile Include="admin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\allOrOneLibrary.ascx.cs">
+      <DependentUpon>allOrOneLibrary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\allOrOneLibrary.ascx.designer.cs">
+      <DependentUpon>allOrOneLibrary.ascx</DependentUpon>
     </Compile>
     <Compile Include="admin\books.aspx.cs">
       <DependentUpon>books.aspx</DependentUpon>

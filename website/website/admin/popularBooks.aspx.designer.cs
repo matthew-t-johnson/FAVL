@@ -13,13 +13,13 @@ namespace website.admin {
     public partial class popularBooks {
         
         /// <summary>
-        /// librarySelect control.
+        /// allOrOneLibrary control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::website.admin.librarySelect librarySelect;
+        protected global::website.admin.allOrOneLibrary allOrOneLibrary;
         
         /// <summary>
         /// popularBooksBody control.

@@ -24,6 +24,14 @@ body {
 
 h1 {
     font-family: Segoe UI, sans-serif;
+    width: 500px;
+    transition: width .3s ease-out;
+}
+
+h1 button {
+    float: right;
+    font-size: 14pt;
+    margin-top: 9px;
 }
 
 .navbar-nav > li > .dropdown-menu {
@@ -401,6 +409,7 @@ footer {
     display: table;
     border-collapse: collapse;
     border-spacing: 0;
+    min-width: 500px;
 }
 
     .listAsTable li {
@@ -435,6 +444,10 @@ footer {
         display: table-cell;
         text-align: left;
         vertical-align: baseline;
+    }
+
+    .listAsTable span.title {
+        max-width: 270px;
     }
 
 svg.svgChart {
@@ -508,6 +521,7 @@ svg.svgChart {
 
 .popularBooksTable td:first-child {
     font-weight: 400;
+    max-width: 400px;
 }
 
 .popularBooksTable td:last-child {
@@ -554,4 +568,8 @@ svg.svgChart {
     padding-right: 5px;
     color: #0B697F;
     font-weight: 700;
+}
+
+.librarySelector p {
+    margin: 1.5em 0;
 }

@@ -11,7 +11,7 @@ namespace website.admin
         {
             using (var db = new favlEntities())
             {
-                var list = db.Readers.Where(b => b.TotalCheckouts > 0).OrderByDescending(b => b.TotalCheckouts).Take(30)
+                var list = db.Readers.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).Where(b => b.TotalCheckouts > 0).OrderByDescending(b => b.TotalCheckouts).Take(30)
                     .ToList();
 
                 foreach (var reader in list)

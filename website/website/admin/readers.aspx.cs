@@ -11,7 +11,7 @@ namespace website.admin
         {
             using (var db = new favlEntities())
             {
-                var list = db.Readers.OrderBy(r => r.LastName).ThenBy(r => r.FirstName).ToList();
+                var list = db.Readers.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).OrderBy(r => r.LastName).ThenBy(r => r.FirstName).ToList();
 
                 var listHeader = new HtmlGenericControl("li");
                 listHeader.InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>";

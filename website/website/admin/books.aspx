@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/Admin.Master" AutoEventWireup="true" CodeBehind="books.aspx.cs" Inherits="website.admin.books" %>
 
+<%@ Register Src="~/admin/allOrOneLibrary.ascx" TagPrefix="uc1" TagName="allOrOneLibrary" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
         function deleteBook(id, title) {
@@ -10,10 +13,15 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Books</h1>
-    <ul id="insertList" class="bookList listAsTable" runat="server"></ul>
-    <p>
+    <h1>Books        
         <button type="button" onclick="location.href = 'addBook.aspx'">Add Book</button>
-    </p>
+    </h1>
+    <uc1:allOrOneLibrary runat="server" ID="allOrOneLibrary" />
+    <ul id="insertList" class="bookList listAsTable" runat="server"></ul>
 
+    <script>
+        var style = window.getComputedStyle(document.querySelector(".contentWrapper ul"));
+        console.log(style);
+        document.querySelector(".contentWrapper h1").style.width = style.width;
+    </script>
 </asp:Content>

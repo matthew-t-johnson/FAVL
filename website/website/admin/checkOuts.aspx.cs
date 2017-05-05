@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -25,15 +24,24 @@ namespace website.admin
         {
             using (var db = new favlEntities())
             {
-                var checkOuts = db.CheckOutsByDays.ToList();
+                var checkOuts = db.CheckOutsByDays.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).ToList();
                 if (checkOuts.Count == 0)
+                {
+                    var name = allOrOneLibrary.LibraryID == 0 ? "any library" : db.Libraries.Single(l => l.Id == allOrOneLibrary.LibraryID).Name;
+                    insertCheckOutChart.Controls.Add(new HtmlGenericControl("h2")
+                    {
+                        InnerText = $"No checkouts for {name}"
+                    });
+                    libraryKeyTitle.Visible = false;
                     return;
+                }
 
                 var firstDay = checkOuts.Min(d => d.Day);
                 var lastDay = checkOuts.Max(d => d.Day);
                 var totalDays = (lastDay - firstDay).TotalDays;
                 var spacing = totalDays >0 ? chartWidth / totalDays : 0;
                 var maxCheckouts = checkOuts.Max(d => d.CheckOuts);
+                maxCheckouts = (int)Math.Ceiling(maxCheckouts / 5.0) * 5;
 
                 var svg = new HtmlGenericControl("svg");
                 svg.Attributes.Add("class", "svgChart");

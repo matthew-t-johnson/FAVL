@@ -5,9 +5,14 @@
         return;
     }
 
-    //addBooks(libraries[1].Id);
-    //addReaders(libraries[1].Id);
-    checkOutBooks(libraries[1].Id);
+    for (var i = 0; i < libraries.length; i++) {
+        console.log("Starting checkouts for " + libraries[i].Name);
+        checkOutBooks(libraries[i].Id);     
+    }
+
+    //addBooks(libraries[3].Id);
+    //addReaders(libraries[2].Id);
+    //checkOutBooks(libraries[0].Id);
 
 }
 
@@ -117,13 +122,22 @@ function addReaders(libraryId: number): void {
 
 function checkOutBooks(libraryId: number): void {
     var readers = getData(`/api/readers/${libraryId}`) as Array<Reader>;
+    if (readers.length === 0) {
+        console.log("No readers for library " + libraryId);
+        return;
+    }
     var books = getData(`/api/books/${libraryId}`) as Array<Book>;
+    if (books.length === 0) {
+        console.log("No books for library " + libraryId);
+        return;
+    }
+
 
     for (var i = 0; i < 50; i++) {
         var reader = readers[Math.floor(Math.random() * readers.length)];
         var book = books[Math.floor(Math.random() * books.length)];
 
-        getData(`/api/books/checkout/${book.Id}/${reader.Id}`);
+        getData(`/api/books/testCheckout/${book.Id}/${reader.Id}`);
     }
 }
 
