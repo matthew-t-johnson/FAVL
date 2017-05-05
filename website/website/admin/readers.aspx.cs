@@ -11,7 +11,7 @@ namespace website.admin
         {
             using (var db = new favlEntities())
             {
-                var list = db.Readers.ToList();
+                var list = db.Readers.OrderBy(r => r.LastName).ThenBy(r => r.FirstName).ToList();
 
                 var listHeader = new HtmlGenericControl("li");
                 listHeader.InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>";
@@ -19,22 +19,13 @@ namespace website.admin
 
                 insertList.Controls.Add(listHeader);
 
-
-                //insertList.Controls.Add(
-                //    new HtmlGenericControl("li")
-                //    {
-                //        InnerHtml =
-                //            "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>"
-                //    }
-                //);
-
                 foreach (var reader in list)
                 {
                     var li = new HtmlGenericControl("li");
 
                     var span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "reader");
-                    var readerName = reader.FirstName + " " + reader.MiddleName + " " + reader.LastName;
+                    var readerName = $"{reader.LastName}, {reader.FirstName} {reader.MiddleName}";
                     span.InnerText = readerName;
                     li.Controls.Add(span);
 

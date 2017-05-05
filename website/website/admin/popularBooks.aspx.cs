@@ -9,9 +9,11 @@ namespace website.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            int.TryParse(Request.QueryString["libraryID"], out int libraryID);
+
             using (var db = new favlEntities())
             {
-                var list = db.Books.Where(b => b.TotalCheckouts > 0).OrderByDescending(b => b.TotalCheckouts).Take(30)
+                var list = db.Books.Where(b => b.TotalCheckouts > 0 && (libraryID == 0 || b.LibraryID == libraryID)).OrderByDescending(b => b.TotalCheckouts).Take(30)
                     .ToList();
 
                 foreach (var book in list)

@@ -11,7 +11,7 @@ namespace website.admin
         {
             using (var db = new favlEntities())
             {
-                var list = db.Books.ToList();
+                var list = db.Books.OrderBy(b => b.Title).ToList();
                 var listHeader = new HtmlGenericControl("li");
                 listHeader.InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>";
                 listHeader.Attributes.Add("class", "listAsTableHeader");
