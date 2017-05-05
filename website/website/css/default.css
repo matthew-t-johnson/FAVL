@@ -35,8 +35,7 @@ h1 {
 }
 
 #navbar-wrapper {
-    background-color: rgba(11, 105, 127, 0.2);
-    opacity: .95;
+    background-color: rgb(209, 227, 231);
 }
 
     #navbar-wrapper .navbar-brand {
