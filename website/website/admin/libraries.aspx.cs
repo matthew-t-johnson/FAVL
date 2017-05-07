@@ -14,7 +14,7 @@ namespace website.admin
                 var list = db.Libraries.ToList();
 
                 var listHeader = new HtmlGenericControl("li");
-                listHeader.InnerHtml = "<span class='name'>Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>";
+                listHeader.InnerHtml = "<span class='name'>Community</span><span class='country'>Country</span><span></span><span></span>";
                 listHeader.Attributes.Add("class", "listAsTableHeader");
 
                 insertList.Controls.Add(listHeader);
@@ -35,11 +35,6 @@ namespace website.admin
                     var span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "name");
                     span.InnerText = library.Name;
-                    li.Controls.Add(span);
-
-                    span = new HtmlGenericControl("span");
-                    span.Attributes.Add("class", "village");
-                    span.InnerText = library.Village;
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");

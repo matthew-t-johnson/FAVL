@@ -14,7 +14,7 @@ namespace website.admin
                 var list = db.Librarians.Where(l => l.LibraryID != null).ToList();
 
                 var listHeader = new HtmlGenericControl("li");
-                listHeader.InnerHtml = "<span class='name'>Library Name</span><span class='village'>Village</span><span class='country'>Country</span><span class='barcode'>Barcode</span><span></span><span></span>";
+                listHeader.InnerHtml = "<span class='name'>Name</span><span class='village'>Community</span><span class='country'>Country</span><span class='barcode'>Barcode</span><span></span><span></span>";
                 listHeader.Attributes.Add("class", "listAsTableHeader");
 
                 insertList.Controls.Add(listHeader);
@@ -34,7 +34,7 @@ namespace website.admin
                     var li = new HtmlGenericControl("li");
                     var span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "name");
-                    span.InnerText = librarian.Library.Name;
+                    span.InnerText = librarian.Username + " " + librarian.LastName;
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");
