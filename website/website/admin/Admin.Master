@@ -21,7 +21,7 @@
 <body>
 <nav class="navbar navbar-default navbar-fixed-top col-xl-12" role="navigation" id="navbar-wrapper">
     <div class="navbar-header nav-header">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="/admin/">
             <img src="/images/logos/scan_logo_light2.svg" style="height: 40px;"/>
         </a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">

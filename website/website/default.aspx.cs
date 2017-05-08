@@ -22,12 +22,12 @@ namespace website
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return;
 
-            if (username == "god" && password == "FAVLScan2017")
+            if (username.ToLower() == "admin" && password == "FAVLScan2017")
             {
                 var adminCookie = new HttpCookie("Admin")
                 {
                     ["ID"] = PW.AdminCookie(PW.GOD_USER_ID),
-                    Expires = DateTime.UtcNow.AddDays(1)
+                    Expires = DateTime.Now.AddDays(1)
                 };
 
                 Response.Cookies.Add(adminCookie);
@@ -53,7 +53,7 @@ namespace website
                 var adminCookie = new HttpCookie("Admin")
                 {
                     ["ID"] = PW.AdminCookie(admin.Id),
-                    Expires = DateTime.UtcNow.AddDays(1)
+                    Expires = DateTime.Now.AddDays(1)
                 };
 
                 Response.Cookies.Add(adminCookie);
