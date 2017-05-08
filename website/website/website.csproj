@@ -112,6 +112,7 @@
     <Content Include="admin\libraries.aspx" />
     <Content Include="admin\librarySelect.ascx" />
     <Content Include="admin\popularBooks.aspx" />
+    <Content Include="admin\printUserCards.aspx" />
     <Content Include="admin\readers.aspx" />
     <Content Include="admin\scan.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -369,6 +370,13 @@
     </Compile>
     <Compile Include="admin\popularBooks.aspx.designer.cs">
       <DependentUpon>popularBooks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\printUserCards.aspx.cs">
+      <DependentUpon>printUserCards.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\printUserCards.aspx.designer.cs">
+      <DependentUpon>printUserCards.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\PW.cs" />
     <Compile Include="admin\readers.aspx.cs">
