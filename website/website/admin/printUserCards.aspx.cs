@@ -45,33 +45,7 @@ namespace website.admin
                         })
                         .ToList();
 
-                    while (users.Count < 8)
-                    {
-                        string s;
-
-                        do
-                        {
-                            s = "";
-                            var check = 0;
-
-                            for (var j = 0; j < 6; ++j)
-                            {
-                                var d = (int) Math.Ceiling(random.NextDouble() * 9);
-                                s += d.ToString();
-                                check += d;
-                            }
-                            s += (check % 10).ToString();
-                        } while (randomBarcodes.Contains(s) || db.Librarians.Any(l => l.Barcode == s) || db.Readers.Any(r => r.Barcode == s));
-
-                        randomBarcodes.Add(s);
-
-                        users.Add(new NameBarcode
-                        {
-                            Barcode = s,
-                            Name = string.Empty,
-                            Library = string.Empty
-                        });
-                    }
+                    AddBlankCards(users, random, randomBarcodes, db);
                 }
                 else
                 {
@@ -86,6 +60,8 @@ namespace website.admin
                             Library = r.Library.Name
                         })
                         .ToList();
+
+                    AddBlankCards(users, random, randomBarcodes, db);
                 }
             }
 
@@ -110,6 +86,37 @@ namespace website.admin
             }
 
             insertCards.InnerHtml = sb.ToString();
+        }
+
+        private static void AddBlankCards(List<NameBarcode> users, Random random, List<string> randomBarcodes, favlEntities db)
+        {
+            while (users.Count < 8)
+            {
+                string s;
+
+                do
+                {
+                    s = "";
+                    var check = 0;
+
+                    for (var j = 0; j < 6; ++j)
+                    {
+                        var d = (int) Math.Ceiling(random.NextDouble() * 9);
+                        s += d.ToString();
+                        check += d;
+                    }
+                    s += (check % 10).ToString();
+                } while (randomBarcodes.Contains(s) || db.Librarians.Any(l => l.Barcode == s) || db.Readers.Any(r => r.Barcode == s));
+
+                randomBarcodes.Add(s);
+
+                users.Add(new NameBarcode
+                {
+                    Barcode = s,
+                    Name = string.Empty,
+                    Library = string.Empty
+                });
+            }
         }
     }
 }

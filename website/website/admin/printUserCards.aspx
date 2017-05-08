@@ -144,26 +144,36 @@
     &bull;&nbsp; <uc1:allOrOneLibrary runat="server" ID="allOrOneLibrary" />
     &nbsp;&bull;&nbsp; <p>Role: <label><input type="radio" value="reader" name="role" checked />Reader</label>&ensp;<label><input type="radio" value="librarian" name="role" />Librarian</label></p>
     <script>
-        var roleMatch = window.location.search.match(/[?&]role=(reader|librarian)\b/);
-        if (roleMatch !== null) {
-            document.querySelector("input[type=radio][value='" + roleMatch[1] + "']").checked = true;
-        }
+        (function() {
 
-        function changeRole(ev)
-        {
-            var role = ev.target.value;
+            var librarySelect = document.querySelector("[name=LibraryID]");
+            var opt = document.createElement("option");
+            opt.setAttribute("value", "-1");
+            if (location.search.indexOf("libraryID=-1") !== -1)
+                opt.setAttribute("selected", "");
+            opt.textContent = "None – Print blank cards";
+            librarySelect.appendChild(opt);
 
-            if (/([?&]role=)(reader|librarian)\b/.test(location.search)) {
-                location.search = location.search.replace(/([?&]role=)(reader|librarian)\b/, "$1" + role);
-            } else if (location.search.length <= 1) {
-                location.search = "?role=" + role;
-            } else {
-                location.search += "&role=" + role;
+            var roleMatch = window.location.search.match(/[?&]role=(reader|librarian)\b/);
+            if (roleMatch !== null) {
+                document.querySelector("input[type=radio][value='" + roleMatch[1] + "']").checked = true;
             }
-        }
 
-        document.querySelector("input[type=radio][value=reader]").addEventListener("click", changeRole);
-        document.querySelector("input[type=radio][value=librarian]").addEventListener("click", changeRole);
+            function changeRole(ev) {
+                var role = ev.target.value;
+
+                if (/([?&]role=)(reader|librarian)\b/.test(location.search)) {
+                    location.search = location.search.replace(/([?&]role=)(reader|librarian)\b/, "$1" + role);
+                } else if (location.search.length <= 1) {
+                    location.search = "?role=" + role;
+                } else {
+                    location.search += "&role=" + role;
+                }
+            }
+
+            document.querySelector("input[type=radio][value=reader]").addEventListener("click", changeRole);
+            document.querySelector("input[type=radio][value=librarian]").addEventListener("click", changeRole);
+        })();
     </script>
 </div>
 <div id="insertCards" runat="server"></div>
