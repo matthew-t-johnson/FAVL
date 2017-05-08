@@ -3,5 +3,27 @@
     "version": "1.0.0",
     "private": true,
     "dependencies": {
+        "cordova-ios": "^4.3.0",
+        "cordova-android": "5.2.1",
+        "cordova-windows": "4.4.2",
+        "cordova-plugin-compat": "~1.1.0",
+        "cordova-plugin-statusbar": "~2.2.2",
+        "cordova-plugin-whitelist": "1.2.2",
+        "phonegap-plugin-barcodescanner": "~6.0.5"
+    },
+    "cordova": {
+        "platforms": [
+            "android",
+            "ios",
+            "windows"
+        ],
+        "plugins": {
+            "cordova-plugin-compat": {},
+            "cordova-plugin-statusbar": {},
+            "cordova-plugin-whitelist": {},
+            "phonegap-plugin-barcodescanner": {
+                "CAMERA_USAGE_DESCRIPTION": "Camera used to scan barcodes"
+            }
+        }
     }
 }
