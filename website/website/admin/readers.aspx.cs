@@ -17,7 +17,7 @@ namespace website.admin
                 var list = db.Readers.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).OrderBy(r => r.LastName).ThenBy(r => r.FirstName).ToList();
 
                 var listHeader = new HtmlGenericControl("li");
-                listHeader.InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode (CODE_128)</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>";
+                listHeader.InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode (CODE_128)</span><span class='library'>Community</span><span class='checkouts'>Checkouts</span><span></span><span></span>";
                 listHeader.Attributes.Add("class", "listAsTableHeader");
 
                 insertList.Controls.Add(listHeader);
