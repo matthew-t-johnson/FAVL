@@ -13,6 +13,8 @@
           <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="PasswordSalt" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Books">
           <Key>
@@ -55,12 +57,12 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" />
-          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" />
-          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="100" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
-          <Property Name="Barcode" Type="varchar" MaxLength="50" />
-          <Property Name="LibraryID" Type="int" />
+          <Property Name="Barcode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LibraryID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Libraries">
           <Key>
@@ -108,7 +110,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Librarians_Libraries">
-          <End Role="Libraries" Type="Self.Libraries" Multiplicity="0..1" />
+          <End Role="Libraries" Type="Self.Libraries" Multiplicity="1" />
           <End Role="Librarians" Type="Self.Librarians" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Libraries">
@@ -187,12 +189,12 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordSalt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
-          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LibraryID" Type="Int32" />
+          <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LibraryID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Library" Relationship="favlModel.FK_Librarians_Libraries" FromRole="Librarian" ToRole="Library" />
         </EntityType>
         <EntityType Name="Library">
@@ -270,11 +272,11 @@
           <EntitySet Name="CheckOuts" EntityType="favlModel.CheckOut" />
           <EntitySet Name="CheckOutsByDays" EntityType="favlModel.CheckOutsByDay" />
           <FunctionImport Name="UpdateCheckOutsByDay">
-            <Parameter Name="dayEnd" Mode="In" Type="DateTime" />
+          <Parameter Name="dayEnd" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <Association Name="FK_Librarians_Libraries">
-          <End Type="favlModel.Library" Role="Library" Multiplicity="0..1" />
+          <End Type="favlModel.Library" Role="Library" Multiplicity="1" />
           <End Type="favlModel.Librarian" Role="Librarian" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Library">
@@ -305,6 +307,8 @@
           <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CheckOut">
           <Key>
@@ -388,6 +392,8 @@
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="favlModel.Admin">
               <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="Username" ColumnName="Username" />

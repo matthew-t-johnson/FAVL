@@ -120,6 +120,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="default.aspx" />
     <Content Include="favlDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>favlDB.edmx</DependentUpon>
@@ -170,7 +171,7 @@
     <Content Include="images\thumbnail\guys_reading_small.jpg" />
     <Content Include="images\thumbnail\librarian_reading_small.jpg" />
     <Content Include="images\companies\TypeScript_Logo.png" />
-    <Content Include="index.html" />
+    <Content Include="favl_home.html" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -368,6 +369,7 @@
     <Compile Include="admin\popularBooks.aspx.designer.cs">
       <DependentUpon>popularBooks.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\PW.cs" />
     <Compile Include="admin\readers.aspx.cs">
       <DependentUpon>readers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -393,6 +395,13 @@
       <DependentUpon>favlDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\APIController.cs" />
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="favlDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

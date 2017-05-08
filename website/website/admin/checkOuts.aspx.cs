@@ -27,7 +27,7 @@ namespace website.admin
                 var checkOuts = db.CheckOutsByDays.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).ToList();
                 if (checkOuts.Count == 0)
                 {
-                    var name = allOrOneLibrary.LibraryID == 0 ? "any library" : db.Libraries.Single(l => l.Id == allOrOneLibrary.LibraryID).Name;
+                    var name = allOrOneLibrary.LibraryID == 0 ? "any library" : db.Libraries.Find(allOrOneLibrary.LibraryID)?.Name ?? $"Library {allOrOneLibrary.LibraryID}";
                     insertCheckOutChart.Controls.Add(new HtmlGenericControl("h2")
                     {
                         InnerText = $"No checkouts for {name}"
@@ -113,7 +113,7 @@ namespace website.admin
                 colorCell.Controls.Add(colorSample);
                 
                 var nameCell = new HtmlGenericControl("td");
-                nameCell.InnerText = db.Libraries.Single(l => l.Id == libraryID).Name;
+                nameCell.InnerText = db.Libraries.Find(libraryID)?.Name ?? $"Library {libraryID}";
                 row.Controls.Add(nameCell);
             }
         }

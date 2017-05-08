@@ -34,7 +34,7 @@ namespace website.admin
                     var li = new HtmlGenericControl("li");
                     var span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "name");
-                    span.InnerText = librarian.Username + " " + librarian.LastName;
+                    span.InnerText = librarian.LastName + ", " + librarian.FirstName;
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");
