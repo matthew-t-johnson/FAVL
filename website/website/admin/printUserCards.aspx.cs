@@ -21,9 +21,9 @@ namespace website.admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var random = new Random();
+            var randomBarcodes = new List<string>();
             var sb = new StringBuilder();
-
-            //var random = new Random();
 
             int.TryParse(Request.QueryString["libraryID"], out int libraryId);
 
@@ -44,6 +44,34 @@ namespace website.admin
                             Library = r.Library.Name
                         })
                         .ToList();
+
+                    while (users.Count < 8)
+                    {
+                        string s;
+
+                        do
+                        {
+                            s = "";
+                            var check = 0;
+
+                            for (var j = 0; j < 6; ++j)
+                            {
+                                var d = (int) Math.Ceiling(random.NextDouble() * 9);
+                                s += d.ToString();
+                                check += d;
+                            }
+                            s += (check % 10).ToString();
+                        } while (randomBarcodes.Contains(s) || db.Librarians.Any(l => l.Barcode == s) || db.Readers.Any(r => r.Barcode == s));
+
+                        randomBarcodes.Add(s);
+
+                        users.Add(new NameBarcode
+                        {
+                            Barcode = s,
+                            Name = string.Empty,
+                            Library = string.Empty
+                        });
+                    }
                 }
                 else
                 {
@@ -70,19 +98,6 @@ namespace website.admin
                 var ReaderName = HttpUtility.HtmlEncode(users[i].Name);
                 var Role = Request.QueryString["role"] == "librarian" ? "Librarian" : "Reader";
                 var LibraryName = HttpUtility.HtmlEncode(users[i].Library);
-
-                //var s = "";
-
-                //var check = 0;
-
-                //for (var j = 0; j < 6; ++j)
-                //{
-                //    var d = (int) Math.Ceiling(random.NextDouble() * 9);
-                //    s += d.ToString();
-                //    check += d;
-                //}
-                //s += (check % 10).ToString();
-
                 var ReaderBarcode = HttpUtility.HtmlEncode(users[i].Barcode);
 
                 sb.AppendLine($@"<div class='card' style='top: {y:0.00}in; left: {x:0.00}in;'><table><tr><td>

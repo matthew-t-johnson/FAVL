@@ -154,7 +154,8 @@
             var role = ev.target.value;
 
             if (/([?&]role=)(reader|librarian)\b/.test(location.search)) {
-                location.search = location.search.replace(/([?&]role=)(reader|librarian)\b/, "$1" + role);            } else if (location.search.length <= 1) {
+                location.search = location.search.replace(/([?&]role=)(reader|librarian)\b/, "$1" + role);
+            } else if (location.search.length <= 1) {
                 location.search = "?role=" + role;
             } else {
                 location.search += "&role=" + role;
@@ -172,7 +173,10 @@
 
     for (var i = 0; i < svgs.length; ++i) {
         var bc = svgs[i].getAttribute("data-barcode");
-        JsBarcode(`svg[data-barcode='${bc}']`, bc);
+        JsBarcode(`svg[data-barcode='${bc}']`, bc, {
+            width: 2,
+            format: "CODE128"
+        });
     }
 
     setTimeout(() => {
