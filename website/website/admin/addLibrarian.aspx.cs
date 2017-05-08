@@ -26,8 +26,8 @@ namespace website.admin
 
                 var librarian = new Librarian
                 {
-                    FirstName = string.Empty,
-                    LastName = string.Empty,
+                    FirstName = Request.Form["FirstName"].Trim(),
+                    LastName = Request.Form["LastName"].Trim(),
                     Username = Request.Form["Username"].Trim(),
                     IsAdmin = false,
                     PasswordHash = hash,

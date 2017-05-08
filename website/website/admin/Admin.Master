@@ -69,8 +69,6 @@
                 </ul>
 
             </li>
-            <!--</ul>
-            <ul class="nav navbar-nav navbar-right">-->
             <li class="search hidden-xs">
                 <input id="searchBox" type="text" placeholder="Search..." hidden/>
                 <i class="fa fa-search" aria-hidden="true" onclick="var sb = document.getElementById('searchBox');sb.removeAttribute('hidden');sb.focus();"></i>

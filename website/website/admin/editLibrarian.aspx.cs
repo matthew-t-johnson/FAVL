@@ -25,6 +25,10 @@ namespace website.admin
                     if (IsPostBack)
                     {
                         var barcode = Request.Form["Barcode"].Trim();
+                        librarian.FirstName = Request.Form["FirstName"].Trim();
+                        librarian.LastName = Request.Form["LastName"].Trim();
+                        librarian.Username = Request.Form["Username"].Trim();
+
                         librarian.Barcode = string.IsNullOrEmpty(barcode) ? null : barcode + " (CODE_128)";
                         librarian.LibraryID = int.Parse(Request.Form["LibraryID"]);
 
@@ -44,6 +48,9 @@ namespace website.admin
                                         new Librarian
                                         {
                                             Id = librarian.Id,
+                                            FirstName = librarian.FirstName,
+                                            LastName = librarian.LastName,
+                                            Username = librarian.Username,
                                             Barcode = originalBarcode ?? string.Empty,
                                             LibraryID = librarian.LibraryID
                                         })

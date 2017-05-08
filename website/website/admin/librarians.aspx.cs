@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
@@ -7,6 +8,8 @@ namespace website.admin
 {
     public partial class librarians : Page
     {
+        private static readonly Regex rxBarcodeSuffix = new Regex(@"\s*\([^\)]+\)\s*$", RegexOptions.Compiled);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             using (var db = new favlEntities())
@@ -14,20 +17,10 @@ namespace website.admin
                 var list = db.Librarians.Where(l => l.LibraryID != null).ToList();
 
                 var listHeader = new HtmlGenericControl("li");
-                listHeader.InnerHtml = "<span class='name'>Name</span><span class='village'>Community</span><span class='country'>Country</span><span class='barcode'>Barcode</span><span></span><span></span>";
+                listHeader.InnerHtml = "<span class='name'>Name</span><span class='village'>Community</span><span class='country'>Country</span><span class='barcode'>Barcode (CODE_128)</span><span></span><span></span>";
                 listHeader.Attributes.Add("class", "listAsTableHeader");
 
                 insertList.Controls.Add(listHeader);
-
-
-                //insertList.Controls.Add(
-                //    new HtmlGenericControl("li")
-                //    {
-                //        InnerHtml =
-                //        "<span class='barcode'>Barcode</span><span class='name'>Library Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>"
-                //    }
-                //);
-
 
                 foreach (var librarian in list)
                 {
@@ -49,7 +42,7 @@ namespace website.admin
 
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "barcode");
-                    span.InnerText = librarian.Barcode ?? "—";
+                    span.InnerText = rxBarcodeSuffix.Replace(librarian.Barcode ?? "—", string.Empty);
                     li.Controls.Add(span);
 
 
