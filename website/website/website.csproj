@@ -160,6 +160,7 @@
     <Content Include="images\logos\scan_favicon.png" />
     <Content Include="images\logos\scan_lightish_BG.svg" />
     <Content Include="images\logos\scan_logo_light2.svg" />
+    <Content Include="images\logos\scan_logo_light_signIn.svg" />
     <Content Include="images\thumbnail\adult_praying_small.jpg" />
     <Content Include="images\logos\scan_header_logo.svg" />
     <Content Include="images\thumbnail\boys_reading_outside_small.jpg" />
