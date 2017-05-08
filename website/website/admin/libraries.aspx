@@ -11,7 +11,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Libraries        
-        <button type="button" onclick="location.href = 'addLibrary.aspx'">Add Library</button>
+        <button type="button" class="addNewButton" onclick="location.href = 'addLibrary.aspx'"><i class="fa fa-plus" aria-hidden="true"></i> Add Library</button>
     </h1>
     <ul id="insertList" class="listAsTable" runat="server"></ul>
 

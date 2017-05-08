@@ -26,7 +26,7 @@
             <input type="text" placeholder="Barcode" name="Barcode" required pattern="^\d{13}$" title="13-digit EAN_13 Barcode Number"/>
         </p>
         <p>
-            <input type="submit" value="Add Book"/>
+            <button type="submit" class="addNewButton"><i class="fa fa-plus" aria-hidden="true"></i> Add Book</button>
         </p>
     </form>
 </asp:Content>

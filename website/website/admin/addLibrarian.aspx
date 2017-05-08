@@ -30,7 +30,7 @@
             <input type="text" placeholder="Barcode" name="Barcode" required pattern="^\d{7}$" title="7-digit CODE_128 Barcode Number" />
         </p>
         <p>
-            <input type="submit" value="Add Librarian" />
+            <button type="submit" class="addNewButton"><i class="fa fa-plus" aria-hidden="true"></i> Add Librarian</button>
         </p>
     </form>
 </asp:Content>

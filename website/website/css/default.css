@@ -31,7 +31,7 @@ h1 {
     h1 button {
         float: right;
         font-size: 14pt;
-        margin-top: 9px;
+        margin-top: 4px;
     }
 
 .navbar-nav > li > .dropdown-menu {
@@ -664,3 +664,18 @@ button.signInSubmitButton {
     #usernameError i, #passwordError i {
         padding-right: 2%;
     }
+
+button.addNewButton {
+    text-transform: uppercase;
+    background-color: green;
+    background-color: rgba(11, 105, 127, 0.8);
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+button.addNewButton:focus {
+    outline: none !important;
+    background-color: #0b697f;
+}
