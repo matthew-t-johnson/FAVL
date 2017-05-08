@@ -18,11 +18,11 @@
                 <form id="signInForm" runat="server">
                     <div>
                         <input type="text" id="signInUsername" name="Username" placeholder="Username" spellcheck="false" required />
-                        <p id="usernameError" runat="server"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Username not found</p>
+                        <p id="usernameError" runat="server"><i class="fa fa-exclamation-triangle" aria-hidden="true" visible="false"></i> Username not found</p>
                     </div>
                     <div>
                         <input type="password" id="signInPassword" name="Password" placeholder="Password" required />
-                        <p id="passwordError" runat="server"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Incorrect Password</p>
+                        <p id="passwordError" runat="server"><i class="fa fa-exclamation-triangle" aria-hidden="true" visible="false"></i> Incorrect Password</p>
 
                     </div>
                     <div class="inputs">
