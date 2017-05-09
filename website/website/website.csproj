@@ -112,6 +112,7 @@
     <Content Include="admin\libraries.aspx" />
     <Content Include="admin\librarySelect.ascx" />
     <Content Include="admin\popularBooks.aspx" />
+    <Content Include="admin\printBookLabels.aspx" />
     <Content Include="admin\printUserCards.aspx" />
     <Content Include="admin\readers.aspx" />
     <Content Include="admin\scan.aspx" />
@@ -371,6 +372,13 @@
     </Compile>
     <Compile Include="admin\popularBooks.aspx.designer.cs">
       <DependentUpon>popularBooks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\printBookLabels.aspx.cs">
+      <DependentUpon>printBookLabels.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\printBookLabels.aspx.designer.cs">
+      <DependentUpon>printBookLabels.aspx</DependentUpon>
     </Compile>
     <Compile Include="admin\printUserCards.aspx.cs">
       <DependentUpon>printUserCards.aspx</DependentUpon>
