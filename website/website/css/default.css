@@ -12,14 +12,23 @@ html, body {
 
 body {
     width: 100%;
-    max-width: 1170px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0;
     color: #1d363a;
-    background-color: white;
     padding-bottom: 0;
     font-family: Segoe UI, sans-serif;
     position: relative;
+    background-image: linear-gradient(rgba(30, 54, 58, 0.9), rgba(30, 54, 58, 0.9)), url('../images/web_background_1.jpg');
+    background-position: 0 0;
+    background-size: cover;
+}
+
+.innerBodyWrapper {
+    margin: 0 auto;
+    position: relative;
+    top: 60px;
+    width: 100%;
+    max-width: 1170px;
+    padding-bottom: 10px;
 }
 
 h1 {
@@ -44,6 +53,7 @@ h1 {
 
 #navbar-wrapper {
     background-color: rgb(209, 227, 231);
+    border: 0;
 }
 
     #navbar-wrapper .navbar-brand {
@@ -91,9 +101,11 @@ h1 {
         top: 3px;
     }
 
-.container {
-    margin: 10px 0;
+footer .container {
     width: 100%;
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #top-center {
@@ -339,6 +351,12 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
+    position: fixed;
+    background-color: white;
+    background-color: rgba(30, 54, 58, 0.9);
+    color: white;
+    padding-top: 10px;
+    box-sizing: border-box;
 }
 
     footer span i {
@@ -351,10 +369,13 @@ footer {
 
 .footer-left {
     font-size: 8pt;
+    display: inline-block;
 }
 
 .footer-right {
     text-align: right;
+    display: inline-block;
+    float: right;
 }
 
     .footer-right .socicons {
@@ -363,6 +384,7 @@ footer {
 
     .footer-right a {
         font-size: 10pt;
+        color: white;
     }
 
 @media (max-width: 440px) {
@@ -384,10 +406,15 @@ footer {
 }
 
 .contentWrapper {
-    margin: 0 50px 100px;
+    margin: 0 auto;
     position: relative;
-    top: 60px;
-    min-height: 850px;
+    /*top: 60px;*/
+    /*min-height: 850px;*/
+    width: 90%;
+    max-width: 1170px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 1%;
+    border-radius: 10px;
 }
 
     .contentWrapper h1 {
@@ -410,6 +437,7 @@ footer {
     border-collapse: collapse;
     border-spacing: 0;
     min-width: 500px;
+    width: 100%;
 }
 
     .listAsTable li {
@@ -571,20 +599,6 @@ svg.svgChart {
 
 .librarySelector p {
     margin: 1.5em 0;
-}
-
-body.signInBody {
-    background-image: url('../images/web_background_1.jpg');
-    background-position: 0 0;
-    background-size: cover;
-    margin: 0;
-    max-width: unset;
-}
-
-div.bodyWrapper {
-    height: 100%;
-    width: 100%;
-    background-color: rgba(30, 54, 58, 0.9);
 }
 
 .signInBody .bodyWrapper .formWrapper {

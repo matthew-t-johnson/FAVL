@@ -31,6 +31,23 @@
                 </form>
             </div>
         </div>
+        <footer style="border-top: 1px solid #333;">
+            <div class="container">
+                <div class="col-xs-6 footer-left">
+                    Friends of African Village Libraries<br />
+                    Copyright &copy; 2017<br />
+                    All Rights Reserved
+                </div>
+                <div class="col-xs-6 footer-right">
+                    <span class="socicons">
+                        <i class="fa fa-facebook-square" aria-hidden="true"></i><i class="fa fa-instagram" aria-hidden="true"></i><i class="fa fa-twitter" aria-hidden="true"></i><i class="fa fa-youtube" aria-hidden="true"></i><i class="fa fa-snapchat-ghost" aria-hidden="true"></i>
+                    </span>
+                    <br />
+                    <a href="#">Site Terms</a> | <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </footer>
+
     </div>
 </body>
 </html>
