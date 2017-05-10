@@ -725,6 +725,8 @@ button.addNewButton {
         height: 200px;
         color: white;
         padding: 10px;
+        opacity: .75;
+        border-radius: 5px;
     }
 
     .libraryTile:first-child {

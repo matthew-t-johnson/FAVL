@@ -20,8 +20,7 @@ namespace website.admin
                     var tile = new HtmlGenericControl("div");
                     tile.Attributes.Add("class", "libraryTile");
                     tile.Controls.Add(new HtmlGenericControl("h2") {InnerText = library.Name});
-                    tile.Style[HtmlTextWriterStyle.BackgroundColor] =
-                        admin.checkOuts.colorArray[(library.Id - 1) % admin.checkOuts.colorArray.Length];
+                    tile.Style[HtmlTextWriterStyle.BackgroundColor] = admin.checkOuts.colorArray[(library.Id - 1) % admin.checkOuts.colorArray.Length];
 
 
                     var books = library.Books.Count;
