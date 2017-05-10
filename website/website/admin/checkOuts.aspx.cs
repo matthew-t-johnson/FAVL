@@ -8,7 +8,7 @@ namespace website.admin
 {
     public partial class checkOuts : Page
     {
-        private readonly string[] colorArray = new[]
+        public static readonly string[] colorArray = new[]
         {
             "blue",
             "darkcyan",

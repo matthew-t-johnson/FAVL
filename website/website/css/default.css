@@ -717,3 +717,40 @@ button.addNewButton {
     .navbar-default .navbar-toggle:hover .icon-bar {
         background-color: rgb(209, 227, 231);
     }
+
+    .libraryTile {
+        display: inline-block;
+        margin: 0 20px 20px 0;
+        width: 200px;
+        height: 200px;
+        color: white;
+        padding: 10px;
+    }
+
+    .libraryTile:first-child {
+        float: left;
+    }
+
+    .libraryTile h2 {
+        font-size: 16pt;
+        margin: 0 0 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: normal;
+        line-height: 1.3;
+    }
+
+    .libraryTile h3 {
+        font-size: 12pt;
+        margin: 5px 0;
+        font-weight: normal;
+    }
+
+    .libraryTile p {
+        font-size: 12pt;
+        margin: 10px 0 0 1em;
+        font-weight: normal;
+        line-height: 1.3;
+        text-indent: -1em;
+    }
