@@ -372,7 +372,10 @@ function postData(path: string, data: Object): Object {
 
     xhr.open("POST", serverURL + path, false);
     xhr.setRequestHeader("content-type", "application/json");
+
+    view.show("#loadingOverlay");
     xhr.send(JSON.stringify(data));
+    view.hide("#loadingOverlay");
 
     if (xhr.status === 200) {
         return JSON.parse(xhr.responseText);
@@ -385,7 +388,10 @@ function getData(path: string): Object {
     const xhr = new XMLHttpRequest();
 
     xhr.open("GET", serverURL + path, false);
+
+    view.show("#loadingOverlay");
     xhr.send();
+    view.hide("#loadingOverlay");
 
     if (xhr.status === 200) {
         return JSON.parse(xhr.responseText);
@@ -393,6 +399,29 @@ function getData(path: string): Object {
     alert(`Error Received: ${xhr.statusText}`);
     return null;
 }
+
+function getDataAsync<T>(path: string, onSuccess : (response: T) => void, onError? : (errorCode: number) => void) : void {
+    const xhr = new XMLHttpRequest();
+
+    xhr.onload = () => {
+        view.hide("#loadingOverlay");
+        if (xhr.status === 200) {
+            onSuccess(JSON.parse(xhr.responseText) as T);
+        } else {
+            onError(xhr.status);
+        }
+    };
+
+    xhr.onerror = () => {
+        view.hide("#loadingOverlay");
+        onError(xhr.status);
+    };
+
+    xhr.open("GET", serverURL + path, true);
+    view.show("#loadingOverlay");
+    xhr.send();
+}
+
 
 interface Reader {
     Id: number;
@@ -409,28 +438,30 @@ function initReaders() {
     const ul = document.getElementById("readersList");
     ul.textContent = "";
 
-    const readers = getData(`/api/readers/${currentLibrary.Id}`) as Array<Reader>;
+    getDataAsync<Array<Reader>>(`/api/readers/${currentLibrary.Id}`,
+        (readers) => {
 
-    readers.forEach(r => {
-        const li = document.createElement("li") as HTMLLIElement;
-        li.addEventListener("click",
-            () => {
-                currentEditUser = r;
-                main.viewSection("editUser");
+            readers.forEach(r => {
+                const li = document.createElement("li") as HTMLLIElement;
+                li.addEventListener("click",
+                    () => {
+                        currentEditUser = r;
+                        main.viewSection("editUser");
+                    });
+
+                var span = document.createElement("span");
+                span.className = "name";
+                span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
+                li.appendChild(span);
+
+                span = document.createElement("span");
+                span.className = "barcode";
+                span.textContent = r.Barcode || "—";
+                li.appendChild(span);
+
+                ul.appendChild(li);
             });
-
-        var span = document.createElement("span");
-        span.className = "name";
-        span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
-        li.appendChild(span);
-
-        span = document.createElement("span");
-        span.className = "barcode";
-        span.textContent = r.Barcode || "—";
-        li.appendChild(span);
-
-        ul.appendChild(li);
-    });
+        });
 }
 
 const scannerSetUp = {
