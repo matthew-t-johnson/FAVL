@@ -727,10 +727,8 @@ button.addNewButton {
         padding: 10px;
         opacity: .75;
         border-radius: 5px;
-    }
-
-    .libraryTile:first-child {
-        float: left;
+        vertical-align: top;
+        text-align: left;
     }
 
     .libraryTile h2 {
@@ -756,3 +754,8 @@ button.addNewButton {
         line-height: 1.3;
         text-indent: -1em;
     }
+
+.libraryTileContainer {
+    text-align: center;
+    margin-right: -20px;
+}
