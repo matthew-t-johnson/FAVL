@@ -264,7 +264,9 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         //xhr.onerror = () => alert("XHR Error");
         xhr.open("POST", serverURL + path, false);
         xhr.setRequestHeader("content-type", "application/json");
+        view.show("#loadingOverlay");
         xhr.send(JSON.stringify(data));
+        view.hide("#loadingOverlay");
         if (xhr.status === 200) {
             return JSON.parse(xhr.responseText);
         }
@@ -274,33 +276,55 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     function getData(path) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", serverURL + path, false);
+        view.show("#loadingOverlay");
         xhr.send();
+        view.hide("#loadingOverlay");
         if (xhr.status === 200) {
             return JSON.parse(xhr.responseText);
         }
         alert("Error Received: " + xhr.statusText);
         return null;
     }
+    function getDataAsync(path, onSuccess, onError) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            view.hide("#loadingOverlay");
+            if (xhr.status === 200) {
+                onSuccess(JSON.parse(xhr.responseText));
+            }
+            else {
+                onError(xhr.status);
+            }
+        };
+        xhr.onerror = function () {
+            view.hide("#loadingOverlay");
+            onError(xhr.status);
+        };
+        xhr.open("GET", serverURL + path, true);
+        view.show("#loadingOverlay");
+        xhr.send();
+    }
     var currentEditUser;
     function initReaders() {
         var ul = document.getElementById("readersList");
         ul.textContent = "";
-        var readers = getData("/api/readers/" + currentLibrary.Id);
-        readers.forEach(function (r) {
-            var li = document.createElement("li");
-            li.addEventListener("click", function () {
-                currentEditUser = r;
-                main.viewSection("editUser");
+        getDataAsync("/api/readers/" + currentLibrary.Id, function (readers) {
+            readers.forEach(function (r) {
+                var li = document.createElement("li");
+                li.addEventListener("click", function () {
+                    currentEditUser = r;
+                    main.viewSection("editUser");
+                });
+                var span = document.createElement("span");
+                span.className = "name";
+                span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
+                li.appendChild(span);
+                span = document.createElement("span");
+                span.className = "barcode";
+                span.textContent = r.Barcode || "—";
+                li.appendChild(span);
+                ul.appendChild(li);
             });
-            var span = document.createElement("span");
-            span.className = "name";
-            span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
-            li.appendChild(span);
-            span = document.createElement("span");
-            span.className = "barcode";
-            span.textContent = r.Barcode || "—";
-            li.appendChild(span);
-            ul.appendChild(li);
         });
     }
     var scannerSetUp = {

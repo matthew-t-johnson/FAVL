@@ -790,3 +790,20 @@ section.currenthub {
   transition: transform 200ms linear;
   display: block;
 }
+#loadingOverlay {
+  background-image: none !important;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+  font-size: 20pt;
+  text-transform: none;
+  text-shadow: 2px 2px 5px black;
+}
+#loadingOverlay div {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#loadingOverlay[hidden] .fa-spin {
+  animation: none;
+}
