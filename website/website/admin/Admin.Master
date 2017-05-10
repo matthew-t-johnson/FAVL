@@ -70,12 +70,10 @@
 
                     </li>
                     <li class="search hidden-xs">
-                        <input id="searchBox" type="text" placeholder="Search..." hidden />
-                        <i class="fa fa-search" aria-hidden="true" onclick="var sb = document.getElementById('searchBox');sb.removeAttribute('hidden');sb.focus();"></i>
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
                     </li>
                     <li class="search hidden-sm hidden-md hidden-lg hidden-xl">
-                        <input type="text" placeholder="Search..." />
-                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
                     </li>
                 </ul>
             </div>

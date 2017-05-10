@@ -17,10 +17,4 @@
     </h1>
     <uc1:allOrOneLibrary runat="server" ID="allOrOneLibrary" />
     <ul id="insertList" class="readerList listAsTable" runat="server"></ul>
-    
-    <script>
-        var style = window.getComputedStyle(document.querySelector(".contentWrapper ul"));
-        console.log(style);
-        document.querySelector(".contentWrapper h1").style.width = style.width;
-    </script>
 </asp:Content>

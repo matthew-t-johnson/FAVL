@@ -37,6 +37,7 @@ interface Book {
     ReaderFirst: string;
     ReaderMiddle: string;
     ReaderLast: string;
+    DaysOverDue?: number;
 }
 
 function showEditUser(): void {
@@ -83,7 +84,15 @@ function showOverDue(): void {
     const books = getData(`/api/books/overdue/${currentLibrary.Id}`) as Array<Book>;
 
     books.forEach(b => {
-        const li = document.createElement("li");
+        const li = document.createElement("li") as HTMLElement;
+
+        if (b.DaysOverDue < 0) {
+            li.classList.add("notOverdue"); 
+        } else if (b.DaysOverDue > 7) {
+            li.classList.add("veryOverdue");
+        } else {
+            li.classList.add("slightlyOverdue");
+        }
 
         const bookInfo = document.createElement("div");
         bookInfo.className = "bookInfo";

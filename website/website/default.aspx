@@ -31,7 +31,7 @@
                 </form>
             </div>
         </div>
-        <footer style="border-top: 1px solid #333;">
+        <footer>
             <div class="container">
                 <div class="col-xs-6 footer-left">
                     Friends of African Village Libraries<br />

@@ -434,6 +434,7 @@ namespace website.Controllers
             public string ReaderMiddle;
             public string ReaderLast;
             public DateTime DueDate;
+            public double DaysOverDue;
         }
 
         [HttpGet]
@@ -444,8 +445,7 @@ namespace website.Controllers
 
             using (var db = new favlEntities())
             {
-                var list = db.Books.Where(b => b.LibraryID == libraryID && b.CheckedOutDate != null &&
-                                    b.CheckedOutDate < overDueIfCheckedOutBefore).Select(book => new OverDueBook
+                var list = db.Books.Where(b => b.LibraryID == libraryID && b.CheckedOutDate != null && b.CheckedOutTo != null).OrderBy(b => b.CheckedOutDate).ToList().Select(book => new OverDueBook
                 {
                     Id = book.Id,
                     Title = book.Title,
@@ -456,7 +456,9 @@ namespace website.Controllers
                     ReaderFirst = book.Reader.FirstName,
                     ReaderMiddle = book.Reader.MiddleName,
                     ReaderLast = book.Reader.LastName,
-                    CheckedOutDate = book.CheckedOutDate
+                    CheckedOutDate = book.CheckedOutDate,
+                    // ReSharper disable once PossibleInvalidOperationException
+                    DaysOverDue = (overDueIfCheckedOutBefore - book.CheckedOutDate.Value).TotalDays
                 }).ToList();
 
                 foreach (var item in list)

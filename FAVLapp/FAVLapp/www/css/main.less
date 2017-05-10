@@ -100,6 +100,19 @@ section {
                 border-radius: 7px;
                 text-transform: none;
 
+                &.veryOverdue {
+                    background-color: #d25757;
+                    color: white;
+
+                    .bookInfo .reader {
+                        color: white;
+                    }
+                }
+
+                &.notOverdue {
+                    background-color: lightgreen;
+                }
+
                 .title, .name {
                     font-weight: 600;
                     font-size: 12pt;

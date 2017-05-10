@@ -14,10 +14,4 @@
         <button type="button" class="addNewButton" onclick="location.href = 'addLibrary.aspx'"><i class="fa fa-plus" aria-hidden="true"></i> Add Library</button>
     </h1>
     <ul id="insertList" class="listAsTable" runat="server"></ul>
-
-    <script>
-        var style = window.getComputedStyle(document.querySelector(".contentWrapper ul"));
-        console.log(style);
-        document.querySelector(".contentWrapper h1").style.width = style.width;
-    </script>
 </asp:Content>

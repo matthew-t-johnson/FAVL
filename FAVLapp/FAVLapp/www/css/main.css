@@ -83,6 +83,16 @@ section .wrapper .listList li {
   border-radius: 7px;
   text-transform: none;
 }
+section .wrapper .listList li.veryOverdue {
+  background-color: #d25757;
+  color: white;
+}
+section .wrapper .listList li.veryOverdue .bookInfo .reader {
+  color: white;
+}
+section .wrapper .listList li.notOverdue {
+  background-color: lightgreen;
+}
 section .wrapper .listList li .title,
 section .wrapper .listList li .name {
   font-weight: 600;

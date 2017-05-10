@@ -51,6 +51,15 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         var books = getData("/api/books/overdue/" + currentLibrary.Id);
         books.forEach(function (b) {
             var li = document.createElement("li");
+            if (b.DaysOverDue < 0) {
+                li.classList.add("notOverdue");
+            }
+            else if (b.DaysOverDue > 7) {
+                li.classList.add("veryOverdue");
+            }
+            else {
+                li.classList.add("slightlyOverdue");
+            }
             var bookInfo = document.createElement("div");
             bookInfo.className = "bookInfo";
             li.appendChild(bookInfo);

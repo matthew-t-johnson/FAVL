@@ -20,6 +20,8 @@ body {
     background-image: linear-gradient(rgba(30, 54, 58, 0.9), rgba(30, 54, 58, 0.9)), url('../images/web_background_1.jpg');
     background-position: 0 0;
     background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 .innerBodyWrapper {
@@ -33,7 +35,6 @@ body {
 
 h1 {
     font-family: Segoe UI, sans-serif;
-    width: 500px;
     transition: width .3s ease-out;
 }
 
@@ -54,6 +55,7 @@ h1 {
 #navbar-wrapper {
     background-color: rgb(209, 227, 231);
     border: 0;
+    border-bottom: 1px solid rgba(30, 54, 58, 0.9);
 }
 
     #navbar-wrapper .navbar-brand {
@@ -357,6 +359,7 @@ footer {
     color: white;
     padding-top: 10px;
     box-sizing: border-box;
+    border: 0;
 }
 
     footer span i {
@@ -370,12 +373,14 @@ footer {
 .footer-left {
     font-size: 8pt;
     display: inline-block;
+    padding-left: 20px;
 }
 
 .footer-right {
     text-align: right;
     display: inline-block;
     float: right;
+    padding-right: 20px;
 }
 
     .footer-right .socicons {
@@ -385,6 +390,7 @@ footer {
     .footer-right a {
         font-size: 10pt;
         color: white;
+        text-decoration: none;
     }
 
 @media (max-width: 440px) {
@@ -436,7 +442,6 @@ footer {
     display: table;
     border-collapse: collapse;
     border-spacing: 0;
-    min-width: 500px;
     width: 100%;
 }
 
@@ -453,7 +458,7 @@ footer {
         }
 
         .listAsTable li.listAsTableHeader:hover {
-            background-color: white;
+            background-color: unset;
         }
 
         .listAsTable li:first-child {
@@ -519,6 +524,10 @@ svg.svgChart {
     margin-left: 28px;
     margin-top: 0;
     font-size: 20pt;
+}
+
+.popularBooksTable, .activeReadersTable {
+    width: 100%;
 }
 
 .popularBooksTable td {
@@ -628,7 +637,6 @@ svg.svgChart {
         outline: none !important;
         background-color: rgba(138, 198, 212, 0.66);
         color: #1e363a;
-
     }
 
 
@@ -689,7 +697,23 @@ button.addNewButton {
     padding: 5px 10px;
 }
 
-button.addNewButton:focus {
-    outline: none !important;
-    background-color: #0b697f;
+    button.addNewButton:focus {
+        outline: none !important;
+        background-color: #0b697f;
+    }
+
+.navbar-default .navbar-toggle {
+    border-color: #1d363a;
 }
+
+    .navbar-default .navbar-toggle:hover {
+        background-color: #0b697f;
+    }
+
+    .navbar-default .navbar-toggle .icon-bar {
+        background-color: #1d363a;
+    }
+
+    .navbar-default .navbar-toggle:hover .icon-bar {
+        background-color: rgb(209, 227, 231);
+    }
