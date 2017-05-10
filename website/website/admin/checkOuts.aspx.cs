@@ -10,11 +10,24 @@ namespace website.admin
     {
         public static readonly string[] colorArray = new[]
         {
-            "blue",
-            "darkcyan",
-            "chocolate",
-            "orange",
-            "red"
+            "#015e80",
+            "#800ade",
+            "#01804a",
+            "#ce1d1d",
+            "#012f80",
+            "#017f80",
+            "#ce1d69",
+            "#800101",
+            "#0a57de",
+            "#688001",
+            "#800143", // pinkish
+            "#806f01",
+            "#0ac3de",
+            "#de870a",
+            "#5f0180",
+            "#ce1dca",
+            "#1dce9b"
+
         };
 
         private const double chartHeight = 600;
