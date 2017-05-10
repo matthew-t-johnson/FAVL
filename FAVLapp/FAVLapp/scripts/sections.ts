@@ -53,26 +53,27 @@ function showInventory(): void {
     const ul = document.getElementById("inventoryList");
     ul.textContent = "";
 
-    const books = getData(`/api/books/${currentLibrary.Id}`) as Array<Book>;
+    getDataAsync<Array<Book>>(`/api/books/${currentLibrary.Id}`,
+        books => {
 
-    books.forEach(b => {
-        const li = document.createElement("li");
+            books.forEach(b => {
+                const li = document.createElement("li");
 
-        var span = document.createElement("span");
-        span.className = "title";
-        span.textContent = b.Title;
-        li.appendChild(span);
+                var span = document.createElement("span");
+                span.className = "title";
+                span.textContent = b.Title;
+                li.appendChild(span);
 
-        span = document.createElement("span");
-        span.className = "author";
-        span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
-        li.appendChild(span);
+                span = document.createElement("span");
+                span.className = "author";
+                span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
+                li.appendChild(span);
 
-        li.setAttribute("data-book-id", b.Id.toString());
+                li.setAttribute("data-book-id", b.Id.toString());
 
-        ul.appendChild(li);
-    });
-
+                ul.appendChild(li);
+            });
+        });
 }
 
 const MonthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -81,68 +82,69 @@ function showOverDue(): void {
     const ul = document.getElementById("overDueList");
     ul.textContent = "";
 
-    const books = getData(`/api/books/overdue/${currentLibrary.Id}`) as Array<Book>;
+    getDataAsync<Array<Book>>(`/api/books/overdue/${currentLibrary.Id}`,
+        books => {
+            books.forEach(b => {
+                const li = document.createElement("li") as HTMLElement;
 
-    books.forEach(b => {
-        const li = document.createElement("li") as HTMLElement;
+                if (b.DaysOverDue < 0) {
+                    li.classList.add("notOverdue");
+                } else if (b.DaysOverDue > 7) {
+                    li.classList.add("veryOverdue");
+                } else {
+                    li.classList.add("slightlyOverdue");
+                }
 
-        if (b.DaysOverDue < 0) {
-            li.classList.add("notOverdue"); 
-        } else if (b.DaysOverDue > 7) {
-            li.classList.add("veryOverdue");
-        } else {
-            li.classList.add("slightlyOverdue");
-        }
+                const bookInfo = document.createElement("div");
+                bookInfo.className = "bookInfo";
+                li.appendChild(bookInfo);
 
-        const bookInfo = document.createElement("div");
-        bookInfo.className = "bookInfo";
-        li.appendChild(bookInfo);
+                var span = document.createElement("span");
+                span.className = "title";
+                span.textContent = b.Title;
+                bookInfo.appendChild(span);
 
-        var span = document.createElement("span");
-        span.className = "title";
-        span.textContent = b.Title;
-        bookInfo.appendChild(span);
+                span = document.createElement("span");
+                span.className = "author";
+                span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
+                bookInfo.appendChild(span);
 
-        span = document.createElement("span");
-        span.className = "author";
-        span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
-        bookInfo.appendChild(span);
+                span = document.createElement("span");
+                span.className = "reader";
+                span.textContent = `${b.ReaderFirst} ${b.ReaderMiddle} ${b.ReaderLast}`;
+                bookInfo.appendChild(span);
 
-        span = document.createElement("span");
-        span.className = "reader";
-        span.textContent = `${b.ReaderFirst} ${b.ReaderMiddle} ${b.ReaderLast}`;
-        bookInfo.appendChild(span);
+                const dueDate = new Date(b.DueDate);
 
+                var dueDateDiv = document.createElement("div");
+                dueDateDiv.className = "dueDateDiv";
+                li.appendChild(dueDateDiv);
 
-        const dueDate = new Date(b.DueDate);
+                span = document.createElement("span");
+                span.className = "month";
+                span.textContent = `${MonthNames[dueDate.getMonth()]}`;
+                dueDateDiv.appendChild(span);
 
-        var dueDateDiv = document.createElement("div");
-        dueDateDiv.className = "dueDateDiv";
-        li.appendChild(dueDateDiv);
+                span = document.createElement("span");
+                span.className = "date";
+                span.textContent = `${dueDate.getDate()}`;
+                dueDateDiv.appendChild(span);
 
-        span = document.createElement("span");
-        span.className = "month";
-        span.textContent = `${MonthNames[dueDate.getMonth()]}`;
-        dueDateDiv.appendChild(span);
-
-        span = document.createElement("span");
-        span.className = "date";
-        span.textContent = `${dueDate.getDate()}`;
-        dueDateDiv.appendChild(span);
-
-        span = document.createElement("span");
-        span.className = "year";
-        span.textContent = `${dueDate.getFullYear()}`;
-        dueDateDiv.appendChild(span);
+                span = document.createElement("span");
+                span.className = "year";
+                span.textContent = `${dueDate.getFullYear()}`;
+                dueDateDiv.appendChild(span);
 
 
-        li.setAttribute("data-book-id", b.Id.toString());
+                li.setAttribute("data-book-id", b.Id.toString());
 
-        ul.appendChild(li);
-    });
-
+                ul.appendChild(li);
+            });
+        });
 }
 
+var checkOutBook: Book;
+var checkOutReader: Reader;
 
 function showCheckOut(): void {
     checkOutReader = null;
@@ -152,45 +154,50 @@ function showCheckOut(): void {
     view.hide("#checkOutError");
 }
 
-var checkOutReader: Reader;
-
 function scanReader(): void {
     view.hide("#checkOutError");
     scanBarcode(result => {
-        checkOutReader = getData(`/api/reader/barcode/${result.text} (${result.format})`) as Reader;
+        getDataAsync<Reader>(`/api/reader/barcode/${result.text} (${result.format})`,
+            reader => {
 
-        if (checkOutReader) {
-            document.getElementById("checkOutReader").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
-            view.show("#checkOutReader");
+                checkOutReader = reader;
 
-            if (checkOutBook && checkOutReader) {
-                checkOutTheBook(checkOutReader, checkOutBook);
-            }
-        } else {
-            document.getElementById("checkOutReader").textContent = "";
-            view.hide("#checkOutReader");
-        }
+                if (checkOutReader) {
+                    document.getElementById("checkOutReader").textContent =
+                        checkOutReader.FirstName + " " + checkOutReader.LastName;
+                    view.show("#checkOutReader");
+
+                    if (checkOutBook && checkOutReader) {
+                        checkOutTheBook(checkOutReader, checkOutBook);
+                    }
+                } else {
+                    document.getElementById("checkOutReader").textContent = "";
+                    view.hide("#checkOutReader");
+                }
+            });
     });
 }
-
-var checkOutBook: Book;
 
 function scanBook(): void {
     view.hide("#checkOutError");
     scanBarcode(result => {
-        checkOutBook = getData(`/api/book/barcode/${result.text} (${result.format})`) as Book;
+        getDataAsync<Book>(`/api/book/barcode/${result.text} (${result.format})`,
+            book => {
 
-        if (checkOutBook) {
-            document.getElementById("checkOutBook").textContent = checkOutBook.Title;
-            view.show("#checkOutBook");
+                checkOutBook = book;
 
-            if (checkOutBook && checkOutReader) {
-                checkOutTheBook(checkOutReader, checkOutBook);
-            }
-        } else {
-            document.getElementById("checkOutBook").textContent = "";
-            view.hide("#checkOutBook");
-        }
+                if (checkOutBook) {
+                    document.getElementById("checkOutBook").textContent = checkOutBook.Title;
+                    view.show("#checkOutBook");
+
+                    if (checkOutBook && checkOutReader) {
+                        checkOutTheBook(checkOutReader, checkOutBook);
+                    }
+                } else {
+                    document.getElementById("checkOutBook").textContent = "";
+                    view.hide("#checkOutBook");
+                }
+            });
     });
 }
 
@@ -400,28 +407,30 @@ function getData(path: string): Object {
     return null;
 }
 
-function getDataAsync<T>(path: string, onSuccess : (response: T) => void, onError? : (errorCode: number) => void) : void {
+function getDataAsync<T>(path: string, onSuccess: (response: T) => void, onError?: (errorCode: number) => void): void {
+    getOrPostDataAsync<T>(path, null, onSuccess, onError);
+}
+
+function postDataAsync<T>(path: string, data: Object, onSuccess: (response: T) => void, onError?: (errorCode: number) => void): void {
+    getOrPostDataAsync<T>(path, null, onSuccess, onError);
+}
+
+function getOrPostDataAsync<T>(path: string, data: Object, onSuccess : (response: T) => void, onError? : (errorCode: number) => void) : void {
     const xhr = new XMLHttpRequest();
 
-    xhr.onload = () => {
-        view.hide("#loadingOverlay");
-        if (xhr.status === 200) {
-            onSuccess(JSON.parse(xhr.responseText) as T);
-        } else {
-            onError(xhr.status);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                onSuccess(JSON.parse(xhr.responseText) as T);
+            } else {
+                onError(xhr.status);
+            }
         }
     };
 
-    xhr.onerror = () => {
-        view.hide("#loadingOverlay");
-        onError(xhr.status);
-    };
-
-    xhr.open("GET", serverURL + path, true);
-    view.show("#loadingOverlay");
-    xhr.send();
+    xhr.open(data ? "POST" : "GET", serverURL + path, true);
+    xhr.send(data);
 }
-
 
 interface Reader {
     Id: number;
@@ -438,8 +447,10 @@ function initReaders() {
     const ul = document.getElementById("readersList");
     ul.textContent = "";
 
+    view.show("#loadingOverlay");
+
     getDataAsync<Array<Reader>>(`/api/readers/${currentLibrary.Id}`,
-        (readers) => {
+        readers => {
 
             readers.forEach(r => {
                 const li = document.createElement("li") as HTMLLIElement;
@@ -461,6 +472,11 @@ function initReaders() {
 
                 ul.appendChild(li);
             });
+
+            view.hide("#loadingOverlay");
+        },
+        errorCode => {
+            view.hide("#loadingOverlay");
         });
 }
 
@@ -493,7 +509,6 @@ function onEditUserGetBarcode(): void {
     });
 }
 
-
 interface Librarian {
     FirstName: string;
     LastName: string;
@@ -502,15 +517,19 @@ interface Librarian {
 
 function onSignInGetBarcode(): void {
     scanBarcode(result => {
-        currentLibrary = getData(`/api/signin/${result.text} (${result.format})`) as Library;
+        getDataAsync<Library>(`/api/signin/${result.text} (${result.format})`,
+            library => {
 
-        if (currentLibrary) {
-            document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
-            document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
-            document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                currentLibrary = library;
 
-            main.viewSection("hub");
-        }
+                if (currentLibrary) {
+                    document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
+                    document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
+                    document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+
+                    main.viewSection("hub");
+                }
+            });
     });
 }
 
