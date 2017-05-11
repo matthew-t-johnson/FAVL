@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.UI;
 
 namespace website.admin
@@ -20,6 +21,12 @@ namespace website.admin
 
                 if (book != null)
                 {
+                    foreach (var checkOut in db.CheckOuts.Where(l => l.BookID == book.Id).ToList())
+                    {
+                        db.CheckOuts.Remove(checkOut);
+                    }
+
+
                     db.Books.Remove(book);
                     db.SaveChanges();
                 }
