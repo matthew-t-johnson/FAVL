@@ -1,0 +1,603 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link href="css/main.css" rel="stylesheet" />
+    <title>FAVL Scan</title>
+</head>
+<body id="mainbody">
+    <!--USELESS - DO NOT TOUCH-->
+    <div class="app" hidden>
+        <h1>Apache Cordova</h1>
+        <div id="deviceready" class="blink">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+        </div>
+    </div>
+
+    <!--LANDING SIGN-IN-->
+    <section id="index">
+        <div class="wrapper">
+            <img id="scanLogoIndex" src="images/scan_logo.svg" />
+            <button class="hubutton" id="signInButton" type="button">Sign In</button>
+        </div>
+    </section>
+
+    <!--HUB-->
+    <section id="hub" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2></h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mainBodyWrapper">
+                <h1 class="libraryName"></h1>
+                <table class="hubtable">
+                    <tr>
+                        <td>
+                            <button id="addUserButton" type="button" class="hubutton">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i><br />
+                                Add User
+                            </button>
+                        </td>
+                        <td>
+                            <button id="editUserButton" type="button" class="hubutton">
+                                <i class="fa fa-pencil" aria-hidden="true"></i><br />
+                                Edit User
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="overdueButton" type="button" class="hubutton">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i><br />
+                                Overdue
+                            </button>
+                        </td>
+                        <td>
+                            <button id="inventoryButton" type="button" class="hubutton">
+                                <i class="fa fa-list-alt" aria-hidden="true"></i><br />
+                                Inventory
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="checkOutButton" type="button" class="hubutton">
+                                <i class="fa fa-shopping-bag" aria-hidden="true"></i><br />
+                                Check Out
+                            </button>
+                        </td>
+                        <td>
+                            <button id="returnButton" type="button" class="hubutton">
+                                <i class="fa fa-undo" aria-hidden="true"></i><br />
+                                Return
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!--SIGN IN-->
+    <section id="signIn" hidden>
+        <div class="wrapper">
+            <div class="wrapperWrapper">
+                <div class="signInFormWrapper">
+                    <form id="signInForm">
+                        <div>
+                            <input type="text" name="username" placeholder="Username" required />
+                        </div>
+                        <div>
+                            <input type="password" name="password" placeholder="Password" required />
+                        </div>
+                        <div>
+                            <button class="signInSubmitButton" type="submit">Sign In</button>
+                            <button id="signInCancelButton" class="signInCancelButton" type="button">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="bottomButtonWrapper">
+                <button type="button" class="BarcodeButton" id="signInBarcode">
+                    <i class="fa fa-barcode" aria-hidden="true"></i>
+                    <h1>
+                        Scan<br />Barcode
+                    </h1>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!--ADD USER-->
+    <section id="addUser" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2>Add User</h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mainBodyWrapper">
+                <form class="userForm" id="addUserForm">
+                    <div class="formTable">
+                        <div class="formInputs">
+                            <div class="inputsOuterWrapper">
+                                <div class="inputsInnerWrapper">
+                                    <h1 class="formTitle">User Information</h1>
+                                    <div class="inputTD">
+                                        <input type="text" name="FirstName" placeholder="First Name" required />
+                                    </div>
+                                    <div class="inputTD">
+                                        <input type="text" name="MiddleName" placeholder="Middle Name" />
+                                    </div>
+                                    <div class="inputTD lastNameTD">
+                                        <input type="text" name="LastName" placeholder="Last Name" required />
+                                    </div>
+                                    <div class="inputTD libraryNameTD">
+                                        <h3 class="libraryName"></h3>
+                                    </div>
+                                    <div class="inputBarcode">
+                                        <button type="button" class="BarcodeButton" id="addBarcodeButton">
+                                            <i class="fa fa-barcode" aria-hidden="true"></i>
+                                            <h1>
+                                                Add<br />Barcode
+                                            </h1>
+                                        </button>
+                                        <div id="barCodeStringContainer" class="barcodeString">
+                                            <table id="addBarcodeStringTable" hidden>
+                                                <tr>
+                                                    <td class="labelCell">
+                                                        <h3 class="barcodeStringLabel">Barcode Number</h3>
+                                                    </td>
+                                                    <td class="inputCell">
+                                                        <input type="text" id="addBarcodeString" name="Barcode" readonly required />
+                                                    </td>
+                                                    <td class="iconCell">
+                                                        <i class="fa fa-thumbs-up fa-flip-horizontal" aria-hidden="true"></i>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="formButtons">
+                            <div>
+                                <button type="submit" class="formSubmit">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <h1>Create</h1>
+                                </button>
+                                <button type="button" id="addUserCancelButton" class="formCancel">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <h1>Cancel</h1>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!--EDIT USER-->
+    <section id="editUser" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2>Edit User</h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mainBodyWrapper">
+                <form class="userForm" id="editUserForm">
+                    <div class="formTable">
+                        <div class="formInputs">
+                            <div class="inputsOuterWrapper">
+                                <div class="inputsInnerWrapper">
+                                    <h1 class="formTitle">User Information</h1>
+                                    <div class="inputTD">
+                                        <input type="text" name="FirstName" placeholder="First Name" required />
+                                    </div>
+                                    <div class="inputTD">
+                                        <input type="text" name="MiddleName" placeholder="Middle Name" />
+                                    </div>
+                                    <div class="inputTD lastNameTD">
+                                        <input type="text" name="LastName" placeholder="Last Name" required />
+                                    </div>
+                                    <div class="inputTD libraryNameTD">
+                                        <h3 class="libraryName"></h3>
+                                    </div>
+                                    <div class="inputBarcode">
+                                        <button type="button" class="BarcodeButton" id="editBarcodeButton">
+                                            <i class="fa fa-barcode" aria-hidden="true"></i>
+                                            <h1>
+                                                Update<br />Barcode
+                                            </h1>
+                                        </button>
+                                        <div id="editBarCodeStringContainer" class="barcodeString">
+                                            <table id="editBarcodeStringTable">
+                                                <tr>
+                                                    <td class="labelCell">
+                                                        <h3 class="barcodeStringLabel">Barcode Number</h3>
+                                                    </td>
+                                                    <td class="inputCell">
+                                                        <input type="text" id="editBarcodeString" name="Barcode" readonly />
+                                                    </td>
+                                                    <td class="iconCell">
+                                                        <i class="fa fa-thumbs-up fa-flip-horizontal" aria-hidden="true"></i>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="formButtons">
+                            <div>
+                                <button type="submit" class="formSubmit">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <h1>Update</h1>
+                                </button>
+                                <button type="button" id="editUserCancelButton" class="formCancel">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <h1>Cancel</h1>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--<div class="wrapper">
+            <div class="headerLogoWrapper">
+                <img src="images/scan_lightish_BG.svg"/>
+                <h2>Edit User</h2>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </div>
+            <div class="mainBodyWrapper">
+                <form class="userForm" id="editUserForm">
+                    <fieldset>
+                        <table class="formTable">
+                            <tr>
+                                <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required/></td>
+                            </tr>
+                            <tr>
+                                <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name"/></td>
+                            </tr>
+                            <tr>
+                                <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required/></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="updateBarcodeString" name="Barcode"/>
+                                    <button type="button" class="addBarcodeButton BarcodeButton">
+                                        <i class="fa fa-barcode" aria-hidden="true"></i>
+                                        <h1>
+                                            Update<br/>Barcode
+                                        </h1>
+                                    </button>
+                                </td>
+
+                            </tr>
+                            <tr class="formButtons">
+                                <td>
+                                    <button type="submit" class="formSubmit">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        <h1>Update</h1>
+                                    </button>
+                                    <button type="button" class="formCancel">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        <h1>Cancel</h1>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>-->
+    </section>
+
+    <!--READERS-->
+    <section id="readers" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2>Readers</h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mainBodyWrapper">
+                <ul class="listList" id="readersList"></ul>
+            </div>
+        </div>
+    </section>
+
+    <!--ADD USER SUCCESS-->
+    <section id="addUserSuccess" class="success" hidden>
+        <div class="wrapper">
+            <div class="successWrapper">
+                <h2>User Added!</h2>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <div class="message">
+                    <div class="topRow">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p class="userName">Adrian Govela</p>
+                    </div>
+                    <div class="readerRow">
+                        <p class="userLibrary">Bereba</p>
+                        <p class="userBarcode">6594958</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="successButtonWrapper">
+                <button id="addUserAgainButton" class="againButton">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                    <h2>
+                        New<br />Reader
+                    </h2>
+                </button>
+                <button id="addUserSuccessButton" class="successButton">
+                    <img src="images/scan_logo.svg" />
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!--EDIT USER SUCCESS-->
+    <section id="editUserSuccess" class="success" hidden>
+        <div class="wrapper">
+            <div class="successWrapper">
+                <h2>User Updated!</h2>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <div class="message">
+                    <div class="topRow">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p class="userName">Adrian Govela</p>
+                    </div>
+                    <div class="readerRow">
+                        <p class="userLibrary">Bereba</p>
+                        <p class="userBarcode">6594958</p>
+                    </div>
+                </div>
+            </div>
+            <div class="successButtonWrapper">
+                <button id="editUserAgainButton" class="againButton">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                    <h2>
+                        New<br />Edit
+                    </h2>
+                </button>
+                <button id="editUserSuccessButton" class="successButton">
+                    <img src="images/scan_logo.svg" />
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!--OVERDUE BOOKS-->
+    <section id="overDue" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2>Overdue</h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mainBodyWrapper">
+                <ul class="listList" id="overDueList"></ul>
+            </div>
+        </div>
+    </section>
+
+
+    <!--INVENTORY-->
+    <section id="inventory" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2>Inventory</h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mainBodyWrapper">
+                <ul class="listList" id="inventoryList"></ul>
+            </div>
+        </div>
+    </section>
+
+    <!--CHECKOUT SCAN OPTION-->
+    <section id="checkOut" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2>Check Out</h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="buttonWrapper">
+                <button type="button" class="scanReader">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <h1>Scan Reader</h1>
+                </button>
+                <button type="button" class="scanBook">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <h1>Scan Book</h1>
+                </button>
+                <h3 id="checkOutReader" hidden><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span></span></h3>
+                <h3 id="checkOutBook" hidden><i class="fa fa-book fa-fw" aria-hidden="true"></i> <span></span></h3>
+                <h3 id="checkOutError" hidden><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> <span></span></h3>
+            </div>
+        </div>
+    </section>
+
+    <!--CHECKOUT SUCCESS-->
+    <section id="checkOutSuccess" class="success" hidden>
+        <div class="wrapper">
+            <div class="successWrapper">
+                <h2>Successful Checkout!</h2>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <div class="message checkOutSuccessMessage">
+                    <div class="topRow">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <p class="bookMessage"></p>
+                    </div>
+                    <p class="messageDescription">Has been checked out to</p>
+                    <div class="bottomRow">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <p class="readerMessage"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="successButtonWrapper">
+                <button id="checkOutAgainButton" class="againButton">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                    <h2>
+                        New<br />Check Out
+                    </h2>
+                </button>
+                <button id="checkOutSuccessButton" class="successButton">
+                    <img src="images/scan_logo.svg" />
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!--RETURN BOOK-->
+    <section id="returnBook" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2>Return</h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mainBodyWrapper">
+                <div class="bottomButtonWrapper">
+                    <button type="button" class="scanBook">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <h1>Scan Book</h1>
+                    </button>
+                    <h3 id="returnError" hidden><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> <span></span></h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--RETURN BOOK SUCCESS-->
+    <section id="returnBookSuccess" class="success" hidden>
+        <div class="wrapper">
+            <div class="successWrapper">
+                <h2>Successful Return!</h2>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <div class="message returnSuccessMessage">
+                    <div class="topRow">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        <p class="bookMessage"></p>
+                    </div>
+                 </div>
+            </div>
+            <div class="successButtonWrapper">
+                <button id="returnAgainButton" class="againButton">
+                    <i class="fa fa-undo" aria-hidden="true"></i>
+                    <h2>
+                        New<br />Return
+                    </h2>
+                </button>
+                <button id="returnSuccessButton" class="successButton">
+                    <img src="images/scan_logo.svg" />
+                </button>
+            </div>
+        </div>
+
+    </section>
+    
+<!-- Loading... overlay -->
+<section id="loadingOverlay" hidden>
+    <div><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+</section>
+    
+<script src="scripts/main.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <!-- The 'async' attribute is needed for RequireJS to work in a Windows app -->
+    <script type="text/javascript" data-main="scripts/startup" src="lib/require.2.1.8.js" async></script>
+</body>
+</html>

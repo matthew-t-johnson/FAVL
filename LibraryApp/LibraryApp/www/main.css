@@ -1,0 +1,62 @@
+﻿#mainbody {
+    background-color: white;
+    color: #1E363A;
+    background-image: none;
+    text-align: center;
+}
+
+.hubtable {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    text-align: center;
+}
+
+    .hubtable td {
+        width: 50%;
+    }
+
+
+button.hubutton {
+    font-size: 24px;
+    width: 90%;
+    border-radius: 15px;
+    background-color: white;
+    color: #1E363A;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    height: 100px;
+    margin-top: 20px;
+}
+
+#scanLogoHeader {
+    height: 40px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    display: block;
+}
+
+#scanLogoIndex {
+    margin-top: 65%;
+}
+
+#signInButton, #addUserButton, #editUserButton, #checkOutButton, #returnButton {
+    border: 1px solid #0B697F;
+    color: #1E363A;
+}
+
+#signInButton {
+    left: 20%;
+    bottom: 10px;
+    position: absolute;
+    height: 50px;
+    width: 60%;
+}
+
+.hubutton i {
+    font-size: 30pt;
+    color: #0B697F;
+}

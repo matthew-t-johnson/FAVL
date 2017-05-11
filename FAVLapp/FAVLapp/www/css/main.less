@@ -1,0 +1,912 @@
+﻿@import url("../Content/font-awesome.min.css");
+
+html {
+    height: 100%;
+}
+
+#mainbody {
+    background-color: white;
+    color: #1E363A;
+    background-image: none;
+    text-align: center;
+    height: 100%;
+}
+
+button:focus {
+    outline: none !important;
+}
+
+section {
+    height: 100%;
+    background-image: url('../images/success_background_2.jpg');
+    background-size: contain;
+    background-attachment: scroll;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+
+    .wrapper {
+        height: 100%;
+        background-color: rgba(30, 54, 58, 0.9);
+
+
+        .headerLogoWrapper {
+            height: 7%;
+
+            table.headerTable {
+                width: 100%;
+                height: 100%;
+                border-spacing: 0;
+                border-collapse: collapse;
+                background-color: rgba(130, 176, 177, 0.66);
+
+                tr {
+
+                    td {
+                        vertical-align: middle;
+                        box-sizing: border-box;
+                        padding: 0;
+
+                        &.logoIcon {
+                            background-image: url('../images/scan_lightish_BG.svg');
+                            width: 30%;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: left center;
+                        }
+
+                        &.pageTitle {
+                            width: 40%;
+                            font-size: 12pt;
+                        }
+
+                        &.userIcon {
+                            width: 30%;
+                            text-align: right;
+                            padding-right: 2%;
+                            font-size: 24pt;
+                        }
+                    }
+                }
+            }
+        }
+
+        .mainBodyWrapper {
+            height: 93%;
+        }
+
+        h2 {
+            margin: 0;
+            padding-top: 3%;
+            font-weight: 400;
+        }
+
+        .listList {
+            list-style: none;
+            padding: 12% 2.5% 2%;
+            /*overflow-y: scroll;*/
+            margin: 0;
+
+
+            li {
+                padding: 3px 10px 5px;
+                margin: 10px;
+                color: #263c40;
+                background-color: #eee;
+                margin-bottom: 5px;
+                text-align: left;
+                border-radius: 7px;
+                text-transform: none;
+
+                &.veryOverdue, &.slightlyOverdue {
+                    background-color: #d25757;
+                    color: white;
+
+                    .bookInfo .reader {
+                        color: white;
+                    }
+                }
+
+                .title, .name {
+                    font-weight: 600;
+                    font-size: 12pt;
+                    display: block;
+                    /*color: #1E363A;*/
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                .author, .barcode {
+                    font-weight: normal;
+                    font-size: 10pt;
+                    display: block;
+                    padding-left: .5em;
+                }
+
+                .bookInfo {
+                    display: inline-block;
+                    width: 80%;
+                }
+
+                .bookInfo {
+
+                    .title {
+                        font-weight: 500;
+                    }
+
+                    .reader {
+                        font-weight: 700;
+                        color: #0B697F;
+                        padding-left: .5em;
+
+                        &::before {
+                            content: "Checked out to: ";
+                            font-weight: 400;
+                        }
+                    }
+                }
+
+                .dueDateDiv {
+                    display: inline-block;
+                    width: 20%;
+                    font-feature-settings: "pnum";
+
+                    span {
+                        display: block;
+                        text-align: center;
+
+                        &.month {
+                            font-size: 10pt;
+                            text-transform: uppercase;
+                        }
+
+                        &.date {
+                            font-size: 24pt;
+                            line-height: .6;
+                            padding-bottom: 1px;
+                            padding-top: 4px;
+                        }
+
+                        &.year {
+                            font-size: 10pt;
+                            letter-spacing: 1.5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#hub {
+    background-image: url('../images/success_background_2.jpg');
+    background-size: contain;
+
+    .wrapper {
+        background-color: rgba(30, 54, 58, 0.9);
+
+        .mainBodyWrapper {
+            height: 93%;
+            /*padding-top: 12%;*/
+            .libraryName {
+                text-align: right;
+                color: white;
+                padding-right: 3%;
+                padding-top: 2%;
+                height: 5%;
+                font-weight: 300;
+            }
+
+            .hubtable {
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                /*padding-top: 7.25%;*/
+                text-align: center;
+                height: 86%;
+                position: absolute;
+                bottom: 0;
+
+                tr {
+                    height: 30%;
+
+                    td {
+                        width: 50%;
+                        padding: 0;
+                    }
+                }
+            }
+
+            button.hubutton {
+                font-size: 14px;
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0.85);
+                color: #1E363A;
+                margin-left: auto;
+                margin-right: auto;
+                border: none;
+                padding: 0;
+                height: 100%;
+                text-transform: uppercase;
+
+                &:focus {
+                    outline: none !important;
+                }
+
+                &:active {
+                    background-color: rgba(11, 105, 127, 0.7);
+                    color: white;
+
+                    i {
+                        color: white;
+                    }
+                }
+
+                i {
+                    font-size: 40pt;
+                    color: #0B697F;
+                    padding-bottom: 20px;
+                }
+            }
+        }
+    }
+}
+
+
+#signInButton {
+    font-size: 16px;
+    width: 90%;
+    background-color: white;
+    color: #1E363A;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    height: 100px;
+    margin-top: 20px;
+    border-radius: 15px;
+    border: 1px solid #0B697F;
+    color: #1E363A;
+}
+
+
+#scanLogoHeader {
+    height: 40px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    display: block;
+}
+
+#scanLogoIndex {
+    margin-top: 65%;
+}
+
+
+#signInButton {
+    left: 20%;
+    bottom: 10px;
+    position: absolute;
+    height: 50px;
+    width: 60%;
+}
+
+#signIn {
+    background-image: url('../images/success_background_2.jpg');
+    background-size: contain;
+
+    .wrapper {
+        height: 88%;
+        background-color: rgba(30, 54, 58, 0.9);
+
+        .wrapperWrapper {
+            padding-top: 60%;
+
+            .signInFormWrapper {
+                background-color: rgba(255, 255, 255, .5);
+                border-radius: 10px;
+                width: 75%;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 20px 0;
+
+                #signInForm {
+                    /*margin-top: 75%;*/
+                    input {
+                        font-size: 14pt;
+                        padding: 3px;
+                        width: 250px;
+                        margin-bottom: 15px;
+                        border-radius: 2px;
+                        border-style: none;
+                    }
+
+                    button {
+                        width: 41%;
+                        height: 35px;
+                        border: none;
+                        border-radius: 5px;
+
+                        &.signInSubmitButton {
+                            background-color: rgba(74, 220, 105, 0.9);
+                            color: #005200;
+                        }
+
+                        &.signInCancelButton {
+                            background-color: rgba(226, 89, 89, 0.9);
+                            color: #520000;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #signInBarcode {
+        height: 12%;
+        color: white;
+        background-color: #0B697F;
+        border: none;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        i {
+            font-size: 50pt;
+        }
+
+        h1 {
+            font-size: 20pt;
+            padding-left: 20px;
+            display: inline-block;
+        }
+    }
+}
+
+section#inventory, section#readers, section#overDue {
+    background-image: none;
+
+    .wrapper {
+        /*background-color: rgb(30, 54, 58);*/
+        background-color: #263c40;
+
+        .headerLogoWrapper {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+
+            .headerTable {
+                background-color: rgba(99, 135, 138, 0.98);
+            }
+        }
+
+        .mainBodyWrapper {
+            /*background-color: rgb(30, 54, 58);*/
+            background-color: #263c40;
+            height: unset;
+        }
+    }
+}
+
+.BarcodeButton:not(#signInBarcode) {
+    height: 100px;
+    color: white;
+    background-color: rgba(30, 54, 58, 0.78);
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+
+    i {
+        font-size: 50pt;
+    }
+
+    h1 {
+        font-size: 20pt;
+        padding-left: 20px;
+        display: inline-block;
+    }
+}
+
+section#addUser, section#editUser {
+
+    .wrapper {
+
+        .mainBodyWrapper {
+            height: 93%;
+            /*padding-top: 12%;*/
+            .userForm {
+                padding: 0;
+                height: 100%;
+                /*fieldset {
+                border: none;
+                padding: 0;
+                margin: 0;                    
+                }*/
+                .formTable {
+                    margin-left: 0;
+                    margin-right: 0;
+                    width: 100%;
+                    height: 100%;
+                    /*padding-top: 17%;*/
+                    .formInputs {
+                        height: 86%;
+                        width: 90%;
+                        margin-left: auto;
+                        margin-right: auto;
+
+                        .inputsOuterWrapper {
+                            padding-top: 20%;
+
+                            .inputsInnerWrapper {
+                                background-color: rgba(255, 255, 255, 0.5);
+                                border-radius: 10px;
+
+                                .formTitle {
+                                    font-size: 10pt;
+                                    padding-bottom: 4%;
+                                    padding-top: 1%;
+                                    padding-right: 3%;
+                                    text-transform: capitalize;
+                                    text-align: right;
+                                }
+
+                                .inputTD {
+                                    width: 95%;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                    padding-bottom: 7%;
+
+                                    &:first-child {
+                                        padding-top: 5%;
+                                    }
+
+                                    &.lastNameTD {
+                                        padding-bottom: 4%;
+                                    }
+
+                                    &.libraryNameTD {
+                                        padding-bottom: 8%;
+                                    }
+
+                                    input {
+                                        width: 99%;
+                                        height: 25px;
+                                        font-size: 14pt;
+                                        border-radius: 2px;
+                                        padding: 1% 0 1% 1%;
+                                        border: 0;
+                                    }
+
+                                    h3 {
+                                        margin: 0;
+                                        font-size: 14pt;
+                                        text-align: left;
+                                        padding-left: 1%;
+                                        font-weight: 400;
+                                    }
+                                }
+
+                                .inputBarcode {
+                                    width: 95%;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                    padding-bottom: 2%;
+
+                                    .barcodeString {
+                                        padding-top: 0;
+                                        /*height: 53px;*/
+                                        /*padding-bottom: 2%;*/
+                                        table {
+                                            border-spacing: 0;
+                                            border-collapse: collapse;
+
+                                            tr {
+
+                                                td {
+                                                    vertical-align: middle;
+                                                    box-sizing: border-box;
+                                                    padding: 0;
+                                                }
+
+                                                .labelCell {
+                                                    width: 40%;
+                                                    white-space: nowrap;
+
+                                                    h3 {
+                                                        display: inline-block;
+                                                    }
+                                                }
+
+                                                .inputCell {
+                                                    width: 50%;
+
+                                                    input {
+                                                        border: 0;
+                                                        border-radius: 2px;
+                                                        width: 95%;
+                                                        height: 15px;
+                                                        font-size: 11pt;
+                                                        /*padding: 1% 0 1% 1%;*/
+                                                        display: inline-block;
+                                                        background-color: rgba(255, 255, 255, 0);
+                                                    }
+                                                }
+
+                                                .iconCell {
+                                                    width: 10%;
+                                                    font-size: 15pt;
+                                                    padding-bottom: 4px;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .BarcodeButton {
+                                        background-color: rgb(11, 105, 127);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .formButtons {
+                        height: 14%;
+
+                        div {
+                            height: 100%;
+
+                            .formSubmit {
+                                height: 100%;
+                                width: 50%;
+                                border: none;
+                                color: #005200;
+                                background-color: rgb(74, 220, 105);
+                                float: left;
+                                padding: 0;
+
+                                i {
+                                    font-size: 40pt;
+                                }
+
+                                h1 {
+                                    font-size: 14pt;
+                                }
+                            }
+
+                            .formCancel {
+                                width: 50%;
+                                background-color: rgb(226, 89, 89);
+                                color: #520000;
+                                border: none;
+                                height: 100%;
+                                padding: 0;
+
+                                i {
+                                    font-size: 40pt;
+                                }
+
+                                h1 {
+                                    font-size: 14pt;
+                                }
+                            }
+                        }
+                    }
+
+                    input {
+                        width: 100%;
+                        height: 25px;
+                        font-size: 14pt;
+                        border: 1px solid #1E363A;
+                        border-radius: 5px;
+                        padding: 3px 0;
+
+                        &:focus {
+                            outline: none !important;
+                            border: 1px solid #0B697F;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#checkOut .buttonWrapper {
+    position: relative;
+    top: 40%;
+}
+
+
+
+#checkOut .scanReader, #checkOut .scanBook {
+    border-style: none;
+    width: 45%;
+    min-height: 200px;
+    background-color: rgba(255, 255, 255, 0.85);
+    margin-right: 5px;
+
+    &:disabled {
+        opacity: 0.6;
+    }
+
+    &:active {
+        background-color: rgba(11, 105, 127, 0.7);
+        color: white;
+
+        i {
+            color: white;
+        }
+
+        h1 {
+            color: white;
+        }
+    }
+
+    i {
+        font-size: 60px;
+        color: #0B697F;
+        padding-bottom: 20px;
+    }
+
+    h1 {
+        color: #1E363A;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+}
+
+#checkOutReader, #checkOutBook {
+    color: white;
+    font-weight: 400;
+    text-transform: none;
+}
+
+#checkOutError, #returnError {
+    color: lightcoral;
+    font-weight: 400;
+}
+
+#returnBook {
+
+    .bottomButtonWrapper {
+        height: 100%;
+
+        .scanBook {
+            width: 60%;
+            height: 30%;
+            margin-left: 0;
+            margin-top: 75%;
+            background-color: rgba(255, 255, 255, 0.85);
+            margin-top: 75%;
+            border: none;
+            text-transform: uppercase;
+
+            i {
+                font-size: 60px;
+                color: #0B697F;
+                padding-bottom: 20px;
+            }
+
+            h1 {
+                color: #1E363A;
+                font-size: 14px;
+            }
+
+            &:active {
+                background-color: rgba(11, 105, 127, 0.7);
+                color: white;
+
+                i {
+                    color: white;
+                }
+
+                h1 {
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+.success {
+    color: white;
+    background-image: url('../images/success_background_2.jpg');
+    background-size: contain;
+
+    .successWrapper {
+        /*background-color: rgba(116, 212, 136, 0.46);*/
+        /*background-color: rgba(162, 214, 226, 0.67);*/
+        /*background-color: rgba(30, 54, 58, 0.87);*/
+        /*background-color: rgba(30, 54, 58, 0.9);*/
+        height: 88%;
+
+        h2 {
+            font-size: 24pt;
+            margin: 0;
+            padding-top: 15%;
+            font-weight: 400;
+            color: rgb(116, 212, 136);
+        }
+
+        i {
+            font-size: 100pt;
+            padding-top: 12%;
+            padding-bottom: 12%;
+            color: rgb(116, 212, 136);
+        }
+
+        .message {
+            font-size: 14pt;
+            margin: 0 auto 0;
+            width: 80%;
+            /*padding-top: 10%;*/
+            /*background-color: rgba(255, 255, 255, 0.4);*/
+            background-color: rgba(116, 212, 136, 0.5);
+            /*height: 200px;*/
+            border-radius: 10px;
+            text-align: left;
+            padding: 5%;
+
+            i {
+                font-size: 16pt;
+                display: inline-block;
+                padding: 0;
+                color: rgb(30, 54, 58);
+            }
+
+            p {
+                display: inline;
+                margin: 0;
+                font-size: 16pt;
+                font-weight: 100;
+                vertical-align: top;
+                padding-left: 3%;
+                text-transform: capitalize;
+
+                &.messageDescription {
+                    font-size: 11pt;
+                    font-weight: 400;
+                    vertical-align: unset;
+                    text-transform: uppercase;
+                    color: rgba(255, 255, 255, 0.75);
+                    display: block;
+                    margin: 5% 0;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+    .successButtonWrapper {
+        height: 12%;
+
+        .againButton {
+            height: 100%;
+            width: 60%;
+            border: none;
+            background-color: #0B697F;
+            color: white;
+            display: inline-block;
+            padding: 0;
+            float: left;
+
+            i {
+                display: inline-block;
+                font-size: 40pt;
+            }
+
+            h2 {
+                display: inline-block;
+                margin: 0;
+                padding-left: 15px;
+            }
+        }
+
+        .successButton {
+            height: 100%;
+            width: 40%;
+            border: none;
+            background-color: white;
+            color: #1E363A;
+            display: inline-block;
+            padding: 0;
+            border-left: 4px solid rgba(30, 54, 58, 0.79);
+
+            img {
+                width: 70%;
+            }
+
+            h2 {
+                display: inline-block;
+                margin: 0;
+                padding-left: 25px;
+            }
+        }
+    }
+}
+
+#addUserSuccess, #editUserSuccess {
+
+    .message {
+
+        .userLibrary, .userBarcode {
+            display: block;
+            padding-left: 14%;
+            padding-bottom: 2%;
+            font-size: 14pt;
+        }
+
+        .userBarcode {
+            padding-bottom: 5%;
+        }
+
+        .userLibrary::before {
+            content: "Library: ";
+            font-size: 12pt;
+        }
+
+        .userBarcode::before {
+            content: "Barcode: ";
+            font-size: 12pt;
+        }
+    }
+}
+
+section.incoming {
+    transform: translateX(100%);
+    transition: transform 200ms linear;
+    display: block;
+}
+
+section.outgoing {
+    transform: translateX(-100%);
+    transition: transform 200ms linear;
+}
+
+section.current {
+    transform: translateX(0);
+    transition: transform 200ms linear;
+    display: block;
+}
+
+section.incominghub {
+    transform: translateX(-100%);
+    transition: transform 200ms linear;
+    display: block;
+}
+
+section.outgoinghub {
+    transform: translateX(100%);
+    transition: transform 200ms linear;
+}
+
+section.currenthub {
+    transform: translateX(0);
+    transition: transform 200ms linear;
+    display: block;
+}
+
+#loadingOverlay {
+    background-image: none !important;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    font-size: 20pt;
+    text-transform: none;
+    text-shadow: 2px 2px 5px black;
+
+    div {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &[hidden] .fa-spin {
+        animation: none;
+    }
+}
+

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -24,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,16 +45,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -82,16 +91,90 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\activeReaders.aspx" />
+    <Content Include="admin\addBook.aspx" />
+    <Content Include="admin\addLibrarian.aspx" />
+    <Content Include="admin\addLibrary.aspx" />
+    <Content Include="admin\addReader.aspx" />
+    <Content Include="admin\allOrOneLibrary.ascx" />
+    <Content Include="admin\books.aspx" />
+    <Content Include="admin\checkOuts.aspx" />
+    <Content Include="admin\default.aspx" />
+    <Content Include="admin\deleteBook.aspx" />
+    <Content Include="admin\deleteLibrarian.aspx" />
+    <Content Include="admin\deleteLibrary.aspx" />
+    <Content Include="admin\deleteReader.aspx" />
+    <Content Include="admin\editBook.aspx" />
+    <Content Include="admin\editLibrarian.aspx" />
+    <Content Include="admin\editLibrary.aspx" />
+    <Content Include="admin\editReader.aspx" />
+    <Content Include="admin\librarians.aspx" />
+    <Content Include="admin\libraries.aspx" />
+    <Content Include="admin\librarySelect.ascx" />
+    <Content Include="admin\popularBooks.aspx" />
+    <Content Include="admin\printBookLabels.aspx" />
+    <Content Include="admin\printUserCards.aspx" />
+    <Content Include="admin\readers.aspx" />
+    <Content Include="admin\scan.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="default.aspx" />
+    <Content Include="favlDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>favlDB.edmx</DependentUpon>
+      <LastGenOutput>favlDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="favlDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>favlDB.edmx</DependentUpon>
+      <LastGenOutput>favlDB.cs</LastGenOutput>
+    </Content>
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
+    <Content Include="images\companies\bootstrap-logo-vector-download.jpg" />
+    <Content Include="images\carousel\phone_banner copy.svg" />
+    <Content Include="images\carousel\phone_banner.jpg" />
+    <Content Include="images\carousel\phone_banner.svg" />
+    <Content Include="images\carousel\phone_outlined.svg" />
+    <Content Include="images\carousel\phone_smaller.svg" />
+    <Content Include="images\carousel\stat_banner_2.jpg" />
+    <Content Include="images\companies\CSS3-logo-vector.png" />
+    <Content Include="images\companies\GitHub-Mark.png" />
+    <Content Include="images\companies\HTML5_Logo_512.png" />
+    <Content Include="images\companies\java.png" />
+    <Content Include="images\companies\LESS_Logo.svg.png" />
+    <Content Include="images\companies\mstile-310x310.png" />
+    <Content Include="images\companies\ts_logo.svg" />
+    <Content Include="images\hero\adult_praying_hero.jpg" />
+    <Content Include="images\hero\boys_reading_outside2_hero.jpg" />
+    <Content Include="images\hero\boys_reading_outside_HERO.jpg" />
+    <Content Include="images\carousel\stat_banner_2.svg" />
+    <Content Include="images\companies\Less-CSS-Preprocessor-Toolbox.jpg" />
+    <Content Include="images\logos\favicon.ico" />
+    <Content Include="images\logos\footer_pages_smaller.png" />
+    <Content Include="images\logos\footer_pages_smaller.svg" />
+    <Content Include="images\logos\scan_favicon.png" />
+    <Content Include="images\logos\scan_lightish_BG.svg" />
+    <Content Include="images\logos\scan_logo_light2.svg" />
+    <Content Include="images\logos\scan_logo_light_signIn.svg" />
+    <Content Include="images\thumbnail\adult_praying_small.jpg" />
+    <Content Include="images\logos\scan_header_logo.svg" />
+    <Content Include="images\thumbnail\boys_reading_outside_small.jpg" />
+    <Content Include="images\thumbnail\boy_reading_small.jpg" />
+    <Content Include="images\thumbnail\girls_reading_inside_small.jpg" />
+    <Content Include="images\thumbnail\girl_reading_circle_small.jpg" />
+    <Content Include="images\thumbnail\girl_reading_small.jpg" />
+    <Content Include="images\thumbnail\girl_surrounded_books_small.jpg" />
+    <Content Include="images\thumbnail\girl_with_book_small.jpg" />
+    <Content Include="images\thumbnail\guys_reading_small.jpg" />
+    <Content Include="images\thumbnail\librarian_reading_small.jpg" />
+    <Content Include="images\companies\TypeScript_Logo.png" />
+    <Content Include="favl_home.html" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -105,28 +188,280 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="images\web_background_1.jpg" />
+    <Content Include="js\scan-barcode.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="css\default.css" />
+    <Content Include="admin\Admin.Master" />
+    <Content Include="webjobs\UpdateCheckOutByDay.aspx" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <EntityDeploy Include="favlDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>favlDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="favlDB.edmx.diagram">
+      <DependentUpon>favlDB.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\favl - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\quagga.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="admin\activeReaders.aspx.cs">
+      <DependentUpon>activeReaders.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\activeReaders.aspx.designer.cs">
+      <DependentUpon>activeReaders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\addBook.aspx.cs">
+      <DependentUpon>addBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\addBook.aspx.designer.cs">
+      <DependentUpon>addBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\addLibrarian.aspx.cs">
+      <DependentUpon>addLibrarian.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\addLibrarian.aspx.designer.cs">
+      <DependentUpon>addLibrarian.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\addLibrary.aspx.cs">
+      <DependentUpon>addLibrary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\addLibrary.aspx.designer.cs">
+      <DependentUpon>addLibrary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\addReader.aspx.cs">
+      <DependentUpon>addReader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\addReader.aspx.designer.cs">
+      <DependentUpon>addReader.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="admin\allOrOneLibrary.ascx.cs">
+      <DependentUpon>allOrOneLibrary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\allOrOneLibrary.ascx.designer.cs">
+      <DependentUpon>allOrOneLibrary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\books.aspx.cs">
+      <DependentUpon>books.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\books.aspx.designer.cs">
+      <DependentUpon>books.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\checkOuts.aspx.cs">
+      <DependentUpon>checkOuts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\checkOuts.aspx.designer.cs">
+      <DependentUpon>checkOuts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\deleteBook.aspx.cs">
+      <DependentUpon>deleteBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\deleteBook.aspx.designer.cs">
+      <DependentUpon>deleteBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\deleteLibrarian.aspx.cs">
+      <DependentUpon>deleteLibrarian.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\deleteLibrarian.aspx.designer.cs">
+      <DependentUpon>deleteLibrarian.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\deleteLibrary.aspx.cs">
+      <DependentUpon>deleteLibrary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\deleteLibrary.aspx.designer.cs">
+      <DependentUpon>deleteLibrary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\deleteReader.aspx.cs">
+      <DependentUpon>deleteReader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\deleteReader.aspx.designer.cs">
+      <DependentUpon>deleteReader.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editBook.aspx.cs">
+      <DependentUpon>editBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editBook.aspx.designer.cs">
+      <DependentUpon>editBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editLibrarian.aspx.cs">
+      <DependentUpon>editLibrarian.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editLibrarian.aspx.designer.cs">
+      <DependentUpon>editLibrarian.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editLibrary.aspx.cs">
+      <DependentUpon>editLibrary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editLibrary.aspx.designer.cs">
+      <DependentUpon>editLibrary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\editReader.aspx.cs">
+      <DependentUpon>editReader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\editReader.aspx.designer.cs">
+      <DependentUpon>editReader.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\librarians.aspx.cs">
+      <DependentUpon>librarians.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\librarians.aspx.designer.cs">
+      <DependentUpon>librarians.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\libraries.aspx.cs">
+      <DependentUpon>libraries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\libraries.aspx.designer.cs">
+      <DependentUpon>libraries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\librarySelect.ascx.cs">
+      <DependentUpon>librarySelect.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\librarySelect.ascx.designer.cs">
+      <DependentUpon>librarySelect.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\popularBooks.aspx.cs">
+      <DependentUpon>popularBooks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\popularBooks.aspx.designer.cs">
+      <DependentUpon>popularBooks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\printBookLabels.aspx.cs">
+      <DependentUpon>printBookLabels.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\printBookLabels.aspx.designer.cs">
+      <DependentUpon>printBookLabels.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\printUserCards.aspx.cs">
+      <DependentUpon>printUserCards.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\printUserCards.aspx.designer.cs">
+      <DependentUpon>printUserCards.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\PW.cs" />
+    <Compile Include="admin\readers.aspx.cs">
+      <DependentUpon>readers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\readers.aspx.designer.cs">
+      <DependentUpon>readers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\scan.aspx.cs">
+      <DependentUpon>scan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\scan.aspx.designer.cs">
+      <DependentUpon>scan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Book.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckOut.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CheckOutsByDay.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\APIController.cs" />
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="favlDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>favlDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="favlDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="favlDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>favlDB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Librarian.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Library.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reader.cs">
+      <DependentUpon>favlDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="webjobs\UpdateCheckOutByDay.aspx.cs">
+      <DependentUpon>UpdateCheckOutByDay.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="webjobs\UpdateCheckOutByDay.aspx.designer.cs">
+      <DependentUpon>UpdateCheckOutByDay.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\favl.pubxml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -136,14 +471,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="controls\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="js\createTestData.ts" />
+    <TypeScriptCompile Include="js\scan-barcode.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
@@ -168,8 +512,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

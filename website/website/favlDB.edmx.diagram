@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2cec458d26814c87974a18bb21104951" Name="Diagram1">
+        <EntityTypeShape EntityType="favlModel.Book" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="favlModel.Librarian" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="favlModel.Library" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="favlModel.Reader" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <AssociationConnector Association="favlModel.FK_Books_Libraries" ManuallyRouted="false" />
+        <AssociationConnector Association="favlModel.FK_Books_Readers" ManuallyRouted="false" />
+        <AssociationConnector Association="favlModel.FK_Librarians_Libraries" />
+        <AssociationConnector Association="favlModel.FK_Readers_Libraries" />
+        <EntityTypeShape EntityType="favlModel.Admin" Width="1.5" PointX="3.375" PointY="5.75" />
+        <EntityTypeShape EntityType="favlModel.CheckOut" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="favlModel.CheckOutsByDay" Width="1.5" PointX="7.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
