@@ -1,5 +1,6 @@
 define(["require", "exports", "./sections", "../lib/view"], function (require, exports, Sections, view) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function mainInit() {
         initClick();
         Sections.init();

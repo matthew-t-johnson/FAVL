@@ -62,6 +62,8 @@ function showInventory(): void {
     const ul = document.getElementById("inventoryList");
     ul.textContent = "";
 
+    view.show("#loadingOverlay");
+
     getDataAsync<Array<Book>>(`/api/books/${currentLibrary.Id}`,
         books => {
 
@@ -82,6 +84,11 @@ function showInventory(): void {
 
                 ul.appendChild(li);
             });
+
+            HideLoading();
+        },
+        errorCode => {
+            HideLoading();
         });
 }
 
@@ -90,6 +97,9 @@ const MonthNames = ["January", "Febuary", "March", "April", "May", "June", "July
 function showOverDue(): void {
     const ul = document.getElementById("overDueList");
     ul.textContent = "";
+
+    view.show("#loadingOverlay");
+
 
     getDataAsync<Array<Book>>(`/api/books/overdue/${currentLibrary.Id}`,
         books => {
@@ -149,6 +159,11 @@ function showOverDue(): void {
 
                 ul.appendChild(li);
             });
+
+            HideLoading();
+        },
+        errorCode => {
+            HideLoading();
         });
 }
 
