@@ -25,7 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -112,6 +112,8 @@
     <Content Include="admin\libraries.aspx" />
     <Content Include="admin\librarySelect.ascx" />
     <Content Include="admin\popularBooks.aspx" />
+    <Content Include="admin\printBookLabels.aspx" />
+    <Content Include="admin\printUserCards.aspx" />
     <Content Include="admin\readers.aspx" />
     <Content Include="admin\scan.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -120,6 +122,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="default.aspx" />
     <Content Include="favlDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>favlDB.edmx</DependentUpon>
@@ -158,6 +161,7 @@
     <Content Include="images\logos\scan_favicon.png" />
     <Content Include="images\logos\scan_lightish_BG.svg" />
     <Content Include="images\logos\scan_logo_light2.svg" />
+    <Content Include="images\logos\scan_logo_light_signIn.svg" />
     <Content Include="images\thumbnail\adult_praying_small.jpg" />
     <Content Include="images\logos\scan_header_logo.svg" />
     <Content Include="images\thumbnail\boys_reading_outside_small.jpg" />
@@ -170,7 +174,7 @@
     <Content Include="images\thumbnail\guys_reading_small.jpg" />
     <Content Include="images\thumbnail\librarian_reading_small.jpg" />
     <Content Include="images\companies\TypeScript_Logo.png" />
-    <Content Include="index.html" />
+    <Content Include="favl_home.html" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -184,6 +188,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="images\web_background_1.jpg" />
     <Content Include="js\scan-barcode.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -368,6 +373,21 @@
     <Compile Include="admin\popularBooks.aspx.designer.cs">
       <DependentUpon>popularBooks.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\printBookLabels.aspx.cs">
+      <DependentUpon>printBookLabels.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\printBookLabels.aspx.designer.cs">
+      <DependentUpon>printBookLabels.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\printUserCards.aspx.cs">
+      <DependentUpon>printUserCards.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\printUserCards.aspx.designer.cs">
+      <DependentUpon>printUserCards.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\PW.cs" />
     <Compile Include="admin\readers.aspx.cs">
       <DependentUpon>readers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -393,6 +413,13 @@
       <DependentUpon>favlDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\APIController.cs" />
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="favlDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

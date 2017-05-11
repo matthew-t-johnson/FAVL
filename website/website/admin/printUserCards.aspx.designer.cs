@@ -10,15 +10,24 @@
 namespace website.admin {
     
     
-    public partial class _default {
+    public partial class printUserCards {
         
         /// <summary>
-        /// insertData control.
+        /// allOrOneLibrary control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl insertData;
+        protected global::website.admin.allOrOneLibrary allOrOneLibrary;
+        
+        /// <summary>
+        /// insertCards control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl insertCards;
     }
 }

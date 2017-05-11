@@ -22,7 +22,7 @@ namespace website
         public string PasswordSalt { get; set; }
         public bool IsAdmin { get; set; }
         public string Barcode { get; set; }
-        public Nullable<int> LibraryID { get; set; }
+        public int LibraryID { get; set; }
     
         public virtual Library Library { get; set; }
     }

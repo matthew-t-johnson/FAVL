@@ -3,11 +3,13 @@ import view = require("../lib/view");
 
 export function init(): void {
     document.getElementById("readers").addEventListener("view:show", initReaders);
+    document.getElementById("addUser").addEventListener("view:show", showAddUser);
     document.getElementById("editUser").addEventListener("view:show", showEditUser);
     document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
     document.getElementById("inventory").addEventListener("view:show", showInventory);
     document.getElementById("overDue").addEventListener("view:show", showOverDue);
     document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
+    
 
 
     document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
@@ -37,6 +39,14 @@ interface Book {
     ReaderFirst: string;
     ReaderMiddle: string;
     ReaderLast: string;
+    DaysOverDue?: number;
+}
+
+function showAddUser(): void {
+    (document.querySelector("#addUser input[name='FirstName']") as HTMLInputElement).value =  "";
+    (document.querySelector("#addUser input[name='MiddleName']") as HTMLInputElement).value = "";
+    (document.querySelector("#addUser input[name='LastName']") as HTMLInputElement).value = "";
+    (document.querySelector("#addUser input[name='Barcode']") as HTMLInputElement).value = "";
 }
 
 function showEditUser(): void {
@@ -52,26 +62,34 @@ function showInventory(): void {
     const ul = document.getElementById("inventoryList");
     ul.textContent = "";
 
-    const books = getData(`/api/books/${currentLibrary.Id}`) as Array<Book>;
+    view.show("#loadingOverlay");
 
-    books.forEach(b => {
-        const li = document.createElement("li");
+    getDataAsync<Array<Book>>(`/api/books/${currentLibrary.Id}`,
+        books => {
 
-        var span = document.createElement("span");
-        span.className = "title";
-        span.textContent = b.Title;
-        li.appendChild(span);
+            books.forEach(b => {
+                const li = document.createElement("li");
 
-        span = document.createElement("span");
-        span.className = "author";
-        span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
-        li.appendChild(span);
+                var span = document.createElement("span");
+                span.className = "title";
+                span.textContent = b.Title;
+                li.appendChild(span);
 
-        li.setAttribute("data-book-id", b.Id.toString());
+                span = document.createElement("span");
+                span.className = "author";
+                span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
+                li.appendChild(span);
 
-        ul.appendChild(li);
-    });
+                li.setAttribute("data-book-id", b.Id.toString());
 
+                ul.appendChild(li);
+            });
+
+            HideLoading();
+        },
+        errorCode => {
+            HideLoading();
+        });
 }
 
 const MonthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -80,144 +98,206 @@ function showOverDue(): void {
     const ul = document.getElementById("overDueList");
     ul.textContent = "";
 
-    const books = getData(`/api/books/overdue/${currentLibrary.Id}`) as Array<Book>;
-
-    books.forEach(b => {
-        const li = document.createElement("li");
-
-        const bookInfo = document.createElement("div");
-        bookInfo.className = "bookInfo";
-        li.appendChild(bookInfo);
-
-        var span = document.createElement("span");
-        span.className = "title";
-        span.textContent = b.Title;
-        bookInfo.appendChild(span);
-
-        span = document.createElement("span");
-        span.className = "author";
-        span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
-        bookInfo.appendChild(span);
-
-        span = document.createElement("span");
-        span.className = "reader";
-        span.textContent = `${b.ReaderFirst} ${b.ReaderMiddle} ${b.ReaderLast}`;
-        bookInfo.appendChild(span);
+    view.show("#loadingOverlay");
 
 
-        const dueDate = new Date(b.DueDate);
+    getDataAsync<Array<Book>>(`/api/books/overdue/${currentLibrary.Id}`,
+        books => {
+            books.forEach(b => {
+                const li = document.createElement("li") as HTMLElement;
 
-        var dueDateDiv = document.createElement("div");
-        dueDateDiv.className = "dueDateDiv";
-        li.appendChild(dueDateDiv);
+                if (b.DaysOverDue < 0) {
+                    li.classList.add("notOverdue");
+                } else if (b.DaysOverDue > 7) {
+                    li.classList.add("veryOverdue");
+                } else {
+                    li.classList.add("slightlyOverdue");
+                }
 
-        span = document.createElement("span");
-        span.className = "month";
-        span.textContent = `${MonthNames[dueDate.getMonth()]}`;
-        dueDateDiv.appendChild(span);
+                const bookInfo = document.createElement("div");
+                bookInfo.className = "bookInfo";
+                li.appendChild(bookInfo);
 
-        span = document.createElement("span");
-        span.className = "date";
-        span.textContent = `${dueDate.getDate()}`;
-        dueDateDiv.appendChild(span);
+                var span = document.createElement("span");
+                span.className = "title";
+                span.textContent = b.Title;
+                bookInfo.appendChild(span);
 
-        span = document.createElement("span");
-        span.className = "year";
-        span.textContent = `${dueDate.getFullYear()}`;
-        dueDateDiv.appendChild(span);
+                span = document.createElement("span");
+                span.className = "author";
+                span.textContent = `${b.AuthorFirst} ${b.AuthorMiddle} ${b.AuthorLast}`;
+                bookInfo.appendChild(span);
+
+                span = document.createElement("span");
+                span.className = "reader";
+                span.textContent = `${b.ReaderFirst} ${b.ReaderMiddle} ${b.ReaderLast}`;
+                bookInfo.appendChild(span);
+
+                const dueDate = new Date(b.DueDate);
+
+                var dueDateDiv = document.createElement("div");
+                dueDateDiv.className = "dueDateDiv";
+                li.appendChild(dueDateDiv);
+
+                span = document.createElement("span");
+                span.className = "month";
+                span.textContent = `${MonthNames[dueDate.getMonth()]}`;
+                dueDateDiv.appendChild(span);
+
+                span = document.createElement("span");
+                span.className = "date";
+                span.textContent = `${dueDate.getDate()}`;
+                dueDateDiv.appendChild(span);
+
+                span = document.createElement("span");
+                span.className = "year";
+                span.textContent = `${dueDate.getFullYear()}`;
+                dueDateDiv.appendChild(span);
 
 
-        li.setAttribute("data-book-id", b.Id.toString());
+                li.setAttribute("data-book-id", b.Id.toString());
 
-        ul.appendChild(li);
-    });
+                ul.appendChild(li);
+            });
 
+            HideLoading();
+        },
+        errorCode => {
+            HideLoading();
+        });
 }
 
+var checkOutBook: Book;
+var checkOutReader: Reader;
 
 function showCheckOut(): void {
     checkOutReader = null;
     checkOutBook = null;
+    (document.querySelector("#checkOut .scanReader") as HTMLButtonElement).disabled = false;
+    (document.querySelector("#checkOut .scanBook") as HTMLButtonElement).disabled = false;
+
     view.hide("#checkOutReader");
     view.hide("#checkOutBook");
     view.hide("#checkOutError");
 }
 
-var checkOutReader: Reader;
-
 function scanReader(): void {
     view.hide("#checkOutError");
     scanBarcode(result => {
-        checkOutReader = getData(`/api/reader/barcode/${result.text} (${result.format})`) as Reader;
+        getDataAsync<Reader>(`/api/reader/barcode/${result.text} (${result.format})`,
+            reader => {
 
-        if (checkOutReader) {
-            document.getElementById("checkOutReader").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
-            view.show("#checkOutReader");
+                checkOutReader = reader;
 
-            if (checkOutBook && checkOutReader) {
-                checkOutTheBook(checkOutReader, checkOutBook);
+                if (checkOutReader) {
+                    document.querySelector("#checkOutReader span").textContent =
+                        checkOutReader.FirstName + " " + checkOutReader.LastName;
+                    view.show("#checkOutReader");
+                    (document.querySelector("#checkOut .scanReader") as HTMLButtonElement).disabled = true;
+
+                    if (checkOutBook && checkOutReader) {
+                        checkOutTheBook(checkOutReader, checkOutBook);
+                    }
+                } else {
+                    view.hide("#checkOutReader");
+                }
+            },
+        errorCode => {
+            if (errorCode === 404) {
+                document.querySelector("#checkOutError span").textContent = "Reader not found";
+            } else {
+                document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
             }
-        } else {
-            document.getElementById("checkOutReader").textContent = "";
-            view.hide("#checkOutReader");
-        }
+            view.show("#checkOutError");
+        });
     });
 }
-
-var checkOutBook: Book;
 
 function scanBook(): void {
     view.hide("#checkOutError");
     scanBarcode(result => {
-        checkOutBook = getData(`/api/book/barcode/${result.text} (${result.format})`) as Book;
+        getDataAsync<Book>(`/api/book/barcode/${result.text} (${result.format})`,
+            book => {
 
-        if (checkOutBook) {
-            document.getElementById("checkOutBook").textContent = checkOutBook.Title;
-            view.show("#checkOutBook");
+                checkOutBook = book;
 
-            if (checkOutBook && checkOutReader) {
-                checkOutTheBook(checkOutReader, checkOutBook);
-            }
-        } else {
-            document.getElementById("checkOutBook").textContent = "";
-            view.hide("#checkOutBook");
-        }
+                if (checkOutBook) {
+                    document.querySelector("#checkOutBook span").textContent = checkOutBook.Title;
+                    view.show("#checkOutBook");
+                    (document.querySelector("#checkOut .scanBook") as HTMLButtonElement).disabled = true;
+
+                    if (checkOutBook && checkOutReader) {
+                        checkOutTheBook(checkOutReader, checkOutBook);
+                    }
+                } else {
+                    document.getElementById("checkOutBook").textContent = "";
+                    view.hide("#checkOutBook");
+                }
+            },
+            errorCode => {
+                if (errorCode === 404) {
+                    document.querySelector("#checkOutError span").textContent = "Book not found";
+                } else {
+                    document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
+                }
+                view.show("#checkOutError");
+            });
     });
 }
 
 function checkOutTheBook(reader: Reader, book: Book) {
     view.hide("#checkOutError");
-    const ok = getData(`/api/books/checkout/${book.Id}/${reader.Id}`) as string;
+    getDataAsync<string>(`/api/books/checkout/${book.Id}/${reader.Id}`,
+        status => {
 
-    if (ok === "ok") {
-        main.viewSection("checkOutSuccess");
-        document.querySelector("#checkOutSuccess .message .topRow .bookMessage").textContent = checkOutBook.Title;
-        document.querySelector("#checkOutSuccess .message .bottomRow .readerMessage").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
+            if (status === "ok") {
+                main.viewSection("checkOutSuccess");
+                document.querySelector("#checkOutSuccess .message .topRow .bookMessage").textContent = checkOutBook.Title;
+                document.querySelector("#checkOutSuccess .message .bottomRow .readerMessage").textContent =
+                    checkOutReader.FirstName + " " + checkOutReader.LastName;
 
-        document.getElementById("checkOutBook").textContent = "";
-        checkOutBook = null;
-    } else {
-        document.getElementById("checkOutError").textContent = ok;
-        view.show("#checkOutError");
-    }
+                checkOutBook = null;
+            } else {
+                document.querySelector("#checkOutError span").textContent = status;
+                view.show("#checkOutError");
+            }
+        },
+        errorCode => {
+            document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
+            view.show("#checkOutError");
+        });
 }
 
 function scanReturn(): void {
     scanBarcode(result => {
-        var returnBook = getData(`/api/book/barcode/${result.text} (${result.format})`) as Book;
+        getDataAsync<Book>(`/api/book/barcode/${result.text} (${result.format})`,
+            returnBook => {
+                getDataAsync<Book>(`/api/books/return/${returnBook.Id}`,
+                    book => {
+                        document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
+                            returnBook.Title;
+                        //document.querySelector("#returnBookSuccess .message .bottomRow .readerInfo").textContent =
+                        //    checkOutReader.FirstName + " " + checkOutReader.LastName;
 
-        if (returnBook) {
-            const ok = getData(`/api/books/return/${returnBook.Id}`) as string;
-
-            if (ok === "ok") {
-                document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
-                    returnBook.Title;
-                //document.querySelector("#returnBookSuccess .message .bottomRow .readerInfo").textContent =
-                //    checkOutReader.FirstName + " " + checkOutReader.LastName;
-
-                main.viewSection("returnBookSuccess");
-            }
-        }
+                        main.viewSection("returnBookSuccess");
+                    },
+                    errorCode => {
+                        if (errorCode === 404) {
+                            document.querySelector("#returnError span").textContent = "Book not found";
+                        } else {
+                            document.querySelector("#returnError span").textContent = `Error ${errorCode}`;
+                        }
+                        view.show("#returnError");
+                    });
+            },
+            errorCode => {
+                if (errorCode === 404) {
+                    document.querySelector("#returnError span").textContent = "Book not found";
+                } else {
+                    document.querySelector("#returnError span").textContent = `Error ${errorCode}`;
+                }
+                view.show("#returnError");
+            });
     });
 }
 
@@ -247,8 +327,6 @@ function addUserSubmit(ev: Event): boolean {
             const field = inputs[i] as HTMLInputElement;
             field.value = "";
         }
-
-        view.hide("#addBarcodeStringContainer");
     }
 
     return false;
@@ -363,7 +441,10 @@ function postData(path: string, data: Object): Object {
 
     xhr.open("POST", serverURL + path, false);
     xhr.setRequestHeader("content-type", "application/json");
+
+    view.show("#loadingOverlay");
     xhr.send(JSON.stringify(data));
+    view.hide("#loadingOverlay");
 
     if (xhr.status === 200) {
         return JSON.parse(xhr.responseText);
@@ -376,13 +457,41 @@ function getData(path: string): Object {
     const xhr = new XMLHttpRequest();
 
     xhr.open("GET", serverURL + path, false);
+
+    view.show("#loadingOverlay");
     xhr.send();
+    view.hide("#loadingOverlay");
 
     if (xhr.status === 200) {
         return JSON.parse(xhr.responseText);
     }
     alert(`Error Received: ${xhr.statusText}`);
     return null;
+}
+
+function getDataAsync<T>(path: string, onSuccess: (response: T) => void, onError?: (errorCode: number) => void): void {
+    getOrPostDataAsync<T>(path, null, onSuccess, onError);
+}
+
+function postDataAsync<T>(path: string, data: Object, onSuccess: (response: T) => void, onError?: (errorCode: number) => void): void {
+    getOrPostDataAsync<T>(path, null, onSuccess, onError);
+}
+
+function getOrPostDataAsync<T>(path: string, data: Object, onSuccess : (response: T) => void, onError? : (errorCode: number) => void) : void {
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                onSuccess(JSON.parse(xhr.responseText) as T);
+            } else {
+                onError(xhr.status);
+            }
+        }
+    };
+
+    xhr.open(data ? "POST" : "GET", serverURL + path, true);
+    xhr.send(data);
 }
 
 interface Reader {
@@ -400,28 +509,52 @@ function initReaders() {
     const ul = document.getElementById("readersList");
     ul.textContent = "";
 
-    const readers = getData(`/api/readers/${currentLibrary.Id}`) as Array<Reader>;
+    view.show("#loadingOverlay");
 
-    readers.forEach(r => {
-        const li = document.createElement("li") as HTMLLIElement;
-        li.addEventListener("click",
-            () => {
-                currentEditUser = r;
-                main.viewSection("editUser");
+    getDataAsync<Array<Reader>>(`/api/readers/${currentLibrary.Id}`,
+        readers => {
+
+            readers.forEach(r => {
+                const li = document.createElement("li") as HTMLLIElement;
+                li.addEventListener("click",
+                    () => {
+                        currentEditUser = r;
+                        main.viewSection("editUser");
+                    });
+
+                var span = document.createElement("span");
+                span.className = "name";
+                span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
+                li.appendChild(span);
+
+                span = document.createElement("span");
+                span.className = "barcode";
+                span.textContent = r.Barcode || "—";
+                li.appendChild(span);
+
+                ul.appendChild(li);
             });
 
-        var span = document.createElement("span");
-        span.className = "name";
-        span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
-        li.appendChild(span);
+            HideLoading();
+        },
+        errorCode => {
+            HideLoading();
+        });
+}
 
-        span = document.createElement("span");
-        span.className = "barcode";
-        span.textContent = r.Barcode || "—";
-        li.appendChild(span);
+function HideLoading(): void {
+    var loading = document.querySelector("#loadingOverlay") as HTMLElement;
 
-        ul.appendChild(li);
-    });
+    function LoadingEnd(): void {
+        loading.removeEventListener("transitionend", LoadingEnd);
+        view.hide("#loadingOverlay");
+        loading.style.removeProperty("transition");
+        loading.style.removeProperty("opacity");
+    }
+
+    loading.addEventListener("transitionend", LoadingEnd);
+    loading.style.transition = "opacity 200ms linear";
+    loading.style.opacity = "0";
 }
 
 const scannerSetUp = {
@@ -453,7 +586,6 @@ function onEditUserGetBarcode(): void {
     });
 }
 
-
 interface Librarian {
     FirstName: string;
     LastName: string;
@@ -462,15 +594,19 @@ interface Librarian {
 
 function onSignInGetBarcode(): void {
     scanBarcode(result => {
-        currentLibrary = getData(`/api/signin/${result.text} (${result.format})`) as Library;
+        getDataAsync<Library>(`/api/signin/${result.text} (${result.format})`,
+            library => {
 
-        if (currentLibrary) {
-            document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
-            document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
-            document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                currentLibrary = library;
 
-            main.viewSection("hub");
-        }
+                if (currentLibrary) {
+                    document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
+                    document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
+                    document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+
+                    main.viewSection("hub");
+                }
+            });
     });
 }
 

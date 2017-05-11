@@ -15,7 +15,7 @@
             <input type="text" placeholder="Country" name="Country" required/>
         </p>
         <p>
-            <input type="submit" value="Add Library"/>
+            <button type="submit" class="addNewButton"><i class="fa fa-plus" aria-hidden="true"></i> Add Library</button>
         </p>
     </form>
 </asp:Content>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
@@ -7,23 +8,18 @@ namespace website.admin
 {
     public partial class books : Page
     {
+        private static readonly Regex rxBarcodeSuffix = new Regex(@"\s*\([^\)]+\)\s*$", RegexOptions.Compiled);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             using (var db = new favlEntities())
             {
                 var list = db.Books.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).OrderBy(b => b.Title).ToList();
                 var listHeader = new HtmlGenericControl("li");
-                listHeader.InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>";
+                listHeader.InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode (EAN_13)</span><span class='reader'>Checked Out To</span><span></span><span></span>";
                 listHeader.Attributes.Add("class", "listAsTableHeader");
 
                 insertList.Controls.Add(listHeader);
-                //insertList.Controls.Add(
-                //    new HtmlGenericControl("li")
-                //    {
-                //        InnerHtml =
-                //            "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode</span><span class='reader'>Checked Out To</span><span></span><span></span>"
-                //    }
-                //);
 
                 foreach (var book in list)
                 {
@@ -45,7 +41,7 @@ namespace website.admin
 
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "barcode");
-                    span.InnerText = book.Barcode ?? "—";
+                    span.InnerText = rxBarcodeSuffix.Replace(book.Barcode ?? "—", string.Empty);
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");

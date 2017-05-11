@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using Microsoft.SqlServer.Server;
 
 namespace website.admin
 {
@@ -9,25 +10,19 @@ namespace website.admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var WeAreGod = (Master as Admin)?.IsGod ?? false;
+
             using (var db = new favlEntities())
             {
                 var list = db.Libraries.ToList();
 
                 var listHeader = new HtmlGenericControl("li");
-                listHeader.InnerHtml = "<span class='name'>Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>";
+
+                listHeader.InnerHtml =
+                    "<span class='name'>Community</span><span class='country'>Country</span><span></span>" + (WeAreGod ? "<span></span>" : string.Empty);
                 listHeader.Attributes.Add("class", "listAsTableHeader");
 
                 insertList.Controls.Add(listHeader);
-
-
-                //insertList.Controls.Add(
-                //    new HtmlGenericControl("li")
-                //    {
-                //        InnerHtml =
-                //            "<span class='name'>Name</span><span class='village'>Village</span><span class='country'>Country</span><span></span><span></span>"
-                //    }
-                //);
-
 
                 foreach (var library in list)
                 {
@@ -38,18 +33,15 @@ namespace website.admin
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");
-                    span.Attributes.Add("class", "village");
-                    span.InnerText = library.Village;
-                    li.Controls.Add(span);
-
-                    span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "country");
                     span.InnerText = library.Country;
                     li.Controls.Add(span);
 
                     li.Controls.Add(
                         new LiteralControl(
-                            $"<span class='edit'><a href='editLibrary.aspx?id={library.Id}'>Edit</a></span><span class='delete'><a href='javascript:deleteLibrary({library.Id}, \"{library.Name}\")'>Delete</a></span>")
+                            $"<span class='edit'><a href='editLibrary.aspx?id={library.Id}'>Edit</a></span>" + (WeAreGod
+                                ? $"<span class='delete'><a href='javascript:deleteLibrary({library.Id}, \"{library.Name}\")'>Delete</a></span>"
+                                : string.Empty))
                     );
 
                     insertList.Controls.Add(li);

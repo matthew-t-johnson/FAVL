@@ -9,18 +9,30 @@
     <h1>Edit Librarian</h1>
     <form id="dbForm" class="dbForm" runat="server">
         <p>
-            <uc1:librarySelect runat="server" ID="librarySelect"/>
+            <input type="text" placeholder="First Name" name="FirstName" required />
         </p>
         <p>
-            <input type="text" placeholder="Barcode" name="Barcode" required pattern="^\d{7}$" title="7-digit CODE_128 Barcode Number"/>
+            <input type="text" placeholder="Last Name" name="LastName" required />
         </p>
         <p>
-            <input type="submit" value="Save Changes"/>&emsp;<input type="button" value="Cancel" onclick="location.href = 'librarians.aspx'"/>
+            <input type="text" placeholder="Username" name="Username" required />
+        </p>
+        <p>
+            <uc1:librarySelect runat="server" ID="librarySelect" />
+        </p>
+        <p>
+            <input type="text" placeholder="Barcode" name="Barcode" required pattern="^\d{7}$" title="7-digit CODE_128 Barcode Number" />
+        </p>
+        <p>
+            <input type="submit" value="Save Changes" />&emsp;<input type="button" value="Cancel" onclick="location.href = 'librarians.aspx'" />
         </p>
     </form>
-    <asp:placeholder id="insertLibrarian" runat="server"></asp:placeholder>
+    <asp:PlaceHolder ID="insertLibrarian" runat="server"></asp:PlaceHolder>
     <script>
         document.querySelector("input[name='Barcode']").value = librarian.Barcode;
+        document.querySelector("input[name='FirstName']").value = librarian.FirstName;
+        document.querySelector("input[name='LastName']").value = librarian.LastName;
+        document.querySelector("input[name='Username']").value = librarian.Username;
         var libraryOption = document.querySelector("option[value='" + librarian.LibraryID + "']");
 
         if (libraryOption)

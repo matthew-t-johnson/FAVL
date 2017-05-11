@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
@@ -7,6 +8,8 @@ namespace website.admin
 {
     public partial class readers : Page
     {
+        private static readonly Regex rxBarcodeSuffix = new Regex(@"\s*\([^\)]+\)\s*$", RegexOptions.Compiled);
+
         protected void Page_Load(object sender, EventArgs e)
         {
             using (var db = new favlEntities())
@@ -14,7 +17,7 @@ namespace website.admin
                 var list = db.Readers.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).OrderBy(r => r.LastName).ThenBy(r => r.FirstName).ToList();
 
                 var listHeader = new HtmlGenericControl("li");
-                listHeader.InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode</span><span class='library'>Library</span><span class='checkouts'>Checkouts</span><span></span><span></span>";
+                listHeader.InnerHtml = "<span class='reader'>Name</span><span class='barcode'>Barcode (CODE_128)</span><span class='library'>Community</span><span class='checkouts'>Checkouts</span><span></span><span></span>";
                 listHeader.Attributes.Add("class", "listAsTableHeader");
 
                 insertList.Controls.Add(listHeader);
@@ -31,7 +34,7 @@ namespace website.admin
 
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "barcode");
-                    span.InnerText = reader.Barcode ?? string.Empty;
+                    span.InnerText = rxBarcodeSuffix.Replace(reader.Barcode ?? "—", string.Empty);
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");
@@ -39,10 +42,9 @@ namespace website.admin
                     span.InnerText = reader.Library?.Name ?? string.Empty;
                     li.Controls.Add(span);
 
-
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "checkouts");
-                    span.InnerText = reader.TotalCheckouts.ToString("#,###;;None");
+                    span.InnerText = reader.TotalCheckouts.ToString("#,###;;0");
                     li.Controls.Add(span);
 
                     li.Controls.Add(
