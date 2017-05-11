@@ -22,7 +22,7 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
                 view("#" + id);
                 newPanel.classList.remove("current" + suffix);
                 currentPanel.classList.remove("outgoing" + suffix);
-            }, 300);
+            }, 200);
         }, 0);
     }
     exports.viewSection = viewSection;
