@@ -83,15 +83,14 @@ section .wrapper .listList li {
   border-radius: 7px;
   text-transform: none;
 }
-section .wrapper .listList li.veryOverdue {
+section .wrapper .listList li.veryOverdue,
+section .wrapper .listList li.slightlyOverdue {
   background-color: #d25757;
   color: white;
 }
-section .wrapper .listList li.veryOverdue .bookInfo .reader {
+section .wrapper .listList li.veryOverdue .bookInfo .reader,
+section .wrapper .listList li.slightlyOverdue .bookInfo .reader {
   color: white;
-}
-section .wrapper .listList li.notOverdue {
-  background-color: lightgreen;
 }
 section .wrapper .listList li .title,
 section .wrapper .listList li .name {
@@ -147,7 +146,7 @@ section .wrapper .listList li .dueDateDiv span.date {
 }
 section .wrapper .listList li .dueDateDiv span.year {
   font-size: 10pt;
-  transform: scaleX(1.2);
+  letter-spacing: 1.5px;
 }
 #hub {
   background-image: url('../images/success_background_2.jpg');
@@ -550,13 +549,34 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   outline: none !important;
   border: 1px solid #0B697F;
 }
+#checkOut .buttonWrapper {
+  position: relative;
+  top: 40%;
+}
 #checkOut .scanReader,
 #checkOut .scanBook {
-  margin-top: 300PX;
   border-style: none;
   width: 45%;
   min-height: 200px;
   background-color: rgba(255, 255, 255, 0.85);
+  margin-right: 5px;
+}
+#checkOut .scanReader:disabled,
+#checkOut .scanBook:disabled {
+  opacity: 0.6;
+}
+#checkOut .scanReader:active,
+#checkOut .scanBook:active {
+  background-color: rgba(11, 105, 127, 0.7);
+  color: white;
+}
+#checkOut .scanReader:active i,
+#checkOut .scanBook:active i {
+  color: white;
+}
+#checkOut .scanReader:active h1,
+#checkOut .scanBook:active h1 {
+  color: white;
 }
 #checkOut .scanReader i,
 #checkOut .scanBook i {
@@ -570,31 +590,16 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   font-size: 14px;
   text-transform: uppercase;
 }
-#checkOut .scanReader {
-  margin-right: 5px;
-}
-#checkOut .scanReader:active {
-  background-color: rgba(11, 105, 127, 0.7);
+#checkOutReader,
+#checkOutBook {
   color: white;
+  font-weight: 400;
+  text-transform: none;
 }
-#checkOut .scanReader:active i {
-  color: white;
-}
-#checkOut .scanReader:active h1 {
-  color: white;
-}
-#checkOut .scanBook {
-  margin-left: 5px;
-}
-#checkOut .scanBook:active {
-  background-color: rgba(11, 105, 127, 0.7);
-  color: white;
-}
-#checkOut .scanBook:active i {
-  color: white;
-}
-#checkOut .scanBook:active h1 {
-  color: white;
+#checkOutError,
+#returnError {
+  color: lightcoral;
+  font-weight: 400;
 }
 #returnBook .bottomButtonWrapper {
   height: 100%;
@@ -648,8 +653,8 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
 }
 .success .successWrapper i {
   font-size: 100pt;
-  padding-top: 15%;
-  padding-bottom: 15%;
+  padding-top: 12%;
+  padding-bottom: 12%;
   color: #74d488;
 }
 .success .successWrapper .message {
@@ -662,23 +667,16 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   /*height: 200px;*/
   border-radius: 10px;
   text-align: left;
-}
-.success .successWrapper .message .topRow {
-  padding-top: 5%;
-  padding-left: 3%;
-}
-.success .successWrapper .message .bottomRow {
-  padding-bottom: 5%;
-  padding-left: 3%;
+  padding: 5%;
 }
 .success .successWrapper .message i {
-  font-size: 1.5em;
+  font-size: 16pt;
   display: inline-block;
   padding: 0;
   color: #1e363a;
 }
 .success .successWrapper .message p {
-  display: inline-block;
+  display: inline;
   margin: 0;
   font-size: 16pt;
   font-weight: 100;
@@ -687,14 +685,14 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
   text-transform: capitalize;
 }
 .success .successWrapper .message p.messageDescription {
-  font-size: 10pt;
-  padding: 10% 0;
+  font-size: 11pt;
   font-weight: 400;
   vertical-align: unset;
-  padding-left: 5%;
   text-transform: uppercase;
-  /*color: #6dea87;*/
-  color: #1e363a;
+  color: rgba(255, 255, 255, 0.75);
+  display: block;
+  margin: 5% 0;
+  padding: 0;
 }
 .success .successButtonWrapper {
   height: 12%;
@@ -758,9 +756,6 @@ section#editUser .wrapper .mainBodyWrapper .userForm .formTable input:focus {
 #editUserSuccess .message .userBarcode::before {
   content: "Barcode: ";
   font-size: 12pt;
-}
-#returnBookSuccess .messageDescription {
-  padding-bottom: 5%;
 }
 section.incoming {
   transform: translateX(100%);

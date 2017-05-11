@@ -411,20 +411,29 @@ namespace website.Controllers
 
         [HttpGet]
         [Route("api/books/return/{bookID}")]
-        public string ReturnBook(int bookID)
+        public Book ReturnBook(int bookID)
         {
             using (var db = new favlEntities())
             {
                 var book = db.Books.Find(bookID);
 
                 if (book == null)
-                    return "Book not found";
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
 
                 book.CheckedOutTo = null;
+                book.CheckedOutDate = null;
 
                 db.SaveChanges();
 
-                return "ok";
+                return new Book
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    AuthorFirst = book.AuthorFirst,
+                    AuthorMiddle = book.AuthorMiddle,
+                    AuthorLast = book.AuthorLast,
+                    Barcode = book.Barcode
+                };
             }
         }
 

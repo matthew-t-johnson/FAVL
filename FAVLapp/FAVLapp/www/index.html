@@ -178,7 +178,7 @@
                                                         <h3 class="barcodeStringLabel">Barcode Number</h3>
                                                     </td>
                                                     <td class="inputCell">
-                                                        <input type="text" id="addBarcodeString" name="Barcode" readonly />
+                                                        <input type="text" id="addBarcodeString" name="Barcode" readonly required />
                                                     </td>
                                                     <td class="iconCell">
                                                         <i class="fa fa-thumbs-up fa-flip-horizontal" aria-hidden="true"></i>
@@ -486,7 +486,7 @@
                     </tr>
                 </table>
             </div>
-            <div>
+            <div class="buttonWrapper">
                 <button type="button" class="scanReader">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <h1>Scan Reader</h1>
@@ -495,9 +495,9 @@
                     <i class="fa fa-book" aria-hidden="true"></i>
                     <h1>Scan Book</h1>
                 </button>
-                <h3 id="checkOutReader"></h3>
-                <h3 id="checkOutBook"></h3>
-                <h3 id="checkOutError" hidden></h3>
+                <h3 id="checkOutReader" hidden><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span></span></h3>
+                <h3 id="checkOutBook" hidden><i class="fa fa-book fa-fw" aria-hidden="true"></i> <span></span></h3>
+                <h3 id="checkOutError" hidden><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> <span></span></h3>
             </div>
         </div>
     </section>
@@ -556,6 +556,7 @@
                         <i class="fa fa-book" aria-hidden="true"></i>
                         <h1>Scan Book</h1>
                     </button>
+                    <h3 id="returnError" hidden><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> <span></span></h3>
                 </div>
             </div>
         </div>
@@ -572,12 +573,7 @@
                         <i class="fa fa-book" aria-hidden="true"></i>
                         <p class="bookMessage"></p>
                     </div>
-                    <p class="messageDescription">Has been returned by</p>
-                    <!--<div class="bottomRow">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                        <p class="readerMessage"></p>
-                    </div>-->
-                </div>
+                 </div>
             </div>
             <div class="successButtonWrapper">
                 <button id="returnAgainButton" class="againButton">

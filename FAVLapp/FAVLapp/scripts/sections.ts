@@ -3,11 +3,13 @@ import view = require("../lib/view");
 
 export function init(): void {
     document.getElementById("readers").addEventListener("view:show", initReaders);
+    document.getElementById("addUser").addEventListener("view:show", showAddUser);
     document.getElementById("editUser").addEventListener("view:show", showEditUser);
     document.getElementById("addUserSuccess").addEventListener("view:show", showAddUserSuccess);
     document.getElementById("inventory").addEventListener("view:show", showInventory);
     document.getElementById("overDue").addEventListener("view:show", showOverDue);
     document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
+    
 
 
     document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
@@ -38,6 +40,13 @@ interface Book {
     ReaderMiddle: string;
     ReaderLast: string;
     DaysOverDue?: number;
+}
+
+function showAddUser(): void {
+    (document.querySelector("#addUser input[name='FirstName']") as HTMLInputElement).value =  "";
+    (document.querySelector("#addUser input[name='MiddleName']") as HTMLInputElement).value = "";
+    (document.querySelector("#addUser input[name='LastName']") as HTMLInputElement).value = "";
+    (document.querySelector("#addUser input[name='Barcode']") as HTMLInputElement).value = "";
 }
 
 function showEditUser(): void {
@@ -149,6 +158,9 @@ var checkOutReader: Reader;
 function showCheckOut(): void {
     checkOutReader = null;
     checkOutBook = null;
+    (document.querySelector("#checkOut .scanReader") as HTMLButtonElement).disabled = false;
+    (document.querySelector("#checkOut .scanBook") as HTMLButtonElement).disabled = false;
+
     view.hide("#checkOutReader");
     view.hide("#checkOutBook");
     view.hide("#checkOutError");
@@ -163,18 +175,26 @@ function scanReader(): void {
                 checkOutReader = reader;
 
                 if (checkOutReader) {
-                    document.getElementById("checkOutReader").textContent =
+                    document.querySelector("#checkOutReader span").textContent =
                         checkOutReader.FirstName + " " + checkOutReader.LastName;
                     view.show("#checkOutReader");
+                    (document.querySelector("#checkOut .scanReader") as HTMLButtonElement).disabled = true;
 
                     if (checkOutBook && checkOutReader) {
                         checkOutTheBook(checkOutReader, checkOutBook);
                     }
                 } else {
-                    document.getElementById("checkOutReader").textContent = "";
                     view.hide("#checkOutReader");
                 }
-            });
+            },
+        errorCode => {
+            if (errorCode === 404) {
+                document.querySelector("#checkOutError span").textContent = "Reader not found";
+            } else {
+                document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
+            }
+            view.show("#checkOutError");
+        });
     });
 }
 
@@ -187,8 +207,9 @@ function scanBook(): void {
                 checkOutBook = book;
 
                 if (checkOutBook) {
-                    document.getElementById("checkOutBook").textContent = checkOutBook.Title;
+                    document.querySelector("#checkOutBook span").textContent = checkOutBook.Title;
                     view.show("#checkOutBook");
+                    (document.querySelector("#checkOut .scanBook") as HTMLButtonElement).disabled = true;
 
                     if (checkOutBook && checkOutReader) {
                         checkOutTheBook(checkOutReader, checkOutBook);
@@ -197,43 +218,71 @@ function scanBook(): void {
                     document.getElementById("checkOutBook").textContent = "";
                     view.hide("#checkOutBook");
                 }
+            },
+            errorCode => {
+                if (errorCode === 404) {
+                    document.querySelector("#checkOutError span").textContent = "Book not found";
+                } else {
+                    document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
+                }
+                view.show("#checkOutError");
             });
     });
 }
 
 function checkOutTheBook(reader: Reader, book: Book) {
     view.hide("#checkOutError");
-    const ok = getData(`/api/books/checkout/${book.Id}/${reader.Id}`) as string;
+    getDataAsync<string>(`/api/books/checkout/${book.Id}/${reader.Id}`,
+        status => {
 
-    if (ok === "ok") {
-        main.viewSection("checkOutSuccess");
-        document.querySelector("#checkOutSuccess .message .topRow .bookMessage").textContent = checkOutBook.Title;
-        document.querySelector("#checkOutSuccess .message .bottomRow .readerMessage").textContent = checkOutReader.FirstName + " " + checkOutReader.LastName;
+            if (status === "ok") {
+                main.viewSection("checkOutSuccess");
+                document.querySelector("#checkOutSuccess .message .topRow .bookMessage").textContent = checkOutBook.Title;
+                document.querySelector("#checkOutSuccess .message .bottomRow .readerMessage").textContent =
+                    checkOutReader.FirstName + " " + checkOutReader.LastName;
 
-        document.getElementById("checkOutBook").textContent = "";
-        checkOutBook = null;
-    } else {
-        document.getElementById("checkOutError").textContent = ok;
-        view.show("#checkOutError");
-    }
+                checkOutBook = null;
+            } else {
+                document.querySelector("#checkOutError span").textContent = status;
+                view.show("#checkOutError");
+            }
+        },
+        errorCode => {
+            document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
+            view.show("#checkOutError");
+        });
 }
 
 function scanReturn(): void {
     scanBarcode(result => {
-        var returnBook = getData(`/api/book/barcode/${result.text} (${result.format})`) as Book;
+        getDataAsync<Book>(`/api/book/barcode/${result.text} (${result.format})`,
+            returnBook => {
+                getDataAsync<Book>(`/api/books/return/${returnBook.Id}`,
+                    book => {
+                        document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
+                            returnBook.Title;
+                        //document.querySelector("#returnBookSuccess .message .bottomRow .readerInfo").textContent =
+                        //    checkOutReader.FirstName + " " + checkOutReader.LastName;
 
-        if (returnBook) {
-            const ok = getData(`/api/books/return/${returnBook.Id}`) as string;
-
-            if (ok === "ok") {
-                document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
-                    returnBook.Title;
-                //document.querySelector("#returnBookSuccess .message .bottomRow .readerInfo").textContent =
-                //    checkOutReader.FirstName + " " + checkOutReader.LastName;
-
-                main.viewSection("returnBookSuccess");
-            }
-        }
+                        main.viewSection("returnBookSuccess");
+                    },
+                    errorCode => {
+                        if (errorCode === 404) {
+                            document.querySelector("#returnError span").textContent = "Book not found";
+                        } else {
+                            document.querySelector("#returnError span").textContent = `Error ${errorCode}`;
+                        }
+                        view.show("#returnError");
+                    });
+            },
+            errorCode => {
+                if (errorCode === 404) {
+                    document.querySelector("#returnError span").textContent = "Book not found";
+                } else {
+                    document.querySelector("#returnError span").textContent = `Error ${errorCode}`;
+                }
+                view.show("#returnError");
+            });
     });
 }
 
@@ -263,8 +312,6 @@ function addUserSubmit(ev: Event): boolean {
             const field = inputs[i] as HTMLInputElement;
             field.value = "";
         }
-
-        view.hide("#addBarcodeStringContainer");
     }
 
     return false;
@@ -473,11 +520,26 @@ function initReaders() {
                 ul.appendChild(li);
             });
 
-            view.hide("#loadingOverlay");
+            HideLoading();
         },
         errorCode => {
-            view.hide("#loadingOverlay");
+            HideLoading();
         });
+}
+
+function HideLoading(): void {
+    var loading = document.querySelector("#loadingOverlay") as HTMLElement;
+
+    function LoadingEnd(): void {
+        loading.removeEventListener("transitionend", LoadingEnd);
+        view.hide("#loadingOverlay");
+        loading.style.removeProperty("transition");
+        loading.style.removeProperty("opacity");
+    }
+
+    loading.addEventListener("transitionend", LoadingEnd);
+    loading.style.transition = "opacity 200ms linear";
+    loading.style.opacity = "0";
 }
 
 const scannerSetUp = {
