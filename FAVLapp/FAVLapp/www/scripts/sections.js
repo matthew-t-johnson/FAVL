@@ -1,5 +1,6 @@
 define(["require", "exports", "./main", "../lib/view"], function (require, exports, main, view) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function init() {
         document.getElementById("readers").addEventListener("view:show", initReaders);
         document.getElementById("addUser").addEventListener("view:show", showAddUser);
@@ -36,6 +37,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     function showInventory() {
         var ul = document.getElementById("inventoryList");
         ul.textContent = "";
+        view.show("#loadingOverlay");
         getDataAsync("/api/books/" + currentLibrary.Id, function (books) {
             books.forEach(function (b) {
                 var li = document.createElement("li");
@@ -50,12 +52,16 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 li.setAttribute("data-book-id", b.Id.toString());
                 ul.appendChild(li);
             });
+            HideLoading();
+        }, function (errorCode) {
+            HideLoading();
         });
     }
     var MonthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     function showOverDue() {
         var ul = document.getElementById("overDueList");
         ul.textContent = "";
+        view.show("#loadingOverlay");
         getDataAsync("/api/books/overdue/" + currentLibrary.Id, function (books) {
             books.forEach(function (b) {
                 var li = document.createElement("li");
@@ -102,6 +108,9 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 li.setAttribute("data-book-id", b.Id.toString());
                 ul.appendChild(li);
             });
+            HideLoading();
+        }, function (errorCode) {
+            HideLoading();
         });
     }
     var checkOutBook;

@@ -1,5 +1,6 @@
 define(["require", "exports", "./sections", "../lib/view"], function (require, exports, Sections, view) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     function mainInit() {
         initClick();
         Sections.init();
@@ -21,7 +22,7 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
                 view("#" + id);
                 newPanel.classList.remove("current" + suffix);
                 currentPanel.classList.remove("outgoing" + suffix);
-            }, 200);
+            }, 300);
         }, 0);
     }
     exports.viewSection = viewSection;
