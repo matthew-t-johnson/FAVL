@@ -3,5 +3,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>FAVL Libraries</h1>
-    <div id="insertData" runat="server"></div>
+    <div id="insertData"  class="libraryTileContainer" runat="server"></div>
 </asp:Content>
