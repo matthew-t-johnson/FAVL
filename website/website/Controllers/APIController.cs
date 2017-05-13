@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -11,7 +12,12 @@ namespace website.Controllers
 {
     public class APIController : ApiController
     {
-        private static readonly Regex rxLeadingArticles = new Regex(@"^(?:(?<art>A|The)\s+)?(?<title>.*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex rxLeadingArticles = new Regex(@"^(?:(?<art>An?|The)\s+)?(?<title>.*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        public static string CleanUpBookTitle(Book book)
+        {
+            return rxLeadingArticles.Replace(book.Title, m => string.IsNullOrEmpty(m.Groups["art"].Value) ? m.Value : $"{m.Groups["title"].Value}, {m.Groups["art"].Value}");
+        }
 
         [HttpPost]
         [Route("api/book/add")]
@@ -311,13 +317,14 @@ namespace website.Controllers
 
         [HttpGet]
         [Route("api/books/overdue/{libraryID}")]
+        [SuppressMessage("ReSharper", "PossibleInvalidOperationException")]
         public List<OverDueBook> GetOverDueBooks(int libraryID)
         {
-            var overDueIfCheckedOutBefore = DateTime.UtcNow.AddDays(-7);
+            var overDueIfCheckedOutBefore = DateTime.UtcNow.Date.AddDays(-7);
 
             using (var db = new favlEntities())
             {
-                var list = db.Books.Where(b => b.LibraryID == libraryID && b.CheckedOutDate != null && b.CheckedOutTo != null).OrderBy(b => b.CheckedOutDate).ToList().Select(book => new OverDueBook
+                var list = db.Books.Where(b => b.LibraryID == libraryID && b.CheckedOutDate != null && b.CheckedOutTo != null).ToList().Select(book => new OverDueBook
                 {
                     Id = book.Id,
                     Title = CleanUpBookTitle(book),
@@ -328,10 +335,9 @@ namespace website.Controllers
                     ReaderFirst = book.Reader.FirstName,
                     ReaderMiddle = book.Reader.MiddleName,
                     ReaderLast = book.Reader.LastName,
-                    CheckedOutDate = book.CheckedOutDate,
-                    // ReSharper disable once PossibleInvalidOperationException
-                    DaysOverDue = (overDueIfCheckedOutBefore - book.CheckedOutDate.Value).TotalDays
-                }).ToList();
+                    CheckedOutDate = book.CheckedOutDate.Value.Date,
+                    DaysOverDue = (overDueIfCheckedOutBefore - book.CheckedOutDate.Value.Date).TotalDays
+                }).OrderBy(b => b.CheckedOutDate.Value).ThenBy(b => b.Title).ToList();
 
                 foreach (var item in list)
                     if (item.CheckedOutDate.HasValue)
@@ -532,11 +538,6 @@ namespace website.Controllers
 
                 return "ok";
             }
-        }
-
-        private static string CleanUpBookTitle(Book book)
-        {
-            return rxLeadingArticles.Replace(book.Title, m => string.IsNullOrEmpty(m.Groups["art"].Value) ? m.Value : $"{m.Groups["title"].Value}, {m.Groups["art"].Value}");
         }
 
         public class BookInfo
