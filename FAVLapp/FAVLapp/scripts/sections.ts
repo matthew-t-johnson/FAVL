@@ -426,8 +426,8 @@ function signInSubmit(ev: Event): boolean {
     return false;
 }
 
-//const serverURL = "http://localhost:51754";
-const serverURL = "https://favl.azurewebsites.net";
+const serverURL = "http://localhost:51754";
+//const serverURL = "https://favl.azurewebsites.net";
 
 function postData(path: string, data: Object): Object {
     const xhr = new XMLHttpRequest();
@@ -524,7 +524,7 @@ function initReaders() {
 
                 var span = document.createElement("span");
                 span.className = "name";
-                span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
+                span.textContent = `${r.LastName}, ${r.FirstName} ${r.MiddleName}`;
                 li.appendChild(span);
 
                 span = document.createElement("span");

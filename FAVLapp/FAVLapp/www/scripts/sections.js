@@ -311,8 +311,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         }
         return false;
     }
-    //const serverURL = "http://localhost:51754";
-    var serverURL = "https://favl.azurewebsites.net";
+    var serverURL = "http://localhost:51754";
+    //const serverURL = "https://favl.azurewebsites.net";
     function postData(path, data) {
         var xhr = new XMLHttpRequest();
         //xhr.onreadystatechange = function () {
@@ -379,7 +379,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 });
                 var span = document.createElement("span");
                 span.className = "name";
-                span.textContent = r.FirstName + " " + r.MiddleName + " " + r.LastName;
+                span.textContent = r.LastName + ", " + r.FirstName + " " + r.MiddleName;
                 li.appendChild(span);
                 span = document.createElement("span");
                 span.className = "barcode";
