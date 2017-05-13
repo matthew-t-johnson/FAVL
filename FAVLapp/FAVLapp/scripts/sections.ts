@@ -9,22 +9,19 @@ export function init(): void {
     document.getElementById("inventory").addEventListener("view:show", showInventory);
     document.getElementById("overDue").addEventListener("view:show", showOverDue);
     document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
-    
-
 
     document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
     document.getElementById("editUserForm").addEventListener("submit", editUserSubmit);
-
     document.getElementById("signInForm").addEventListener("submit", signInSubmit);
-
 
     document.getElementById("addBarcodeButton").addEventListener("click", onAddUserGetBarcode);
     document.getElementById("editBarcodeButton").addEventListener("click", onEditUserGetBarcode);
-
     document.getElementById("signInBarcode").addEventListener("click", onSignInGetBarcode);
     document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
     document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
     document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
+
+    document.querySelector("#errorOverlay button").addEventListener("click", clearErrorMessage);
 }
 
 interface Book {
@@ -85,10 +82,11 @@ function showInventory(): void {
                 ul.appendChild(li);
             });
 
-            HideLoading();
+            hideLoading();
         },
         errorCode => {
-            HideLoading();
+            hideLoading();
+            showErrorMessage(errorCode);
         });
 }
 
@@ -160,10 +158,11 @@ function showOverDue(): void {
                 ul.appendChild(li);
             });
 
-            HideLoading();
+            hideLoading();
         },
         errorCode => {
-            HideLoading();
+            hideLoading();
+            showErrorMessage(errorCode);
         });
 }
 
@@ -203,10 +202,10 @@ function scanReader(): void {
                 }
             },
         errorCode => {
-            if (errorCode === 404) {
+            if (errorCode === HTTPStatusCodes.NOT_FOUND) {
                 document.querySelector("#checkOutError span").textContent = "Reader not found";
             } else {
-                document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
+                document.querySelector("#checkOutError span").textContent = `Error ${errorCode} ${HTTPStatusCodes[errorCode]}`;
             }
             view.show("#checkOutError");
         });
@@ -235,7 +234,7 @@ function scanBook(): void {
                 }
             },
             errorCode => {
-                if (errorCode === 404) {
+                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#checkOutError span").textContent = "Book not found";
                 } else {
                     document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
@@ -273,16 +272,14 @@ function scanReturn(): void {
         getDataAsync<Book>(`/api/book/barcode/${result.text} (${result.format})`,
             returnBook => {
                 getDataAsync<Book>(`/api/books/return/${returnBook.Id}`,
-                    book => {
+                    () => {
                         document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
                             returnBook.Title;
-                        //document.querySelector("#returnBookSuccess .message .bottomRow .readerInfo").textContent =
-                        //    checkOutReader.FirstName + " " + checkOutReader.LastName;
 
                         main.viewSection("returnBookSuccess");
                     },
                     errorCode => {
-                        if (errorCode === 404) {
+                        if (errorCode === HTTPStatusCodes.NOT_FOUND) {
                             document.querySelector("#returnError span").textContent = "Book not found";
                         } else {
                             document.querySelector("#returnError span").textContent = `Error ${errorCode}`;
@@ -291,7 +288,7 @@ function scanReturn(): void {
                     });
             },
             errorCode => {
-                if (errorCode === 404) {
+                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#returnError span").textContent = "Book not found";
                 } else {
                     document.querySelector("#returnError span").textContent = `Error ${errorCode}`;
@@ -412,16 +409,33 @@ function signInSubmit(ev: Event): boolean {
         data[field.name] = prepField(field.value);
     }
 
-    currentLibrary = postData("/api/signin", data) as Library;
+    view.show("#loadingOverlay");
 
-    if (currentLibrary) {
-        document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
-        document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
-        document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+    postDataAsync<Library>("/api/signin", data,
+        library => {
+            hideLoading();
 
-        //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
-        main.viewSection("hub");
-    }
+            currentLibrary = library;
+
+            if (currentLibrary) {
+                document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
+                document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
+                document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+
+                //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                main.viewSection("hub");
+            }
+        },
+        errorCode => {
+            hideLoading();
+
+            if (errorCode === HTTPStatusCodes.NOT_FOUND)
+                showErrorMessage("Username not found");
+            else if (errorCode === HTTPStatusCodes.UNAUTHORIZED)
+                showErrorMessage("Incorrect password");
+            else
+                showErrorMessage(errorCode);
+        });
 
     return false;
 }
@@ -432,13 +446,6 @@ const serverURL = "http://localhost:51754";
 function postData(path: string, data: Object): Object {
     const xhr = new XMLHttpRequest();
 
-    //xhr.onreadystatechange = function () {
-    //    if (xhr.readyState === XMLHttpRequest.DONE) {
-    //        alert(xhr.responseText);
-    //    }
-    //}
-    //xhr.onerror = () => alert("XHR Error");
-
     xhr.open("POST", serverURL + path, false);
     xhr.setRequestHeader("content-type", "application/json");
 
@@ -446,23 +453,7 @@ function postData(path: string, data: Object): Object {
     xhr.send(JSON.stringify(data));
     view.hide("#loadingOverlay");
 
-    if (xhr.status === 200) {
-        return JSON.parse(xhr.responseText);
-    }
-    alert(`Error Received: ${xhr.statusText}`);
-    return null;
-}
-
-function getData(path: string): Object {
-    const xhr = new XMLHttpRequest();
-
-    xhr.open("GET", serverURL + path, false);
-
-    view.show("#loadingOverlay");
-    xhr.send();
-    view.hide("#loadingOverlay");
-
-    if (xhr.status === 200) {
+    if (xhr.status === HTTPStatusCodes.OK) {
         return JSON.parse(xhr.responseText);
     }
     alert(`Error Received: ${xhr.statusText}`);
@@ -474,7 +465,7 @@ function getDataAsync<T>(path: string, onSuccess: (response: T) => void, onError
 }
 
 function postDataAsync<T>(path: string, data: Object, onSuccess: (response: T) => void, onError?: (errorCode: number) => void): void {
-    getOrPostDataAsync<T>(path, null, onSuccess, onError);
+    getOrPostDataAsync<T>(path, data, onSuccess, onError);
 }
 
 function getOrPostDataAsync<T>(path: string, data: Object, onSuccess : (response: T) => void, onError? : (errorCode: number) => void) : void {
@@ -482,7 +473,7 @@ function getOrPostDataAsync<T>(path: string, data: Object, onSuccess : (response
 
     xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
+            if (xhr.status === HTTPStatusCodes.OK) {
                 onSuccess(JSON.parse(xhr.responseText) as T);
             } else {
                 onError(xhr.status);
@@ -491,7 +482,11 @@ function getOrPostDataAsync<T>(path: string, data: Object, onSuccess : (response
     };
 
     xhr.open(data ? "POST" : "GET", serverURL + path, true);
-    xhr.send(data);
+
+    if (data)
+        xhr.setRequestHeader("content-type", "application/json");
+
+    xhr.send(data ? JSON.stringify(data) : null);
 }
 
 interface Reader {
@@ -535,14 +530,15 @@ function initReaders() {
                 ul.appendChild(li);
             });
 
-            HideLoading();
+            hideLoading();
         },
         errorCode => {
-            HideLoading();
+            hideLoading();
+            showErrorMessage(errorCode);
         });
 }
 
-function HideLoading(): void {
+function hideLoading(): void {
     var loading = document.querySelector("#loadingOverlay") as HTMLElement;
 
     function LoadingEnd(): void {
@@ -555,6 +551,21 @@ function HideLoading(): void {
     loading.addEventListener("transitionend", LoadingEnd);
     loading.style.transition = "opacity 200ms linear";
     loading.style.opacity = "0";
+}
+
+function showErrorMessage(error: string | number) : void {
+
+    if (typeof error == "number") {
+        document.querySelector("#errorOverlay .errorMessage").textContent = `Unexpected error ${error} – ${HTTPStatusCodes[error]}`;
+    } else {
+        document.querySelector("#errorOverlay .errorMessage").textContent = `${error}`;
+    }
+
+    view.show("#errorOverlay");
+}
+
+function clearErrorMessage(): void {
+    view.hide("#errorOverlay");
 }
 
 const scannerSetUp = {
@@ -619,4 +630,50 @@ function scanBarcode(onSuccess): void {
         error => alert(`Scanning failed: ${error}`),
         scannerSetUp
     );
+}
+
+// HTTP Status codes 
+enum HTTPStatusCodes {
+    CONTINUE = 100,
+    SWITCHING_PROTOCOLS = 101,
+    OK = 200,
+    CREATED = 201,
+    ACCEPTED = 202,
+    NON_AUTHORITATIVE_INFORMATION = 203,
+    NO_CONTENT = 204,
+    RESET_CONTENT = 205,
+    PARTIAL_CONTENT = 206,
+    MULTIPLE_CHOICES = 300,
+    MOVED_PERMANENTLY = 301,
+    FOUND = 302,
+    SEE_OTHER = 303,
+    NOT_MODIFIED = 304,
+    USE_PROXY = 305,
+    TEMPORARY_REDIRECT = 307,
+    BAD_REQUEST = 400,
+    UNAUTHORIZED = 401,
+    PAYMENT_REQUIRED = 402,
+    FORBIDDEN = 403,
+    NOT_FOUND = 404,
+    METHOD_NOT_ALLOWED = 405,
+    NOT_ACCEPTABLE = 406,
+    PROXY_AUTHENTICATION_REQUIRED = 407,
+    REQUEST_TIMEOUT = 408,
+    CONFLICT = 409,
+    GONE = 410,
+    LENGTH_REQUIRED = 411,
+    PRECONDITION_FAILED = 412,
+    REQUEST_ENTITY_TOO_LARGE = 413,
+    REQUEST_URI_TOO_LONG = 414,
+    UNSUPPORTED_MEDIA_TYPE = 415,
+    REQUESTED_RANGE_NOT_SATISFIABLE = 416,
+    EXPECTATION_FAILED = 417,
+    UNPROCESSABLE_ENTITY = 422,
+    TOO_MANY_REQUESTS = 429,
+    INTERNAL_SERVER_ERROR = 500,
+    NOT_IMPLEMENTED = 501,
+    BAD_GATEWAY = 502,
+    SERVICE_UNAVAILABLE = 503,
+    GATEWAY_TIMEOUT = 504,
+    HTTP_VERSION_NOT_SUPPORTED = 505,
 }

@@ -18,6 +18,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
         document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
         document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
+        document.querySelector("#errorOverlay button").addEventListener("click", clearErrorMessage);
     }
     exports.init = init;
     function showAddUser() {
@@ -52,9 +53,10 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 li.setAttribute("data-book-id", b.Id.toString());
                 ul.appendChild(li);
             });
-            HideLoading();
+            hideLoading();
         }, function (errorCode) {
-            HideLoading();
+            hideLoading();
+            showErrorMessage(errorCode);
         });
     }
     var MonthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -108,9 +110,10 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 li.setAttribute("data-book-id", b.Id.toString());
                 ul.appendChild(li);
             });
-            HideLoading();
+            hideLoading();
         }, function (errorCode) {
-            HideLoading();
+            hideLoading();
+            showErrorMessage(errorCode);
         });
     }
     var checkOutBook;
@@ -142,11 +145,11 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                     view.hide("#checkOutReader");
                 }
             }, function (errorCode) {
-                if (errorCode === 404) {
+                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#checkOutError span").textContent = "Reader not found";
                 }
                 else {
-                    document.querySelector("#checkOutError span").textContent = "Error " + errorCode;
+                    document.querySelector("#checkOutError span").textContent = "Error " + errorCode + " " + HTTPStatusCodes[errorCode];
                 }
                 view.show("#checkOutError");
             });
@@ -170,7 +173,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                     view.hide("#checkOutBook");
                 }
             }, function (errorCode) {
-                if (errorCode === 404) {
+                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#checkOutError span").textContent = "Book not found";
                 }
                 else {
@@ -202,14 +205,12 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     function scanReturn() {
         scanBarcode(function (result) {
             getDataAsync("/api/book/barcode/" + result.text + " (" + result.format + ")", function (returnBook) {
-                getDataAsync("/api/books/return/" + returnBook.Id, function (book) {
+                getDataAsync("/api/books/return/" + returnBook.Id, function () {
                     document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
                         returnBook.Title;
-                    //document.querySelector("#returnBookSuccess .message .bottomRow .readerInfo").textContent =
-                    //    checkOutReader.FirstName + " " + checkOutReader.LastName;
                     main.viewSection("returnBookSuccess");
                 }, function (errorCode) {
-                    if (errorCode === 404) {
+                    if (errorCode === HTTPStatusCodes.NOT_FOUND) {
                         document.querySelector("#returnError span").textContent = "Book not found";
                     }
                     else {
@@ -218,7 +219,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                     view.show("#returnError");
                 });
             }, function (errorCode) {
-                if (errorCode === 404) {
+                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#returnError span").textContent = "Book not found";
                 }
                 else {
@@ -301,44 +302,38 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             var field = inputs[i];
             data[field.name] = prepField(field.value);
         }
-        currentLibrary = postData("/api/signin", data);
-        if (currentLibrary) {
-            document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
-            document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
-            document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
-            //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
-            main.viewSection("hub");
-        }
+        view.show("#loadingOverlay");
+        postDataAsync("/api/signin", data, function (library) {
+            hideLoading();
+            currentLibrary = library;
+            if (currentLibrary) {
+                document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
+                document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
+                document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                main.viewSection("hub");
+            }
+        }, function (errorCode) {
+            hideLoading();
+            if (errorCode === HTTPStatusCodes.NOT_FOUND)
+                showErrorMessage("Username not found");
+            else if (errorCode === HTTPStatusCodes.UNAUTHORIZED)
+                showErrorMessage("Incorrect password");
+            else
+                showErrorMessage(errorCode);
+        });
         return false;
     }
     var serverURL = "http://localhost:51754";
     //const serverURL = "https://favl.azurewebsites.net";
     function postData(path, data) {
         var xhr = new XMLHttpRequest();
-        //xhr.onreadystatechange = function () {
-        //    if (xhr.readyState === XMLHttpRequest.DONE) {
-        //        alert(xhr.responseText);
-        //    }
-        //}
-        //xhr.onerror = () => alert("XHR Error");
         xhr.open("POST", serverURL + path, false);
         xhr.setRequestHeader("content-type", "application/json");
         view.show("#loadingOverlay");
         xhr.send(JSON.stringify(data));
         view.hide("#loadingOverlay");
-        if (xhr.status === 200) {
-            return JSON.parse(xhr.responseText);
-        }
-        alert("Error Received: " + xhr.statusText);
-        return null;
-    }
-    function getData(path) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", serverURL + path, false);
-        view.show("#loadingOverlay");
-        xhr.send();
-        view.hide("#loadingOverlay");
-        if (xhr.status === 200) {
+        if (xhr.status === HTTPStatusCodes.OK) {
             return JSON.parse(xhr.responseText);
         }
         alert("Error Received: " + xhr.statusText);
@@ -348,13 +343,13 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         getOrPostDataAsync(path, null, onSuccess, onError);
     }
     function postDataAsync(path, data, onSuccess, onError) {
-        getOrPostDataAsync(path, null, onSuccess, onError);
+        getOrPostDataAsync(path, data, onSuccess, onError);
     }
     function getOrPostDataAsync(path, data, onSuccess, onError) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
+                if (xhr.status === HTTPStatusCodes.OK) {
                     onSuccess(JSON.parse(xhr.responseText));
                 }
                 else {
@@ -363,7 +358,9 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             }
         };
         xhr.open(data ? "POST" : "GET", serverURL + path, true);
-        xhr.send(data);
+        if (data)
+            xhr.setRequestHeader("content-type", "application/json");
+        xhr.send(data ? JSON.stringify(data) : null);
     }
     var currentEditUser;
     function initReaders() {
@@ -387,12 +384,13 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 li.appendChild(span);
                 ul.appendChild(li);
             });
-            HideLoading();
+            hideLoading();
         }, function (errorCode) {
-            HideLoading();
+            hideLoading();
+            showErrorMessage(errorCode);
         });
     }
-    function HideLoading() {
+    function hideLoading() {
         var loading = document.querySelector("#loadingOverlay");
         function LoadingEnd() {
             loading.removeEventListener("transitionend", LoadingEnd);
@@ -403,6 +401,18 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         loading.addEventListener("transitionend", LoadingEnd);
         loading.style.transition = "opacity 200ms linear";
         loading.style.opacity = "0";
+    }
+    function showErrorMessage(error) {
+        if (typeof error == "number") {
+            document.querySelector("#errorOverlay .errorMessage").textContent = "Unexpected error " + error + " \u2013 " + HTTPStatusCodes[error];
+        }
+        else {
+            document.querySelector("#errorOverlay .errorMessage").textContent = "" + error;
+        }
+        view.show("#errorOverlay");
+    }
+    function clearErrorMessage() {
+        view.hide("#errorOverlay");
     }
     var scannerSetUp = {
         preferFrontCamera: false,
@@ -449,5 +459,51 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 onSuccess(result);
         }, function (error) { return alert("Scanning failed: " + error); }, scannerSetUp);
     }
+    // HTTP Status codes 
+    var HTTPStatusCodes;
+    (function (HTTPStatusCodes) {
+        HTTPStatusCodes[HTTPStatusCodes["CONTINUE"] = 100] = "CONTINUE";
+        HTTPStatusCodes[HTTPStatusCodes["SWITCHING_PROTOCOLS"] = 101] = "SWITCHING_PROTOCOLS";
+        HTTPStatusCodes[HTTPStatusCodes["OK"] = 200] = "OK";
+        HTTPStatusCodes[HTTPStatusCodes["CREATED"] = 201] = "CREATED";
+        HTTPStatusCodes[HTTPStatusCodes["ACCEPTED"] = 202] = "ACCEPTED";
+        HTTPStatusCodes[HTTPStatusCodes["NON_AUTHORITATIVE_INFORMATION"] = 203] = "NON_AUTHORITATIVE_INFORMATION";
+        HTTPStatusCodes[HTTPStatusCodes["NO_CONTENT"] = 204] = "NO_CONTENT";
+        HTTPStatusCodes[HTTPStatusCodes["RESET_CONTENT"] = 205] = "RESET_CONTENT";
+        HTTPStatusCodes[HTTPStatusCodes["PARTIAL_CONTENT"] = 206] = "PARTIAL_CONTENT";
+        HTTPStatusCodes[HTTPStatusCodes["MULTIPLE_CHOICES"] = 300] = "MULTIPLE_CHOICES";
+        HTTPStatusCodes[HTTPStatusCodes["MOVED_PERMANENTLY"] = 301] = "MOVED_PERMANENTLY";
+        HTTPStatusCodes[HTTPStatusCodes["FOUND"] = 302] = "FOUND";
+        HTTPStatusCodes[HTTPStatusCodes["SEE_OTHER"] = 303] = "SEE_OTHER";
+        HTTPStatusCodes[HTTPStatusCodes["NOT_MODIFIED"] = 304] = "NOT_MODIFIED";
+        HTTPStatusCodes[HTTPStatusCodes["USE_PROXY"] = 305] = "USE_PROXY";
+        HTTPStatusCodes[HTTPStatusCodes["TEMPORARY_REDIRECT"] = 307] = "TEMPORARY_REDIRECT";
+        HTTPStatusCodes[HTTPStatusCodes["BAD_REQUEST"] = 400] = "BAD_REQUEST";
+        HTTPStatusCodes[HTTPStatusCodes["UNAUTHORIZED"] = 401] = "UNAUTHORIZED";
+        HTTPStatusCodes[HTTPStatusCodes["PAYMENT_REQUIRED"] = 402] = "PAYMENT_REQUIRED";
+        HTTPStatusCodes[HTTPStatusCodes["FORBIDDEN"] = 403] = "FORBIDDEN";
+        HTTPStatusCodes[HTTPStatusCodes["NOT_FOUND"] = 404] = "NOT_FOUND";
+        HTTPStatusCodes[HTTPStatusCodes["METHOD_NOT_ALLOWED"] = 405] = "METHOD_NOT_ALLOWED";
+        HTTPStatusCodes[HTTPStatusCodes["NOT_ACCEPTABLE"] = 406] = "NOT_ACCEPTABLE";
+        HTTPStatusCodes[HTTPStatusCodes["PROXY_AUTHENTICATION_REQUIRED"] = 407] = "PROXY_AUTHENTICATION_REQUIRED";
+        HTTPStatusCodes[HTTPStatusCodes["REQUEST_TIMEOUT"] = 408] = "REQUEST_TIMEOUT";
+        HTTPStatusCodes[HTTPStatusCodes["CONFLICT"] = 409] = "CONFLICT";
+        HTTPStatusCodes[HTTPStatusCodes["GONE"] = 410] = "GONE";
+        HTTPStatusCodes[HTTPStatusCodes["LENGTH_REQUIRED"] = 411] = "LENGTH_REQUIRED";
+        HTTPStatusCodes[HTTPStatusCodes["PRECONDITION_FAILED"] = 412] = "PRECONDITION_FAILED";
+        HTTPStatusCodes[HTTPStatusCodes["REQUEST_ENTITY_TOO_LARGE"] = 413] = "REQUEST_ENTITY_TOO_LARGE";
+        HTTPStatusCodes[HTTPStatusCodes["REQUEST_URI_TOO_LONG"] = 414] = "REQUEST_URI_TOO_LONG";
+        HTTPStatusCodes[HTTPStatusCodes["UNSUPPORTED_MEDIA_TYPE"] = 415] = "UNSUPPORTED_MEDIA_TYPE";
+        HTTPStatusCodes[HTTPStatusCodes["REQUESTED_RANGE_NOT_SATISFIABLE"] = 416] = "REQUESTED_RANGE_NOT_SATISFIABLE";
+        HTTPStatusCodes[HTTPStatusCodes["EXPECTATION_FAILED"] = 417] = "EXPECTATION_FAILED";
+        HTTPStatusCodes[HTTPStatusCodes["UNPROCESSABLE_ENTITY"] = 422] = "UNPROCESSABLE_ENTITY";
+        HTTPStatusCodes[HTTPStatusCodes["TOO_MANY_REQUESTS"] = 429] = "TOO_MANY_REQUESTS";
+        HTTPStatusCodes[HTTPStatusCodes["INTERNAL_SERVER_ERROR"] = 500] = "INTERNAL_SERVER_ERROR";
+        HTTPStatusCodes[HTTPStatusCodes["NOT_IMPLEMENTED"] = 501] = "NOT_IMPLEMENTED";
+        HTTPStatusCodes[HTTPStatusCodes["BAD_GATEWAY"] = 502] = "BAD_GATEWAY";
+        HTTPStatusCodes[HTTPStatusCodes["SERVICE_UNAVAILABLE"] = 503] = "SERVICE_UNAVAILABLE";
+        HTTPStatusCodes[HTTPStatusCodes["GATEWAY_TIMEOUT"] = 504] = "GATEWAY_TIMEOUT";
+        HTTPStatusCodes[HTTPStatusCodes["HTTP_VERSION_NOT_SUPPORTED"] = 505] = "HTTP_VERSION_NOT_SUPPORTED";
+    })(HTTPStatusCodes || (HTTPStatusCodes = {}));
 });
 //# sourceMappingURL=sections.js.map

@@ -595,6 +595,14 @@
         <div><i class="fa fa-spinner fa-spin"></i> Loading...</div>
     </section>
     
+    <!-- Error overlay -->
+    <section id="errorOverlay" hidden>
+        <div>
+            <p><i class="fa fa-exclamation-triangle"></i>&ensp;<span class="errorMessage"></span></p>
+            <p><button type="button">OK</button></p>
+        </div>
+    </section>
+    
     <script type="text/javascript" src="cordova.js"></script>
     <!-- The 'async' attribute is needed for RequireJS to work in a Windows app -->
     <script type="text/javascript" data-main="scripts/startup" src="lib/require.2.1.8.js" async></script>
