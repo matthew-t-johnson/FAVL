@@ -59,7 +59,7 @@ function showInventory(): void {
     const ul = document.getElementById("inventoryList");
     ul.textContent = "";
 
-    view.show("#loadingOverlay");
+    showLoading();
 
     getDataAsync<Array<Book>>(`/api/books/${currentLibrary.Id}`,
         books => {
@@ -84,9 +84,9 @@ function showInventory(): void {
 
             hideLoading();
         },
-        errorCode => {
+        httpStatus => {
             hideLoading();
-            showErrorMessage(errorCode);
+            showErrorMessage(httpStatus);
         });
 }
 
@@ -96,8 +96,7 @@ function showOverDue(): void {
     const ul = document.getElementById("overDueList");
     ul.textContent = "";
 
-    view.show("#loadingOverlay");
-
+    showLoading();
 
     getDataAsync<Array<Book>>(`/api/books/overdue/${currentLibrary.Id}`,
         books => {
@@ -160,9 +159,9 @@ function showOverDue(): void {
 
             hideLoading();
         },
-        errorCode => {
+        httpStatus => {
             hideLoading();
-            showErrorMessage(errorCode);
+            showErrorMessage(httpStatus);
         });
 }
 
@@ -201,11 +200,11 @@ function scanReader(): void {
                     view.hide("#checkOutReader");
                 }
             },
-        errorCode => {
-            if (errorCode === HTTPStatusCodes.NOT_FOUND) {
+        httpStatus => {
+            if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
                 document.querySelector("#checkOutError span").textContent = "Reader not found";
             } else {
-                document.querySelector("#checkOutError span").textContent = `Error ${errorCode} ${HTTPStatusCodes[errorCode]}`;
+                document.querySelector("#checkOutError span").textContent = errorMessageText(httpStatus);
             }
             view.show("#checkOutError");
         });
@@ -233,11 +232,11 @@ function scanBook(): void {
                     view.hide("#checkOutBook");
                 }
             },
-            errorCode => {
-                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
+            httpStatus => {
+                if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#checkOutError span").textContent = "Book not found";
                 } else {
-                    document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
+                    document.querySelector("#checkOutError span").textContent = errorMessageText(httpStatus);
                 }
                 view.show("#checkOutError");
             });
@@ -261,8 +260,8 @@ function checkOutTheBook(reader: Reader, book: Book) {
                 view.show("#checkOutError");
             }
         },
-        errorCode => {
-            document.querySelector("#checkOutError span").textContent = `Error ${errorCode}`;
+        httpStatus => {
+            document.querySelector("#checkOutError span").textContent = errorMessageText(httpStatus);
             view.show("#checkOutError");
         });
 }
@@ -278,20 +277,20 @@ function scanReturn(): void {
 
                         main.viewSection("returnBookSuccess");
                     },
-                    errorCode => {
-                        if (errorCode === HTTPStatusCodes.NOT_FOUND) {
+                    httpStatus => {
+                        if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
                             document.querySelector("#returnError span").textContent = "Book not found";
                         } else {
-                            document.querySelector("#returnError span").textContent = `Error ${errorCode}`;
+                            document.querySelector("#returnError span").textContent = errorMessageText(httpStatus);
                         }
                         view.show("#returnError");
                     });
             },
-            errorCode => {
-                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
+            httpStatus => {
+                if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#returnError span").textContent = "Book not found";
                 } else {
-                    document.querySelector("#returnError span").textContent = `Error ${errorCode}`;
+                    document.querySelector("#returnError span").textContent = errorMessageText(httpStatus);
                 }
                 view.show("#returnError");
             });
@@ -311,20 +310,31 @@ function addUserSubmit(ev: Event): boolean {
     }
     data["LibraryID"] = currentLibrary.Id;
 
-    currentReader = postData("/api/reader/add", data) as Reader;
+    postDataAsync<Reader>("/api/reader/add", data,
+        addedReader => {
 
-    if (currentReader) {
-        document.querySelector("#addUserSuccess .message .userName").textContent =
-            currentReader.FirstName + " " + currentReader.LastName;
-        document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
-        document.querySelector("#addUserSuccess .message .userBarcode").textContent = currentReader.Barcode;
-        main.viewSection("addUserSuccess");
+            currentReader = addedReader;
 
-        for (let i = 0; i < inputs.length; i++) {
-            const field = inputs[i] as HTMLInputElement;
-            field.value = "";
-        }
-    }
+            if (currentReader) {
+                document.querySelector("#addUserSuccess .message .userName").textContent =
+                    currentReader.FirstName + " " + currentReader.LastName;
+                document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+                document.querySelector("#addUserSuccess .message .userBarcode").textContent = currentReader.Barcode;
+                main.viewSection("addUserSuccess");
+
+                for (let i = 0; i < inputs.length; i++) {
+                    const field = inputs[i] as HTMLInputElement;
+                    field.value = "";
+                }
+            }
+        },
+        httpStatus => {
+            if (httpStatus === HTTPStatusCodes.CONFLICT) {
+                showErrorMessage("Barcode in use");
+            } else {
+                showErrorMessage(httpStatus);
+            }
+        });
 
     return false;
 }
@@ -342,24 +352,35 @@ function editUserSubmit(ev: Event): boolean {
     }
     data["LibraryID"] = currentLibrary.Id;
 
-    currentEditUser = postData(`/api/reader/${currentEditUser.Id}`, data) as Reader;
+    postDataAsync<Reader>(`/api/reader/${currentEditUser.Id}`, data,
+        user => {
+            currentEditUser = user;
 
-    if (currentEditUser) {
-        document.querySelector("#editUserSuccess .message .userName").textContent =
-            currentEditUser.FirstName + " " + currentEditUser.LastName;
-        document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
-        document.querySelector("#editUserSuccess .message .userBarcode").textContent = currentEditUser.Barcode;
-        main.viewSection("editUserSuccess");
+            if (currentEditUser) {
+                document.querySelector("#editUserSuccess .message .userName").textContent =
+                    currentEditUser.FirstName + " " + currentEditUser.LastName;
+                document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+                document.querySelector("#editUserSuccess .message .userBarcode").textContent = currentEditUser.Barcode;
+                main.viewSection("editUserSuccess");
 
-        for (let i = 0; i < inputs.length; i++) {
-            const field = inputs[i] as HTMLInputElement;
-            field.value = "";
-        }
-    }
+                for (let i = 0; i < inputs.length; i++) {
+                    const field = inputs[i] as HTMLInputElement;
+                    field.value = "";
+                }
+            }
+        },
+        httpStatus => {
+            if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
+                showErrorMessage("User not found");
+            } else if (httpStatus === HTTPStatusCodes.CONFLICT) {
+                showErrorMessage("Barcode in use");
+            } else {
+                showErrorMessage(httpStatus);
+            }
+        });
 
     return false;
 }
-
 
 var currentReader: Reader;
 
@@ -409,7 +430,7 @@ function signInSubmit(ev: Event): boolean {
         data[field.name] = prepField(field.value);
     }
 
-    view.show("#loadingOverlay");
+    showLoading();
 
     postDataAsync<Library>("/api/signin", data,
         library => {
@@ -426,15 +447,15 @@ function signInSubmit(ev: Event): boolean {
                 main.viewSection("hub");
             }
         },
-        errorCode => {
+        httpStatus => {
             hideLoading();
 
-            if (errorCode === HTTPStatusCodes.NOT_FOUND)
+            if (httpStatus === HTTPStatusCodes.NOT_FOUND)
                 showErrorMessage("Username not found");
-            else if (errorCode === HTTPStatusCodes.UNAUTHORIZED)
+            else if (httpStatus === HTTPStatusCodes.UNAUTHORIZED)
                 showErrorMessage("Incorrect password");
             else
-                showErrorMessage(errorCode);
+                showErrorMessage(httpStatus);
         });
 
     return false;
@@ -443,32 +464,15 @@ function signInSubmit(ev: Event): boolean {
 const serverURL = "http://localhost:51754";
 //const serverURL = "https://favl.azurewebsites.net";
 
-function postData(path: string, data: Object): Object {
-    const xhr = new XMLHttpRequest();
-
-    xhr.open("POST", serverURL + path, false);
-    xhr.setRequestHeader("content-type", "application/json");
-
-    view.show("#loadingOverlay");
-    xhr.send(JSON.stringify(data));
-    view.hide("#loadingOverlay");
-
-    if (xhr.status === HTTPStatusCodes.OK) {
-        return JSON.parse(xhr.responseText);
-    }
-    alert(`Error Received: ${xhr.statusText}`);
-    return null;
-}
-
-function getDataAsync<T>(path: string, onSuccess: (response: T) => void, onError?: (errorCode: number) => void): void {
+function getDataAsync<T>(path: string, onSuccess: (response: T) => void, onError?: (httpStatus: number) => void): void {
     getOrPostDataAsync<T>(path, null, onSuccess, onError);
 }
 
-function postDataAsync<T>(path: string, data: Object, onSuccess: (response: T) => void, onError?: (errorCode: number) => void): void {
+function postDataAsync<T>(path: string, data: Object, onSuccess: (response: T) => void, onError?: (httpStatus: number) => void): void {
     getOrPostDataAsync<T>(path, data, onSuccess, onError);
 }
 
-function getOrPostDataAsync<T>(path: string, data: Object, onSuccess : (response: T) => void, onError? : (errorCode: number) => void) : void {
+function getOrPostDataAsync<T>(path: string, data: Object, onSuccess : (response: T) => void, onError? : (httpStatus: number) => void) : void {
     const xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = () => {
@@ -504,7 +508,7 @@ function initReaders() {
     const ul = document.getElementById("readersList");
     ul.textContent = "";
 
-    view.show("#loadingOverlay");
+    showLoading();
 
     getDataAsync<Array<Reader>>(`/api/readers/${currentLibrary.Id}`,
         readers => {
@@ -532,10 +536,14 @@ function initReaders() {
 
             hideLoading();
         },
-        errorCode => {
+        httpStatus => {
             hideLoading();
-            showErrorMessage(errorCode);
+            showErrorMessage(httpStatus);
         });
+}
+
+function showLoading(): void {
+    view.show("#loadingOverlay");
 }
 
 function hideLoading(): void {
@@ -553,10 +561,15 @@ function hideLoading(): void {
     loading.style.opacity = "0";
 }
 
+function errorMessageText(error: number): string {
+    const statusText = HTTPStatusCodes[error] ? ` – ${HTTPStatusCodes[error].replace(/_/g, " ").toLocaleLowerCase().replace(/\b[a-z]/g, m => m.toLocaleUpperCase())}` : "";
+    return `Unexpected error ${error}${statusText}`;
+}
+
 function showErrorMessage(error: string | number) : void {
 
     if (typeof error == "number") {
-        document.querySelector("#errorOverlay .errorMessage").textContent = `Unexpected error ${error} – ${HTTPStatusCodes[error]}`;
+        document.querySelector("#errorOverlay .errorMessage").textContent = errorMessageText(error as number);
     } else {
         document.querySelector("#errorOverlay .errorMessage").textContent = `${error}`;
     }
@@ -627,7 +640,7 @@ function scanBarcode(onSuccess): void {
             if (!result.cancelled)
                 onSuccess(result);
         },
-        error => alert(`Scanning failed: ${error}`),
+        error => showErrorMessage(`Scanning failed: ${error}`),
         scannerSetUp
     );
 }

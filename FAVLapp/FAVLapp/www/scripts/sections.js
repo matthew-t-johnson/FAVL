@@ -38,7 +38,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     function showInventory() {
         var ul = document.getElementById("inventoryList");
         ul.textContent = "";
-        view.show("#loadingOverlay");
+        showLoading();
         getDataAsync("/api/books/" + currentLibrary.Id, function (books) {
             books.forEach(function (b) {
                 var li = document.createElement("li");
@@ -54,16 +54,16 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 ul.appendChild(li);
             });
             hideLoading();
-        }, function (errorCode) {
+        }, function (httpStatus) {
             hideLoading();
-            showErrorMessage(errorCode);
+            showErrorMessage(httpStatus);
         });
     }
     var MonthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     function showOverDue() {
         var ul = document.getElementById("overDueList");
         ul.textContent = "";
-        view.show("#loadingOverlay");
+        showLoading();
         getDataAsync("/api/books/overdue/" + currentLibrary.Id, function (books) {
             books.forEach(function (b) {
                 var li = document.createElement("li");
@@ -111,9 +111,9 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 ul.appendChild(li);
             });
             hideLoading();
-        }, function (errorCode) {
+        }, function (httpStatus) {
             hideLoading();
-            showErrorMessage(errorCode);
+            showErrorMessage(httpStatus);
         });
     }
     var checkOutBook;
@@ -144,12 +144,12 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 else {
                     view.hide("#checkOutReader");
                 }
-            }, function (errorCode) {
-                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
+            }, function (httpStatus) {
+                if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#checkOutError span").textContent = "Reader not found";
                 }
                 else {
-                    document.querySelector("#checkOutError span").textContent = "Error " + errorCode + " " + HTTPStatusCodes[errorCode];
+                    document.querySelector("#checkOutError span").textContent = errorMessageText(httpStatus);
                 }
                 view.show("#checkOutError");
             });
@@ -172,12 +172,12 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                     document.getElementById("checkOutBook").textContent = "";
                     view.hide("#checkOutBook");
                 }
-            }, function (errorCode) {
-                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
+            }, function (httpStatus) {
+                if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#checkOutError span").textContent = "Book not found";
                 }
                 else {
-                    document.querySelector("#checkOutError span").textContent = "Error " + errorCode;
+                    document.querySelector("#checkOutError span").textContent = errorMessageText(httpStatus);
                 }
                 view.show("#checkOutError");
             });
@@ -197,8 +197,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 document.querySelector("#checkOutError span").textContent = status;
                 view.show("#checkOutError");
             }
-        }, function (errorCode) {
-            document.querySelector("#checkOutError span").textContent = "Error " + errorCode;
+        }, function (httpStatus) {
+            document.querySelector("#checkOutError span").textContent = errorMessageText(httpStatus);
             view.show("#checkOutError");
         });
     }
@@ -209,21 +209,21 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                     document.querySelector("#returnBookSuccess .message .topRow .bookMessage").textContent =
                         returnBook.Title;
                     main.viewSection("returnBookSuccess");
-                }, function (errorCode) {
-                    if (errorCode === HTTPStatusCodes.NOT_FOUND) {
+                }, function (httpStatus) {
+                    if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
                         document.querySelector("#returnError span").textContent = "Book not found";
                     }
                     else {
-                        document.querySelector("#returnError span").textContent = "Error " + errorCode;
+                        document.querySelector("#returnError span").textContent = errorMessageText(httpStatus);
                     }
                     view.show("#returnError");
                 });
-            }, function (errorCode) {
-                if (errorCode === HTTPStatusCodes.NOT_FOUND) {
+            }, function (httpStatus) {
+                if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
                     document.querySelector("#returnError span").textContent = "Book not found";
                 }
                 else {
-                    document.querySelector("#returnError span").textContent = "Error " + errorCode;
+                    document.querySelector("#returnError span").textContent = errorMessageText(httpStatus);
                 }
                 view.show("#returnError");
             });
@@ -239,18 +239,27 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             data[field.name] = prepField(field.value);
         }
         data["LibraryID"] = currentLibrary.Id;
-        currentReader = postData("/api/reader/add", data);
-        if (currentReader) {
-            document.querySelector("#addUserSuccess .message .userName").textContent =
-                currentReader.FirstName + " " + currentReader.LastName;
-            document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
-            document.querySelector("#addUserSuccess .message .userBarcode").textContent = currentReader.Barcode;
-            main.viewSection("addUserSuccess");
-            for (var i = 0; i < inputs.length; i++) {
-                var field = inputs[i];
-                field.value = "";
+        postDataAsync("/api/reader/add", data, function (addedReader) {
+            currentReader = addedReader;
+            if (currentReader) {
+                document.querySelector("#addUserSuccess .message .userName").textContent =
+                    currentReader.FirstName + " " + currentReader.LastName;
+                document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+                document.querySelector("#addUserSuccess .message .userBarcode").textContent = currentReader.Barcode;
+                main.viewSection("addUserSuccess");
+                for (var i = 0; i < inputs.length; i++) {
+                    var field = inputs[i];
+                    field.value = "";
+                }
             }
-        }
+        }, function (httpStatus) {
+            if (httpStatus === HTTPStatusCodes.CONFLICT) {
+                showErrorMessage("Barcode in use");
+            }
+            else {
+                showErrorMessage(httpStatus);
+            }
+        });
         return false;
     }
     function editUserSubmit(ev) {
@@ -263,18 +272,30 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             data[field.name] = prepField(field.value);
         }
         data["LibraryID"] = currentLibrary.Id;
-        currentEditUser = postData("/api/reader/" + currentEditUser.Id, data);
-        if (currentEditUser) {
-            document.querySelector("#editUserSuccess .message .userName").textContent =
-                currentEditUser.FirstName + " " + currentEditUser.LastName;
-            document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
-            document.querySelector("#editUserSuccess .message .userBarcode").textContent = currentEditUser.Barcode;
-            main.viewSection("editUserSuccess");
-            for (var i = 0; i < inputs.length; i++) {
-                var field = inputs[i];
-                field.value = "";
+        postDataAsync("/api/reader/" + currentEditUser.Id, data, function (user) {
+            currentEditUser = user;
+            if (currentEditUser) {
+                document.querySelector("#editUserSuccess .message .userName").textContent =
+                    currentEditUser.FirstName + " " + currentEditUser.LastName;
+                document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+                document.querySelector("#editUserSuccess .message .userBarcode").textContent = currentEditUser.Barcode;
+                main.viewSection("editUserSuccess");
+                for (var i = 0; i < inputs.length; i++) {
+                    var field = inputs[i];
+                    field.value = "";
+                }
             }
-        }
+        }, function (httpStatus) {
+            if (httpStatus === HTTPStatusCodes.NOT_FOUND) {
+                showErrorMessage("User not found");
+            }
+            else if (httpStatus === HTTPStatusCodes.CONFLICT) {
+                showErrorMessage("Barcode in use");
+            }
+            else {
+                showErrorMessage(httpStatus);
+            }
+        });
         return false;
     }
     var currentReader;
@@ -302,7 +323,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             var field = inputs[i];
             data[field.name] = prepField(field.value);
         }
-        view.show("#loadingOverlay");
+        showLoading();
         postDataAsync("/api/signin", data, function (library) {
             hideLoading();
             currentLibrary = library;
@@ -313,32 +334,19 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
                 main.viewSection("hub");
             }
-        }, function (errorCode) {
+        }, function (httpStatus) {
             hideLoading();
-            if (errorCode === HTTPStatusCodes.NOT_FOUND)
+            if (httpStatus === HTTPStatusCodes.NOT_FOUND)
                 showErrorMessage("Username not found");
-            else if (errorCode === HTTPStatusCodes.UNAUTHORIZED)
+            else if (httpStatus === HTTPStatusCodes.UNAUTHORIZED)
                 showErrorMessage("Incorrect password");
             else
-                showErrorMessage(errorCode);
+                showErrorMessage(httpStatus);
         });
         return false;
     }
     var serverURL = "http://localhost:51754";
     //const serverURL = "https://favl.azurewebsites.net";
-    function postData(path, data) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", serverURL + path, false);
-        xhr.setRequestHeader("content-type", "application/json");
-        view.show("#loadingOverlay");
-        xhr.send(JSON.stringify(data));
-        view.hide("#loadingOverlay");
-        if (xhr.status === HTTPStatusCodes.OK) {
-            return JSON.parse(xhr.responseText);
-        }
-        alert("Error Received: " + xhr.statusText);
-        return null;
-    }
     function getDataAsync(path, onSuccess, onError) {
         getOrPostDataAsync(path, null, onSuccess, onError);
     }
@@ -366,7 +374,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
     function initReaders() {
         var ul = document.getElementById("readersList");
         ul.textContent = "";
-        view.show("#loadingOverlay");
+        showLoading();
         getDataAsync("/api/readers/" + currentLibrary.Id, function (readers) {
             readers.forEach(function (r) {
                 var li = document.createElement("li");
@@ -385,10 +393,13 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
                 ul.appendChild(li);
             });
             hideLoading();
-        }, function (errorCode) {
+        }, function (httpStatus) {
             hideLoading();
-            showErrorMessage(errorCode);
+            showErrorMessage(httpStatus);
         });
+    }
+    function showLoading() {
+        view.show("#loadingOverlay");
     }
     function hideLoading() {
         var loading = document.querySelector("#loadingOverlay");
@@ -402,9 +413,13 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         loading.style.transition = "opacity 200ms linear";
         loading.style.opacity = "0";
     }
+    function errorMessageText(error) {
+        var statusText = HTTPStatusCodes[error] ? " \u2013 " + HTTPStatusCodes[error].replace(/_/g, " ").toLocaleLowerCase().replace(/\b[a-z]/g, function (m) { return m.toLocaleUpperCase(); }) : "";
+        return "Unexpected error " + error + statusText;
+    }
     function showErrorMessage(error) {
         if (typeof error == "number") {
-            document.querySelector("#errorOverlay .errorMessage").textContent = "Unexpected error " + error + " \u2013 " + HTTPStatusCodes[error];
+            document.querySelector("#errorOverlay .errorMessage").textContent = errorMessageText(error);
         }
         else {
             document.querySelector("#errorOverlay .errorMessage").textContent = "" + error;
@@ -457,7 +472,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         cordova.plugins.barcodeScanner.scan(function (result) {
             if (!result.cancelled)
                 onSuccess(result);
-        }, function (error) { return alert("Scanning failed: " + error); }, scannerSetUp);
+        }, function (error) { return showErrorMessage("Scanning failed: " + error); }, scannerSetUp);
     }
     // HTTP Status codes 
     var HTTPStatusCodes;
