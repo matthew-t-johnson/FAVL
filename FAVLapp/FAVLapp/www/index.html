@@ -289,55 +289,6 @@
                 </form>
             </div>
         </div>
-        <!--<div class="wrapper">
-            <div class="headerLogoWrapper">
-                <img src="images/scan_lightish_BG.svg"/>
-                <h2>Edit User</h2>
-                <i class="fa fa-user-circle" aria-hidden="true"></i>
-            </div>
-            <div class="mainBodyWrapper">
-                <form class="userForm" id="editUserForm">
-                    <fieldset>
-                        <table class="formTable">
-                            <tr>
-                                <td class="inputTD"><input type="text" name="FirstName" placeholder="First Name" required/></td>
-                            </tr>
-                            <tr>
-                                <td class="inputTD"><input type="text" name="MiddleName" placeholder="Middle Name"/></td>
-                            </tr>
-                            <tr>
-                                <td class="inputTD"><input type="text" name="LastName" placeholder="Last Name" required/></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="hidden" id="updateBarcodeString" name="Barcode"/>
-                                    <button type="button" class="addBarcodeButton BarcodeButton">
-                                        <i class="fa fa-barcode" aria-hidden="true"></i>
-                                        <h1>
-                                            Update<br/>Barcode
-                                        </h1>
-                                    </button>
-                                </td>
-
-                            </tr>
-                            <tr class="formButtons">
-                                <td>
-                                    <button type="submit" class="formSubmit">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        <h1>Update</h1>
-                                    </button>
-                                    <button type="button" class="formCancel">
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                        <h1>Cancel</h1>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                </form>
-
-            </div>
-        </div>-->
     </section>
 
     <!--READERS-->
@@ -573,7 +524,7 @@
                         <i class="fa fa-book" aria-hidden="true"></i>
                         <p class="bookMessage"></p>
                     </div>
-                 </div>
+                </div>
             </div>
             <div class="successButtonWrapper">
                 <button id="returnAgainButton" class="againButton">
@@ -587,14 +538,36 @@
                 </button>
             </div>
         </div>
-
     </section>
-    
+
+    <!--UserDetails-->
+    <section id="userDetails" hidden>
+        <div class="wrapper">
+            <div class="headerLogoWrapper">
+                <table class="headerTable">
+                    <tr>
+                        <td class="logoIcon"></td>
+                        <td class="pageTitle">
+                            <h2>User</h2>
+                        </td>
+                        <td class="userIcon">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mainBodyWrapper">
+                <button type="button" id="signOutButton">Sign Out</button>
+            </div>
+        </div>
+    </section>
+
+
     <!-- Loading... overlay -->
     <section id="loadingOverlay" hidden>
         <div><i class="fa fa-spinner fa-spin"></i> Loading...</div>
     </section>
-    
+
     <!-- Error overlay -->
     <section id="errorOverlay" hidden>
         <div>
@@ -602,7 +575,7 @@
             <p><button type="button">OK</button></p>
         </div>
     </section>
-    
+
     <script type="text/javascript" src="cordova.js"></script>
     <!-- The 'async' attribute is needed for RequireJS to work in a Windows app -->
     <script type="text/javascript" data-main="scripts/startup" src="lib/require.2.1.8.js" async></script>

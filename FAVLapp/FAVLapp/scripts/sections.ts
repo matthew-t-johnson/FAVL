@@ -20,9 +20,15 @@ export function init(): void {
     document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
     document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
     document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
+    document.querySelector("#signOutButton").addEventListener("click", signOut);
 
     document.querySelector("#errorOverlay button").addEventListener("click", clearErrorMessage);
 }
+
+// Global State Variables
+var currentLibrary: Library;
+var currentEditUser: Reader;
+var currentReader: Reader;
 
 interface Book {
     Id: number;
@@ -382,7 +388,6 @@ function editUserSubmit(ev: Event): boolean {
     return false;
 }
 
-var currentReader: Reader;
 
 function encodeHTML(str: string): string {
     if (!str)
@@ -415,8 +420,6 @@ interface Library {
     Village: string;
     Country: string;
 }
-
-var currentLibrary: Library;
 
 function signInSubmit(ev: Event): boolean {
     ev.preventDefault();
@@ -461,8 +464,8 @@ function signInSubmit(ev: Event): boolean {
     return false;
 }
 
-const serverURL = "http://localhost:51754";
-//const serverURL = "https://favl.azurewebsites.net";
+//const serverURL = "http://localhost:51754";
+const serverURL = "https://favl.azurewebsites.net";
 
 function getDataAsync<T>(path: string, onSuccess: (response: T) => void, onError?: (httpStatus: number) => void): void {
     getOrPostDataAsync<T>(path, null, onSuccess, onError);
@@ -502,7 +505,6 @@ interface Reader {
     Barcode: string;
 }
 
-var currentEditUser: Reader;
 
 function initReaders() {
     const ul = document.getElementById("readersList");
@@ -643,6 +645,14 @@ function scanBarcode(onSuccess): void {
         error => showErrorMessage(`Scanning failed: ${error}`),
         scannerSetUp
     );
+}
+
+function signOut(): void {
+    currentLibrary = null;
+    currentEditUser = null;
+    currentReader = null;
+
+    view("#index");
 }
 
 // HTTP Status codes 

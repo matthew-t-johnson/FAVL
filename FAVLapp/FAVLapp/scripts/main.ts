@@ -94,4 +94,11 @@ function initClick(): void {
         viewSection("hub");
     });
 
+    const userIcons = document.querySelectorAll(".headerLogoWrapper .fa-user-circle");
+    for (let i = 0; i < userIcons.length; i++) {
+        userIcons[i].addEventListener("click", () => { viewSection("userDetails"); });
+    }
+
+
+
 }

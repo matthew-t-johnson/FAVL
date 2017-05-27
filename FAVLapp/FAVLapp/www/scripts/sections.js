@@ -18,9 +18,14 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.querySelector("#checkOut .scanReader").addEventListener("click", scanReader);
         document.querySelector("#checkOut .scanBook").addEventListener("click", scanBook);
         document.querySelector("#returnBook .scanBook").addEventListener("click", scanReturn);
+        document.querySelector("#signOutButton").addEventListener("click", signOut);
         document.querySelector("#errorOverlay button").addEventListener("click", clearErrorMessage);
     }
     exports.init = init;
+    // Global State Variables
+    var currentLibrary;
+    var currentEditUser;
+    var currentReader;
     function showAddUser() {
         document.querySelector("#addUser input[name='FirstName']").value = "";
         document.querySelector("#addUser input[name='MiddleName']").value = "";
@@ -298,7 +303,6 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         });
         return false;
     }
-    var currentReader;
     function encodeHTML(str) {
         if (!str)
             return "";
@@ -313,7 +317,6 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             str = "";
         return str.trim();
     }
-    var currentLibrary;
     function signInSubmit(ev) {
         ev.preventDefault();
         var form = ev.target;
@@ -345,8 +348,8 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         });
         return false;
     }
-    var serverURL = "http://localhost:51754";
-    //const serverURL = "https://favl.azurewebsites.net";
+    //const serverURL = "http://localhost:51754";
+    var serverURL = "https://favl.azurewebsites.net";
     function getDataAsync(path, onSuccess, onError) {
         getOrPostDataAsync(path, null, onSuccess, onError);
     }
@@ -370,7 +373,6 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             xhr.setRequestHeader("content-type", "application/json");
         xhr.send(data ? JSON.stringify(data) : null);
     }
-    var currentEditUser;
     function initReaders() {
         var ul = document.getElementById("readersList");
         ul.textContent = "";
@@ -473,6 +475,12 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             if (!result.cancelled)
                 onSuccess(result);
         }, function (error) { return showErrorMessage("Scanning failed: " + error); }, scannerSetUp);
+    }
+    function signOut() {
+        currentLibrary = null;
+        currentEditUser = null;
+        currentReader = null;
+        view("#index");
     }
     // HTTP Status codes 
     var HTTPStatusCodes;

@@ -73,6 +73,10 @@ define(["require", "exports", "./sections", "../lib/view"], function (require, e
         document.getElementById("editUserCancelButton").addEventListener("click", function () {
             viewSection("hub");
         });
+        var userIcons = document.querySelectorAll(".headerLogoWrapper .fa-user-circle");
+        for (var i = 0; i < userIcons.length; i++) {
+            userIcons[i].addEventListener("click", function () { viewSection("userDetails"); });
+        }
     }
 });
 //# sourceMappingURL=main.js.map
