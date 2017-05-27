@@ -70,10 +70,10 @@
 
                     </li>
                     <li class="search hidden-xs">
-                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <i onclick="location.href = 'user.aspx';" class="fa fa-user-circle" aria-hidden="true"></i>
                     </li>
                     <li class="search hidden-sm hidden-md hidden-lg hidden-xl">
-                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <i onclick="location.href = 'user.aspx';" class="fa fa-user-circle" aria-hidden="true"></i>
                     </li>
                 </ul>
             </div>

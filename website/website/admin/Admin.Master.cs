@@ -7,7 +7,7 @@ namespace website.admin
     {
         public bool IsGod => PW.AdminIsGod(Request.Cookies["Admin"]?["ID"]);
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             var adminCookie = Request.Cookies["Admin"]?["ID"];
 

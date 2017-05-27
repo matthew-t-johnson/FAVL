@@ -116,6 +116,7 @@
     <Content Include="admin\printUserCards.aspx" />
     <Content Include="admin\readers.aspx" />
     <Content Include="admin\scan.aspx" />
+    <Content Include="admin\user.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -401,6 +402,13 @@
     </Compile>
     <Compile Include="admin\scan.aspx.designer.cs">
       <DependentUpon>scan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user.aspx.cs">
+      <DependentUpon>user.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user.aspx.designer.cs">
+      <DependentUpon>user.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Book.cs">
