@@ -10,12 +10,15 @@
   },
   "ios": {
     "debug": {
-      "developmentTeam": "Matthew Johnson"
+      "developmentTeam": "46278N56C8",
+      "codeSignIdentity": "iPhone Developer",
+      "packageType": "ad-hoc"
     },
 
     "release": {
-      "developmentTeam": "Matthew Johnson",
-      "codeSignIdentity": "iPhone Developer"
+      "developmentTeam": "46278N56C8",
+      "codeSignIdentity": "iPhone Developer",
+      "packageType": "ad-hoc"
     }
   }
 }
