@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using website.Controllers;
 
 namespace website.admin
 {
@@ -14,24 +15,24 @@ namespace website.admin
         {
             using (var db = new favlEntities())
             {
-                var list = db.Books.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).OrderBy(b => b.Title).ToList();
+                var list = db.Books.Where(b => allOrOneLibrary.LibraryID == 0 || b.LibraryID == allOrOneLibrary.LibraryID).ToList();
                 var listHeader = new HtmlGenericControl("li");
                 listHeader.InnerHtml = "<span class='title'>Title</span><span class='author'>Author</span><span class='library'>Library</span><span class='barcode'>Barcode (EAN_13)</span><span class='reader'>Checked Out To</span><span></span><span></span>";
                 listHeader.Attributes.Add("class", "listAsTableHeader");
 
                 insertList.Controls.Add(listHeader);
 
-                foreach (var book in list)
+                foreach (var book in list.OrderBy(APIController.CleanUpBookTitle))
                 {
                     var li = new HtmlGenericControl("li");
                     var span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "title");
-                    span.InnerText = book.Title;
+                    span.InnerText = APIController.CleanUpBookTitle(book);
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("class", "author");
-                    span.InnerText = book.AuthorFirst + " " + book.AuthorMiddle + " " + book.AuthorLast;
+                    span.InnerText = $"{book.AuthorFirst} {book.AuthorMiddle} {book.AuthorLast}";
                     li.Controls.Add(span);
 
                     span = new HtmlGenericControl("span");

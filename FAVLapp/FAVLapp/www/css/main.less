@@ -890,7 +890,7 @@ section.currenthub {
     display: block;
 }
 
-#loadingOverlay {
+#loadingOverlay, #errorOverlay {
     background-image: none !important;
     background-color: rgba(30, 54, 58, 0.5);
     color: white;
@@ -910,4 +910,21 @@ section.currenthub {
         animation: none;
     }
 }
+
+#errorOverlay {
+    div {
+        background-color: rgba(30, 54, 58, 0.95);
+        padding: 20px;
+    }
+
+    button {
+        width: 104px;
+        height: 33px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(74, 220, 105, 0.9);
+        color: #005200;
+    }
+}
+
 
