@@ -9,6 +9,7 @@ export function init(): void {
     document.getElementById("inventory").addEventListener("view:show", showInventory);
     document.getElementById("overDue").addEventListener("view:show", showOverDue);
     document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
+    document.getElementById("userDetails").addEventListener("view:show", showUserDetails);
 
     document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
     document.getElementById("editUserForm").addEventListener("submit", editUserSubmit);
@@ -26,7 +27,7 @@ export function init(): void {
 }
 
 // Global State Variables
-var currentLibrary: Library;
+var currentLibrary: SignInResponse;
 var currentEditUser: Reader;
 var currentReader: Reader;
 
@@ -45,6 +46,15 @@ interface Book {
     DaysOverDue?: number;
 }
 
+interface SignInResponse {
+    LibraryId: number;
+    LibraryName: string;
+    Village: string;
+    Country: string;
+    LibrarianFirst: string;
+    LibrarianLast: string;
+}
+
 function showAddUser(): void {
     (document.querySelector("#addUser input[name='FirstName']") as HTMLInputElement).value =  "";
     (document.querySelector("#addUser input[name='MiddleName']") as HTMLInputElement).value = "";
@@ -61,13 +71,22 @@ function showEditUser(): void {
         currentEditUser.Barcode || "";
 }
 
+function showUserDetails(): void {
+    document.querySelector("#userDetails .librarianFirst").textContent = currentLibrary.LibrarianFirst;
+    document.querySelector("#userDetails .librarianLast").textContent = currentLibrary.LibrarianLast; 
+    document.querySelector("#userDetails .librarianLibraryName").textContent = currentLibrary.LibraryName;
+    document.querySelector("#userDetails .librarianLibraryVillage").textContent = currentLibrary.Village;
+    document.querySelector("#userDetails .librarianLibraryCountry").textContent = currentLibrary.Country;
+
+}
+
 function showInventory(): void {
     const ul = document.getElementById("inventoryList");
     ul.textContent = "";
 
     showLoading();
 
-    getDataAsync<Array<Book>>(`/api/books/${currentLibrary.Id}`,
+    getDataAsync<Array<Book>>(`/api/books/${currentLibrary.LibraryId}`,
         books => {
 
             books.forEach(b => {
@@ -104,7 +123,7 @@ function showOverDue(): void {
 
     showLoading();
 
-    getDataAsync<Array<Book>>(`/api/books/overdue/${currentLibrary.Id}`,
+    getDataAsync<Array<Book>>(`/api/books/overdue/${currentLibrary.LibraryId}`,
         books => {
             books.forEach(b => {
                 const li = document.createElement("li") as HTMLElement;
@@ -314,7 +333,7 @@ function addUserSubmit(ev: Event): boolean {
         const field = inputs[i] as HTMLInputElement;
         data[field.name] = prepField(field.value);
     }
-    data["LibraryID"] = currentLibrary.Id;
+    data["LibraryID"] = currentLibrary.LibraryId;
 
     postDataAsync<Reader>("/api/reader/add", data,
         addedReader => {
@@ -324,7 +343,7 @@ function addUserSubmit(ev: Event): boolean {
             if (currentReader) {
                 document.querySelector("#addUserSuccess .message .userName").textContent =
                     currentReader.FirstName + " " + currentReader.LastName;
-                document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+                document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.LibraryName;
                 document.querySelector("#addUserSuccess .message .userBarcode").textContent = currentReader.Barcode;
                 main.viewSection("addUserSuccess");
 
@@ -356,7 +375,7 @@ function editUserSubmit(ev: Event): boolean {
         const field = inputs[i] as HTMLInputElement;
         data[field.name] = prepField(field.value);
     }
-    data["LibraryID"] = currentLibrary.Id;
+    data["LibraryID"] = currentLibrary.LibraryId;
 
     postDataAsync<Reader>(`/api/reader/${currentEditUser.Id}`, data,
         user => {
@@ -365,7 +384,7 @@ function editUserSubmit(ev: Event): boolean {
             if (currentEditUser) {
                 document.querySelector("#editUserSuccess .message .userName").textContent =
                     currentEditUser.FirstName + " " + currentEditUser.LastName;
-                document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+                document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.LibraryName;
                 document.querySelector("#editUserSuccess .message .userBarcode").textContent = currentEditUser.Barcode;
                 main.viewSection("editUserSuccess");
 
@@ -414,12 +433,7 @@ function prepField(str: string): string {
     return str.trim();
 }
 
-interface Library {
-    Id: number;
-    Name: string;
-    Village: string;
-    Country: string;
-}
+
 
 function signInSubmit(ev: Event): boolean {
     ev.preventDefault();
@@ -435,18 +449,18 @@ function signInSubmit(ev: Event): boolean {
 
     showLoading();
 
-    postDataAsync<Library>("/api/signin", data,
+    postDataAsync<SignInResponse>("/api/signin", data,
         library => {
             hideLoading();
 
             currentLibrary = library;
 
             if (currentLibrary) {
-                document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
-                document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
-                document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                document.querySelector("#hub .libraryName").textContent = currentLibrary.LibraryName;
+                document.querySelector("#addUser .libraryName").textContent = currentLibrary.LibraryName;
+                document.querySelector("#editUser .libraryName").textContent = currentLibrary.LibraryName;
 
-                //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                //document.querySelector("#editUser .libraryName").textContent = currentLibrary.LibraryName;
                 main.viewSection("hub");
             }
         },
@@ -512,7 +526,7 @@ function initReaders() {
 
     showLoading();
 
-    getDataAsync<Array<Reader>>(`/api/readers/${currentLibrary.Id}`,
+    getDataAsync<Array<Reader>>(`/api/readers/${currentLibrary.LibraryId}`,
         readers => {
 
             readers.forEach(r => {
@@ -620,15 +634,15 @@ interface Librarian {
 
 function onSignInGetBarcode(): void {
     scanBarcode(result => {
-        getDataAsync<Library>(`/api/signin/${result.text} (${result.format})`,
+        getDataAsync<SignInResponse>(`/api/signin/${result.text} (${result.format})`,
             library => {
 
                 currentLibrary = library;
 
                 if (currentLibrary) {
-                    document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
-                    document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
-                    document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                    document.querySelector("#hub .libraryName").textContent = currentLibrary.LibraryName;
+                    document.querySelector("#addUser .libraryName").textContent = currentLibrary.LibraryName;
+                    document.querySelector("#editUser .libraryName").textContent = currentLibrary.LibraryName;
 
                     main.viewSection("hub");
                 }

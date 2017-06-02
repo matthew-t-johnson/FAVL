@@ -72,6 +72,29 @@ namespace website.admin
             }
         }
 
+        public static website.Admin GetAdminFromCookie(string adminCookie)
+        {
+            var parts = adminCookie.Split('|');
+
+            var adminId = int.Parse(parts[0]) / int.Parse(parts[1]);
+
+            if (adminId == GOD_USER_ID)
+            {
+                return new website.Admin()
+                {
+                    FirstName = "Super",
+                    LastName = "User",
+                    Username = "Admin"
+                };
+            }
+
+            using (var db = new favlEntities())
+            {
+                return db.Admins.Find(adminId);
+            }
+
+        }
+
         public static bool AdminIsGod(string adminCookie)
         {
             try

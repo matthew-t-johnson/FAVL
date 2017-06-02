@@ -9,6 +9,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.getElementById("inventory").addEventListener("view:show", showInventory);
         document.getElementById("overDue").addEventListener("view:show", showOverDue);
         document.getElementById("checkOut").addEventListener("view:show", showCheckOut);
+        document.getElementById("userDetails").addEventListener("view:show", showUserDetails);
         document.getElementById("addUserForm").addEventListener("submit", addUserSubmit);
         document.getElementById("editUserForm").addEventListener("submit", editUserSubmit);
         document.getElementById("signInForm").addEventListener("submit", signInSubmit);
@@ -40,11 +41,18 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         document.querySelector("#editUser input[name='Barcode']").value =
             currentEditUser.Barcode || "";
     }
+    function showUserDetails() {
+        document.querySelector("#userDetails .librarianFirst").textContent = currentLibrary.LibrarianFirst;
+        document.querySelector("#userDetails .librarianLast").textContent = currentLibrary.LibrarianLast;
+        document.querySelector("#userDetails .librarianLibraryName").textContent = currentLibrary.LibraryName;
+        document.querySelector("#userDetails .librarianLibraryVillage").textContent = currentLibrary.Village;
+        document.querySelector("#userDetails .librarianLibraryCountry").textContent = currentLibrary.Country;
+    }
     function showInventory() {
         var ul = document.getElementById("inventoryList");
         ul.textContent = "";
         showLoading();
-        getDataAsync("/api/books/" + currentLibrary.Id, function (books) {
+        getDataAsync("/api/books/" + currentLibrary.LibraryId, function (books) {
             books.forEach(function (b) {
                 var li = document.createElement("li");
                 var span = document.createElement("span");
@@ -69,7 +77,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         var ul = document.getElementById("overDueList");
         ul.textContent = "";
         showLoading();
-        getDataAsync("/api/books/overdue/" + currentLibrary.Id, function (books) {
+        getDataAsync("/api/books/overdue/" + currentLibrary.LibraryId, function (books) {
             books.forEach(function (b) {
                 var li = document.createElement("li");
                 if (b.DaysOverDue < 0) {
@@ -243,13 +251,13 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             var field = inputs[i];
             data[field.name] = prepField(field.value);
         }
-        data["LibraryID"] = currentLibrary.Id;
+        data["LibraryID"] = currentLibrary.LibraryId;
         postDataAsync("/api/reader/add", data, function (addedReader) {
             currentReader = addedReader;
             if (currentReader) {
                 document.querySelector("#addUserSuccess .message .userName").textContent =
                     currentReader.FirstName + " " + currentReader.LastName;
-                document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+                document.querySelector("#addUserSuccess .message .userLibrary").textContent = currentLibrary.LibraryName;
                 document.querySelector("#addUserSuccess .message .userBarcode").textContent = currentReader.Barcode;
                 main.viewSection("addUserSuccess");
                 for (var i = 0; i < inputs.length; i++) {
@@ -276,13 +284,13 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             var field = inputs[i];
             data[field.name] = prepField(field.value);
         }
-        data["LibraryID"] = currentLibrary.Id;
+        data["LibraryID"] = currentLibrary.LibraryId;
         postDataAsync("/api/reader/" + currentEditUser.Id, data, function (user) {
             currentEditUser = user;
             if (currentEditUser) {
                 document.querySelector("#editUserSuccess .message .userName").textContent =
                     currentEditUser.FirstName + " " + currentEditUser.LastName;
-                document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.Name;
+                document.querySelector("#editUserSuccess .message .userLibrary").textContent = currentLibrary.LibraryName;
                 document.querySelector("#editUserSuccess .message .userBarcode").textContent = currentEditUser.Barcode;
                 main.viewSection("editUserSuccess");
                 for (var i = 0; i < inputs.length; i++) {
@@ -331,10 +339,10 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             hideLoading();
             currentLibrary = library;
             if (currentLibrary) {
-                document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
-                document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
-                document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
-                //document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                document.querySelector("#hub .libraryName").textContent = currentLibrary.LibraryName;
+                document.querySelector("#addUser .libraryName").textContent = currentLibrary.LibraryName;
+                document.querySelector("#editUser .libraryName").textContent = currentLibrary.LibraryName;
+                //document.querySelector("#editUser .libraryName").textContent = currentLibrary.LibraryName;
                 main.viewSection("hub");
             }
         }, function (httpStatus) {
@@ -377,7 +385,7 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
         var ul = document.getElementById("readersList");
         ul.textContent = "";
         showLoading();
-        getDataAsync("/api/readers/" + currentLibrary.Id, function (readers) {
+        getDataAsync("/api/readers/" + currentLibrary.LibraryId, function (readers) {
             readers.forEach(function (r) {
                 var li = document.createElement("li");
                 li.addEventListener("click", function () {
@@ -462,9 +470,9 @@ define(["require", "exports", "./main", "../lib/view"], function (require, expor
             getDataAsync("/api/signin/" + result.text + " (" + result.format + ")", function (library) {
                 currentLibrary = library;
                 if (currentLibrary) {
-                    document.querySelector("#hub .libraryName").textContent = currentLibrary.Name;
-                    document.querySelector("#addUser .libraryName").textContent = currentLibrary.Name;
-                    document.querySelector("#editUser .libraryName").textContent = currentLibrary.Name;
+                    document.querySelector("#hub .libraryName").textContent = currentLibrary.LibraryName;
+                    document.querySelector("#addUser .libraryName").textContent = currentLibrary.LibraryName;
+                    document.querySelector("#editUser .libraryName").textContent = currentLibrary.LibraryName;
                     main.viewSection("hub");
                 }
             });

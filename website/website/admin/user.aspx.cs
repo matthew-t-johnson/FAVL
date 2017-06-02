@@ -21,7 +21,14 @@ namespace website.admin
 
                 Response.Cookies.Add(adminCookie);
                 Response.Redirect("/");
+                return;
             }
+
+            var admin = PW.GetAdminFromCookie(Request.Cookies["Admin"]?["ID"]);
+
+            adminFirst.InnerText = admin.FirstName;
+            adminLast.InnerText = admin.LastName;
+            adminUsername.InnerText = admin.Username;
         }
     }
 }

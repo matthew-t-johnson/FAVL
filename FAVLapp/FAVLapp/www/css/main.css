@@ -303,6 +303,57 @@ section .wrapper .listList li .dueDateDiv span.year {
   padding-left: 20px;
   display: inline-block;
 }
+#userDetails .mainBodyWrapper {
+  background-color: rgba(174, 191, 191, 0.66);
+}
+.librarianInfo {
+  padding-top: 45%;
+  padding-left: 20%;
+  text-align: left;
+}
+.librarianInfo p {
+  margin: 0;
+  font-size: 14pt;
+  padding: 3px 0;
+}
+.librarianInfo p:before {
+  font-size: 11pt;
+}
+.librarianInfo p.librarianFirst:before {
+  content: 'First Name: ';
+}
+.librarianInfo p.librarianLast:before {
+  content: 'Last Name: ';
+}
+.librarianInfo p.librarianLibraryName:before {
+  content: 'Library: ';
+}
+.librarianInfo p.librarianLibraryVillage:before {
+  content: 'Village: ';
+}
+.librarianInfo p.librarianLibraryCountry:before {
+  content: 'Country: ';
+}
+#signOutButton {
+  height: 12%;
+  color: white;
+  background-color: rgba(30, 54, 58, 0.78);
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+#signOutButton i {
+  font-size: 50pt;
+}
+#signOutButton h1 {
+  font-size: 20pt;
+  padding-left: 20px;
+  display: inline-block;
+  text-transform: uppercase;
+}
 section#inventory,
 section#readers,
 section#overDue {

@@ -759,3 +759,7 @@ button.addNewButton {
     text-align: center;
     margin-right: -20px;
 }
+
+.adminInfo span {
+    font-size: 14pt;
+}

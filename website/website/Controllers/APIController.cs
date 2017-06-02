@@ -462,7 +462,7 @@ namespace website.Controllers
 
         [HttpPost]
         [Route("api/signin")]
-        public Library SignIn([FromBody] SignInArgs args)
+        public SignInResponse SignIn([FromBody] SignInArgs args)
         {
             using (var db = new favlEntities())
             {
@@ -474,19 +474,21 @@ namespace website.Controllers
                 if (!PW.Verify(args.password, librarian.PasswordHash, librarian.PasswordSalt))
                     throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
-                return new Library
+                return new SignInResponse
                 {
-                    Id = librarian.Library.Id,
-                    Name = librarian.Library.Name,
+                    LibraryId = librarian.Library.Id,
+                    LibraryName = librarian.Library.Name,
                     Village = librarian.Library.Village,
-                    Country = librarian.Library.Country
+                    Country = librarian.Library.Country,
+                    LibrarianFirst = librarian.FirstName,
+                    LibrarianLast = librarian.LastName
                 };
             }
         }
 
         [HttpGet]
         [Route("api/signin/{barcode}")]
-        public Library SignIn(string barcode)
+        public SignInResponse SignIn(string barcode)
         {
             using (var db = new favlEntities())
             {
@@ -495,12 +497,14 @@ namespace website.Controllers
                 if (librarian == null)
                     throw new HttpResponseException(HttpStatusCode.NotFound);
 
-                return new Library
+                return new SignInResponse
                 {
-                    Id = librarian.Library.Id,
-                    Name = librarian.Library.Name,
+                    LibraryId = librarian.Library.Id,
+                    LibraryName = librarian.Library.Name,
                     Village = librarian.Library.Village,
-                    Country = librarian.Library.Country
+                    Country = librarian.Library.Country,
+                    LibrarianFirst = librarian.FirstName,
+                    LibrarianLast = librarian.LastName
                 };
             }
         }
@@ -538,6 +542,16 @@ namespace website.Controllers
 
                 return "ok";
             }
+        }
+
+        public class SignInResponse
+        {
+            public int LibraryId;
+            public string LibraryName;
+            public string Village;
+            public string Country;
+            public string LibrarianFirst;
+            public string LibrarianLast;
         }
 
         public class BookInfo
